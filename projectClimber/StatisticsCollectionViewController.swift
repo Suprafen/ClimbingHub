@@ -20,22 +20,28 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     var workouts = [Object]()
     var dataSource: DataSource!
+    var token: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("STATISTICS COLLECTION VIEW - VIEW DID LOAD")
         self.collectionView!.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier)
-        
+        workouts = RealmManager.sharedInstance.fetch(object: FingerWorkout.self)
+        observeRealm()
         viewConfiguration()
         configureDataSource()
         collectionView.setCollectionViewLayout(createLayout(), animated: true)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("STATISTICS COLLECTION VIEW - VIEW DID APPEAR")
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(self.workouts, toSection: .main)
+        self.dataSource.apply(snapshot)
     }
-
+    
     func viewConfiguration() {
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -59,7 +65,13 @@ class StatisticsCollectionViewController: UICollectionViewController {
         let section = NSCollectionLayoutSection(group: group)
         
         return UICollectionViewCompositionalLayout(section: section)
-        
+    }
+    
+    func observeRealm() {
+        token = RealmManager.sharedInstance.realm.observe { notification, realm in
+            self.workouts = RealmManager.sharedInstance.fetch(object: FingerWorkout.self)
+            print("OBSERVED")
+        }
     }
     
     //MARK: Data Source configuring

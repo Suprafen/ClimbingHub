@@ -58,9 +58,9 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             labelsStackView.topAnchor.constraint(equalTo: topAnchor),
-            labelsStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            labelsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             labelsStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30)
         ])
     }
     
@@ -73,7 +73,7 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         // Downcasting to FingerWorkout
         guard let workout = workout as? FingerWorkout else { print("Downcasting error in Workout Cell"); return }
         
-        workoutTitleLabel.text = workout.description
+        workoutTitleLabel.text = "Finger Workout"
         dateLabel.text = dateFormatter.string(from: workout.date)
     }
 }

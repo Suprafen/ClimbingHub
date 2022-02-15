@@ -259,12 +259,28 @@ class FingerWorkoutViewController: UIViewController {
             // remove any splits
             splits = []
             dismiss(animated: true, completion: nil)
+        } else if isRestModeActive{
+            // If rest mode active I don't want to save last split, which will be 0
+            // In other cases it's ok
+            dismiss(animated: true, completion: nil)
+            print(splits)
+            // create an instance of workout
+            let instance = FingerWorkout()
+            instance.date = Date()
+            // append splits to a model's list
+            instance.splits.append(objectsIn: splits)
+            // save insantiated object
+            RealmManager.sharedInstance.saveData(object: instance)
         } else {
             // append the last split before view dismissed
             splits.append(splitTimeCounter)
             dismiss(animated: true, completion: nil)
-            // -- test
-            print(splits)
+            
+            let instance = FingerWorkout()
+            instance.date = Date()
+            instance.splits.append(objectsIn: splits)
+            RealmManager.sharedInstance.saveData(object: instance)
+            
         }
     }
     
