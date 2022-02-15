@@ -270,6 +270,7 @@ class FingerWorkoutViewController: UIViewController {
             // append splits to a model's list
             instance.splits.append(objectsIn: splits)
             // save insantiated object
+            instance.totalTime = totalTimeCounter
             RealmManager.sharedInstance.saveData(object: instance)
         } else {
             // append the last split before view dismissed
@@ -279,6 +280,7 @@ class FingerWorkoutViewController: UIViewController {
             let instance = FingerWorkout()
             instance.date = Date()
             instance.splits.append(objectsIn: splits)
+            instance.totalTime = totalTimeCounter
             RealmManager.sharedInstance.saveData(object: instance)
             
         }

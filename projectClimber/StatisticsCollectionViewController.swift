@@ -42,6 +42,15 @@ class StatisticsCollectionViewController: UICollectionViewController {
         self.dataSource.apply(snapshot)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Move to statistics table view
+        let workoutToShow = workouts[indexPath.item]
+        let tableStatView = WorkoutStatisticsTableViewController()
+        tableStatView.workout = workoutToShow as? FingerWorkout
+        
+        navigationController?.pushViewController(tableStatView, animated: true)
+    }
+    
     func viewConfiguration() {
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.prefersLargeTitles = true
