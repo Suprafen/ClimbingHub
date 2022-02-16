@@ -1,28 +1,29 @@
 //
-//  SecondTableViewCell.swift
+//  ThirdTableViewCell.swift
 //  projectClimber
 //
-//  Created by Ivan Pryhara on 15.02.22.
+//  Created by Ivan Pryhara on 16.02.22.
 //
 
 import UIKit
 
-class SecondTableViewCell: UITableViewCell {
+class ThirdTableViewCell: UITableViewCell {
 
     let stack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.alignment = .center
-        
+       
         return stack
     }()
     
-    let totalTimeLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-        label.text = "Total time"
-        label.textColor = .green
+        label.text = "Time on HandBoard"
+        label.textColor = .magenta
+        label.textAlignment = .left
         
         return label
     }()
@@ -42,7 +43,7 @@ class SecondTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        stack.addArrangedSubview(totalTimeLabel)
+        stack.addArrangedSubview(titleLabel)
         stack.addArrangedSubview(timeLabel)
         
         addSubview(stack)
@@ -56,7 +57,7 @@ class SecondTableViewCell: UITableViewCell {
         ])
     }
     
-    func configure(totalTime: Int) {
-        timeLabel.text = String.makeTimeString(seconds: totalTime)
+    func configure(with timeOnHandBoard: Int) {
+        timeLabel.text = String.makeTimeString(seconds: timeOnHandBoard)
     }
 }

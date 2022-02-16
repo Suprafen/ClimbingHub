@@ -23,17 +23,27 @@ class WorkoutStatisticsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let workout = workout {
             switch(indexPath.row) {
-            case 0: let cell = FirstTableViewCell()
+            case 0:
+                let cell = FirstTableViewCell()
+                cell.accessoryType = .disclosureIndicator
                 cell.configure(with: workout.date)
+                
                 return cell
-            case 1: let cell = SecondTableViewCell()
+            case 1:
+                let cell = SecondTableViewCell()
                 cell.configure(totalTime: workout.totalTime)
+                
+                return cell
+            case 2:
+                let cell = ThirdTableViewCell()
+                cell.configure(with: workout.timeOnHandBoard)
+                
                 return cell
             default:
                 return UITableViewCell()

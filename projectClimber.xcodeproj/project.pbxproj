@@ -23,6 +23,7 @@
 		E2F1CFFF27BC22C3007ADEE2 /* FirstTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFE27BC22C3007ADEE2 /* FirstTableViewCell.swift */; };
 		E2F1D00227BC26C7007ADEE2 /* SecondTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1D00127BC26C7007ADEE2 /* SecondTableViewCell.swift */; };
 		E2F1D00427BC32FA007ADEE2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1D00327BC32FA007ADEE2 /* Extensions.swift */; };
+		E2FFD4F327BD4623004AADEC /* ThirdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFD4F227BD4623004AADEC /* ThirdTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		E2F1CFFE27BC22C3007ADEE2 /* FirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTableViewCell.swift; sourceTree = "<group>"; };
 		E2F1D00127BC26C7007ADEE2 /* SecondTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableViewCell.swift; sourceTree = "<group>"; };
 		E2F1D00327BC32FA007ADEE2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = SOURCE_ROOT; };
+		E2FFD4F227BD4623004AADEC /* ThirdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 		E2F1D00027BC22CA007ADEE2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E2FFD4F227BD4623004AADEC /* ThirdTableViewCell.swift */,
 				E2F1D00127BC26C7007ADEE2 /* SecondTableViewCell.swift */,
 				E2F1CFFE27BC22C3007ADEE2 /* FirstTableViewCell.swift */,
 			);
@@ -269,6 +272,7 @@
 				E2CEE4C3279AE0970088278D /* Workout.swift in Sources */,
 				E205A87B27AD18B2002BA08B /* StatisticsCollectionViewController.swift in Sources */,
 				E2F1D00227BC26C7007ADEE2 /* SecondTableViewCell.swift in Sources */,
+				E2FFD4F327BD4623004AADEC /* ThirdTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

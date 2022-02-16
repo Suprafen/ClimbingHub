@@ -47,6 +47,8 @@ class StatisticsCollectionViewController: UICollectionViewController {
         let workoutToShow = workouts[indexPath.item]
         let tableStatView = WorkoutStatisticsTableViewController()
         tableStatView.workout = workoutToShow as? FingerWorkout
+        // Prevent table view to have a large title
+        tableStatView.navigationItem.largeTitleDisplayMode = .never
         
         navigationController?.pushViewController(tableStatView, animated: true)
     }
