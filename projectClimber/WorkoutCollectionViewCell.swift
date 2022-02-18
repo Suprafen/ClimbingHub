@@ -69,11 +69,11 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     }
     
     //using Object type from Realm
-    func configure(with workout: Object) {
+    func configure(with object: Object) {
         // Downcasting to FingerWorkout
-        guard let workout = workout as? FingerWorkout else { print("Downcasting error in Workout Cell"); return }
+        guard let workout = object as? Workout else { print("Downcasting error in Workout Cell"); return }
         
-        workoutTitleLabel.text = "Finger Workout"
+        workoutTitleLabel.text = workout.type.rawValue
         dateLabel.text = dateFormatter.string(from: workout.date)
     }
 }

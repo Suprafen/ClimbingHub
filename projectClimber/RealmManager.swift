@@ -15,7 +15,7 @@ class RealmManager {
     static let sharedInstance = RealmManager()
     private init() {
         realm = {
-            let realm = try! Realm(configuration: Realm.Configuration(objectTypes:[FingerWorkout.self]))
+            let realm = try! Realm(configuration: Realm.Configuration(objectTypes:[Workout.self]))
             print(realm.configuration.fileURL?.path ?? "PATH IS NIL")
             return realm
         }()

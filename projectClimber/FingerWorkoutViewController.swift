@@ -265,7 +265,7 @@ class FingerWorkoutViewController: UIViewController {
             dismiss(animated: true, completion: nil)
             print(splits)
             // create an instance of workout
-            let instance = FingerWorkout()
+            let instance = Workout()
             instance.date = Date()
             // append splits to a model's list
             instance.splits.append(objectsIn: splits)
@@ -277,7 +277,7 @@ class FingerWorkoutViewController: UIViewController {
             splits.append(splitTimeCounter)
             dismiss(animated: true, completion: nil)
             
-            let instance = FingerWorkout()
+            let instance = Workout()
             instance.date = Date()
             instance.splits.append(objectsIn: splits)
             instance.totalTime = totalTimeCounter

@@ -12,7 +12,7 @@ import RealmSwift
 class StatisticsCollectionViewController: UICollectionViewController {
     
     enum Section: Hashable {
-        case history
+        case statistics
         case workouts
     }
     
@@ -20,34 +20,35 @@ class StatisticsCollectionViewController: UICollectionViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Object>
     
     var workouts = [Object]()
+    var statistics = Statistics()
     var dataSource: DataSource!
     var token: NotificationToken?
     // Array where kept sections
     var sections = [Section]()
     //TEST----
-    var history = History()
+//    var history = History()
     //--------
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("STATISTICS COLLECTION VIEW - VIEW DID LOAD")
+//        print("STATISTICS COLLECTION VIEW - VIEW DID LOAD")
         self.collectionView!.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier)
-        self.collectionView!.register(HistoryCollectionViewCell.self, forCellWithReuseIdentifier: HistoryCollectionViewCell.reuseIdentifier)
+        self.collectionView!.register(StatisticsCollectionViewCell.self, forCellWithReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier)
 
         collectionView.collectionViewLayout = createLayout()
-        workouts = RealmManager.sharedInstance.fetch(object: FingerWorkout.self)
+        
+        workouts = RealmManager.sharedInstance.fetch(object: Workout.self)
+        statistics.combineWorkoutTime(in: workouts)
         observeRealm()
         viewConfiguration()
         configureDataSource()
-        
-        print(sections)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("STATISTICS COLLECTION VIEW - VIEW DID APPEAR")
         var snapshot = Snapshot()
-        snapshot.appendSections([.history])
-        snapshot.appendItems([history], toSection: .history)
+        snapshot.appendSections([.statistics])
+        snapshot.appendItems([statistics], toSection: .statistics)
         
         snapshot.appendSections([.workouts])
         snapshot.appendItems(self.workouts, toSection: .workouts)
@@ -61,7 +62,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
             // Move to statistics table view
             let workoutToShow = workouts[indexPath.item]
             let tableStatView = WorkoutStatisticsTableViewController()
-            tableStatView.workout = workoutToShow as? FingerWorkout
+            tableStatView.workout = workoutToShow as? Workout
             // Prevent table view to have a large title
             tableStatView.navigationItem.largeTitleDisplayMode = .never
             
@@ -69,7 +70,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
         }
         // ... otherwise nothing happens
     }
-    
+    //MARK: Helper methods
     func viewConfiguration() {
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -83,7 +84,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
             // Switch between different sections
             // And create theirown layout for particular section
             switch section {
-            case .history:
+            case .statistics:
                 let padding: CGFloat = 10
                 
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.4))
@@ -125,7 +126,17 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     func observeRealm() {
         token = RealmManager.sharedInstance.realm.observe { notification, realm in
-            self.workouts = RealmManager.sharedInstance.fetch(object: FingerWorkout.self)
+            self.workouts = RealmManager.sharedInstance.fetch(object: Workout.self)
+            self.statistics.combineWorkoutTime(in: self.workouts)
+            // Making new snapshot with new values
+            var snapshot = Snapshot()
+            snapshot.appendSections([.statistics])
+            snapshot.appendItems([self.statistics], toSection: .statistics)
+            // Reaload items. In this case only one item with statistics
+            snapshot.reloadItems([self.statistics])
+            
+            // Apply to data source, hence update UI
+            self.dataSource.apply(snapshot)
             print("OBSERVED")
         }
     }
@@ -137,10 +148,10 @@ class StatisticsCollectionViewController: UICollectionViewController {
             // Switch between sections
             // Configuring cell depends on section
             switch section {
-            case .history:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HistoryCollectionViewCell.reuseIdentifier, for: indexPath) as! HistoryCollectionViewCell
+            case .statistics:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier, for: indexPath) as! StatisticsCollectionViewCell
                 
-                cell.configure(with: self.history)
+                cell.configure(with: self.statistics)
                 cell.layer.cornerRadius = 10
                 cell.backgroundColor = .systemFill
                 
@@ -158,8 +169,8 @@ class StatisticsCollectionViewController: UICollectionViewController {
 
         var snapshot = Snapshot()
         // add each seciton to the snapshot
-        snapshot.appendSections([.history])
-        snapshot.appendItems([history], toSection: .history)
+        snapshot.appendSections([.statistics])
+        snapshot.appendItems([statistics], toSection: .statistics)
         
         snapshot.appendSections([.workouts])
         snapshot.appendItems(workouts, toSection: .workouts)
@@ -168,8 +179,4 @@ class StatisticsCollectionViewController: UICollectionViewController {
         dataSource.apply(snapshot)
     }
 }
-// TEST-----
-// Class just for making sure that cell appears properly
-class History: Object {
-    @Persisted var totalTime = 400
-}
+
