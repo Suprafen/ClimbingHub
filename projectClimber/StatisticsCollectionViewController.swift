@@ -25,9 +25,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
     var token: NotificationToken?
     // Array where kept sections
     var sections = [Section]()
-    //TEST----
-//    var history = History()
-    //--------
+
     override func viewDidLoad() {
         super.viewDidLoad()
 //        print("STATISTICS COLLECTION VIEW - VIEW DID LOAD")
@@ -36,23 +34,11 @@ class StatisticsCollectionViewController: UICollectionViewController {
 
         collectionView.collectionViewLayout = createLayout()
         
-        workouts = RealmManager.sharedInstance.fetch(object: Workout.self)
+        workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
         statistics.combineWorkoutTime(in: workouts)
         observeRealm()
         viewConfiguration()
         configureDataSource()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print("STATISTICS COLLECTION VIEW - VIEW DID APPEAR")
-        var snapshot = Snapshot()
-        snapshot.appendSections([.statistics])
-        snapshot.appendItems([statistics], toSection: .statistics)
-        
-        snapshot.appendSections([.workouts])
-        snapshot.appendItems(self.workouts, toSection: .workouts)
-        self.dataSource.apply(snapshot)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -126,7 +112,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     func observeRealm() {
         token = RealmManager.sharedInstance.realm.observe { notification, realm in
-            self.workouts = RealmManager.sharedInstance.fetch(object: Workout.self)
+            self.workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
             self.statistics.combineWorkoutTime(in: self.workouts)
             // Making new snapshot with new values
             var snapshot = Snapshot()
@@ -135,6 +121,8 @@ class StatisticsCollectionViewController: UICollectionViewController {
             // Reaload items. In this case only one item with statistics
             snapshot.reloadItems([self.statistics])
             
+            snapshot.appendSections([.workouts])
+            snapshot.appendItems(self.workouts, toSection: .workouts)
             // Apply to data source, hence update UI
             self.dataSource.apply(snapshot)
             print("OBSERVED")
