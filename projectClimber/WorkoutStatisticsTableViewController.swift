@@ -9,7 +9,7 @@ import UIKit
 
 class WorkoutStatisticsTableViewController: UITableViewController {
 
-    var workout: FingerWorkout?
+    var workout: Workout?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +42,8 @@ class WorkoutStatisticsTableViewController: UITableViewController {
                 return cell
             case 2:
                 let cell = ThirdTableViewCell()
-                cell.configure(with: workout.timeOnHandBoard)
+                guard let timeOnHangBoard = workout.timeOnHangBoard else { return UITableViewCell()}
+                cell.configure(with: timeOnHangBoard)
                 
                 return cell
             default:
