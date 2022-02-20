@@ -16,6 +16,10 @@ class StatisticsCollectionViewController: UICollectionViewController {
         case workouts
     }
     
+    enum SupplementaryKind {
+       static let header = "header"
+    }
+    
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Object>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Object>
     
@@ -29,9 +33,9 @@ class StatisticsCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        print("STATISTICS COLLECTION VIEW - VIEW DID LOAD")
-        self.collectionView!.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier)
-        self.collectionView!.register(StatisticsCollectionViewCell.self, forCellWithReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier)
-
+        self.collectionView.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier)
+        self.collectionView.register(StatisticsCollectionViewCell.self, forCellWithReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier)
+        self.collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
         collectionView.collectionViewLayout = createLayout()
         
         workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
@@ -60,13 +64,21 @@ class StatisticsCollectionViewController: UICollectionViewController {
     func viewConfiguration() {
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "Statistics"
+        self.navigationItem.title = "Overview"
     }
     
     func createLayout() -> UICollectionViewLayout {
         
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
             let section = self.sections[sectionIndex]
+            
+            
+            let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .estimated(44))
+            let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerItemSize, elementKind: SupplementaryKind.header, alignment: .top)
+            headerItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+            
+            
+            
             // Switch between different sections
             // And create theirown layout for particular section
             switch section {
@@ -84,6 +96,8 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: padding, bottom: 0, trailing: padding)
                 
                 let section = NSCollectionLayoutSection(group: group)
+                section.boundarySupplementaryItems = [headerItem]
+                
                 return section
                 
             case .workouts:
@@ -102,6 +116,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: padding, bottom: 0, trailing: padding)
                 
                 let section = NSCollectionLayoutSection(group: group)
+                section.boundarySupplementaryItems = [headerItem]
                 
                 return section
             }
@@ -154,7 +169,29 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 return cell
             }
         })
-
+        
+        //MARK: Supplementary view provider
+        dataSource.supplementaryViewProvider = {collectionView, kind, indexPath -> UICollectionReusableView? in
+            switch kind {
+            case SupplementaryKind.header:
+                let section = self.sections[indexPath.section]
+                let sectionName: String
+                switch section {
+                case .statistics:
+                    sectionName = "Statistics"
+                case .workouts:
+                    sectionName = "Workouts"
+                }
+                
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
+                headerView.setTitle(sectionName)
+                
+                return headerView
+            default:
+                return nil
+            }
+        }
+        
         var snapshot = Snapshot()
         // add each seciton to the snapshot
         snapshot.appendSections([.statistics])

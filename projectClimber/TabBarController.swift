@@ -16,7 +16,7 @@ class TabBarController: UITabBarController {
         workoutViewController.title = "Workout"
         //default layout, the real one will be configured when view did load
         let statisticsViewController = UINavigationController(rootViewController: StatisticsCollectionViewController(collectionViewLayout: UICollectionViewLayout()))
-        statisticsViewController.title = "Statistics"
+        statisticsViewController.title = "Overview"
         setViewControllers([statisticsViewController, workoutViewController], animated: false)
         
         // Do any additional setup after loading the view.
