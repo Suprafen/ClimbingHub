@@ -20,9 +20,16 @@ class StatisticsCollectionViewController: UICollectionViewController {
        static let header = "header"
     }
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, Object>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Object>
+    enum ObjectType {
+        case workout
+        case statistics
+    }
     
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, [Object]>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, [Object]>
+    
+    //TODO: RENAME VARIABLE
+    var test = [ObjectType: [Object]]()
     var workouts = [Object]()
     var statistics = Statistics()
     var dataSource: DataSource!
@@ -50,7 +57,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
         // If section is .workouts we can push to stats for specific workout
         if section == .workouts {
             // Move to statistics table view
-            let workoutToShow = workouts[indexPath.item]
+            let workoutToShow = test[.workout]?[indexPath.row]
             let tableStatView = WorkoutStatisticsTableViewController()
             tableStatView.workout = workoutToShow as? Workout
             // Prevent table view to have a large title
@@ -127,17 +134,21 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     func observeRealm() {
         token = RealmManager.sharedInstance.realm.observe { notification, realm in
+            //TODO: Change what we're observing
             self.workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
             self.statistics.combineWorkoutTime(in: self.workouts)
             // Making new snapshot with new values
+            guard let statistics = self.test[.statistics],
+                  let workouts = self.test[.workout] else { return }
             var snapshot = Snapshot()
             snapshot.appendSections([.statistics])
-            snapshot.appendItems([self.statistics], toSection: .statistics)
+            snapshot.appendItems([statistics], toSection: .statistics)
             // Reaload items. In this case only one item with statistics
-            snapshot.reloadItems([self.statistics])
+            //TODO: Find a way to avoid shut the array instead of force unwrapping
+            snapshot.reloadItems([self.test[.statistics]!])
             
             snapshot.appendSections([.workouts])
-            snapshot.appendItems(self.workouts, toSection: .workouts)
+            snapshot.appendItems([workouts], toSection: .workouts)
             // Apply to data source, hence update UI
             self.dataSource.apply(snapshot)
             print("OBSERVED")
@@ -153,7 +164,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
             switch section {
             case .statistics:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier, for: indexPath) as! StatisticsCollectionViewCell
-                
+                //TODO: Change what you're configuring
                 cell.configure(with: self.statistics)
                 cell.layer.cornerRadius = 10
                 cell.backgroundColor = .systemFill
@@ -161,7 +172,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 return cell
             case .workouts:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WorkoutCollectionViewCell
-                
+                //TODO: Change what you're configuring
                 cell.configure(with: workout)
                 cell.layer.cornerRadius = 10
                 cell.backgroundColor = .systemOrange
@@ -192,13 +203,16 @@ class StatisticsCollectionViewController: UICollectionViewController {
             }
         }
         
+        guard let statistics = test[.statistics],
+              let workouts = test[.workout] else { return }
+        
         var snapshot = Snapshot()
         // add each seciton to the snapshot
         snapshot.appendSections([.statistics])
         snapshot.appendItems([statistics], toSection: .statistics)
         
         snapshot.appendSections([.workouts])
-        snapshot.appendItems(workouts, toSection: .workouts)
+        snapshot.appendItems([workouts], toSection: .workouts)
         // asign sections to the value of snapshot section identifiers
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot)
