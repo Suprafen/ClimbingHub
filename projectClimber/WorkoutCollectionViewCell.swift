@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 class WorkoutCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "Cell"
+    static let reuseIdentifier = "WorkoutViewCell"
     
     let labelsStackView: UIStackView = {
         let stack = UIStackView()

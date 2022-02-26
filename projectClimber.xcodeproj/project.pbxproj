@@ -14,6 +14,7 @@
 		E205A87F27AD2A55002BA08B /* WorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E205A87E27AD2A55002BA08B /* WorkoutViewController.swift */; };
 		E205A88127AD4DD0002BA08B /* FingerWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E205A88027AD4DD0002BA08B /* FingerWorkoutViewController.swift */; };
 		E205A88327B035F5002BA08B /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E205A88227B035F5002BA08B /* RealmManager.swift */; };
+		E20ACC0F27C94353009DD7E8 /* SubCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20ACC0E27C94353009DD7E8 /* SubCollectionViewCell.swift */; };
 		E22E7B2127BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22E7B2027BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift */; };
 		E280FEF627C29C53000AC2EC /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280FEF527C29C53000AC2EC /* SectionHeaderView.swift */; };
 		E2815189279AD7D900E8C2D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2815188279AD7D900E8C2D4 /* AppDelegate.swift */; };
@@ -38,6 +39,7 @@
 		E205A87E27AD2A55002BA08B /* WorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewController.swift; sourceTree = "<group>"; };
 		E205A88027AD4DD0002BA08B /* FingerWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerWorkoutViewController.swift; sourceTree = "<group>"; };
 		E205A88227B035F5002BA08B /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		E20ACC0E27C94353009DD7E8 /* SubCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCollectionViewCell.swift; sourceTree = "<group>"; };
 		E22E7B2027BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		E280FEF527C29C53000AC2EC /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		E2815185279AD7D900E8C2D4 /* projectClimber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = projectClimber.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				E22E7B2027BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift */,
+				E20ACC0E27C94353009DD7E8 /* SubCollectionViewCell.swift */,
 				E205A87C27AD18F1002BA08B /* WorkoutCollectionViewCell.swift */,
 			);
 			name = "CollectionView Cells";
@@ -98,12 +101,12 @@
 				E280FEF527C29C53000AC2EC /* SectionHeaderView.swift */,
 			);
 			name = "Supplementary Views";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		E281517C279AD7D900E8C2D4 = {
 			isa = PBXGroup;
 			children = (
-				E280FEF427C29C08000AC2EC /* Supplementary Views */,
 				E2815187279AD7D900E8C2D4 /* projectClimber */,
 				E2815186279AD7D900E8C2D4 /* Products */,
 				2E59D8B1A7E59D8AD0AE9C03 /* Pods */,
@@ -122,6 +125,7 @@
 		E2815187279AD7D900E8C2D4 /* projectClimber */ = {
 			isa = PBXGroup;
 			children = (
+				E280FEF427C29C08000AC2EC /* Supplementary Views */,
 				E2F1D00327BC32FA007ADEE2 /* Extensions.swift */,
 				E2F1CFFD27BC1775007ADEE2 /* Model */,
 				E205A88227B035F5002BA08B /* RealmManager.swift */,
@@ -283,6 +287,7 @@
 			files = (
 				E2815189279AD7D900E8C2D4 /* AppDelegate.swift in Sources */,
 				E281518B279AD7D900E8C2D4 /* SceneDelegate.swift in Sources */,
+				E20ACC0F27C94353009DD7E8 /* SubCollectionViewCell.swift in Sources */,
 				E205A87F27AD2A55002BA08B /* WorkoutViewController.swift in Sources */,
 				E205A88127AD4DD0002BA08B /* FingerWorkoutViewController.swift in Sources */,
 				E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */,
