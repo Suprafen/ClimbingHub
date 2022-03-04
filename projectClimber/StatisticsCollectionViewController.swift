@@ -30,7 +30,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     var sections = [Section]()
     var workouts = [Object]()
-    var statContainer = StatContainer()
+    var statistics = [Statistics]()
     
     var dataSource: DataSource!
     var token: NotificationToken?
@@ -48,9 +48,10 @@ class StatisticsCollectionViewController: UICollectionViewController {
         // If workouts is empty I must prevent statConteiner's statistics from appending
         // Because if I didn't do this, I would see empty cells in the collection view
         if !workouts.isEmpty {
-            statContainer.statistics.append(objectsIn: [
+            statistics.append(contentsOf: [
                 Statistics(titleStatistics: "Total time", time: workoutsTime.totalTime, type: .totalTime),
-                Statistics(titleStatistics: "Time on hangboard", time: workoutsTime.timeOnHangBoard, type: .hangBoard)
+                Statistics(titleStatistics: "Time on hangboard", time: workoutsTime.timeOnHangBoard, type: .hangBoard),
+                Statistics(titleStatistics: "Graph", time: 1000, type: .hangBoard)
             ])
         }
         observeRealm()
@@ -93,23 +94,22 @@ class StatisticsCollectionViewController: UICollectionViewController {
             // And create theirown layout for particular section
             switch section {
             case .statistics:
-                let padding: CGFloat = 10
                 
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.4))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
+//                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .fractionalWidth(0.4))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.4))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-                
-                group.interItemSpacing = .fixed(padding * 2)
-                
-                group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: padding, bottom: 0, trailing: padding)
-                
+                group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
                 let section = NSCollectionLayoutSection(group: group)
                 // Show supplementary items only if workouts is not empty
                 if !self.workouts.isEmpty {
                     section.boundarySupplementaryItems = [headerItem]
                 }
+
+                section.orthogonalScrollingBehavior = .groupPagingCentered
+                
                 return section
                 
             case .workouts:
@@ -119,7 +119,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.2))
                 
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
                 
@@ -141,20 +141,20 @@ class StatisticsCollectionViewController: UICollectionViewController {
     func observeRealm() {
         token = RealmManager.sharedInstance.realm.observe { notification, realm in
             self.workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
-            // Remove everything from array in the container
-            self.statContainer.statistics.removeAll()
+            // Remove everything from array
+            self.statistics.removeAll()
             let workoutsTime: (totalTime: Int, timeOnHangBoard: Int) = Workout.combineWorkoutTime(in: self.workouts)
             // Append new statistics items
-            self.statContainer.statistics.append(objectsIn: [
+            self.statistics.append(contentsOf: [
                 Statistics(titleStatistics: "Total time", time: workoutsTime.totalTime, type: .totalTime),
                 Statistics(titleStatistics: "Time on hangboard", time: workoutsTime.timeOnHangBoard, type: .hangBoard)
             ])
             // Making new snapshot with new values
             var snapshot = Snapshot()
             snapshot.appendSections([.statistics])
-            snapshot.appendItems([self.statContainer], toSection: .statistics)
+            snapshot.appendItems(self.statistics, toSection: .statistics)
             // Reaload items. In this case only one item with statistics
-            snapshot.reloadItems([self.statContainer])
+            snapshot.reloadItems(self.statistics)
             
             snapshot.appendSections([.workouts])
             snapshot.appendItems(self.workouts, toSection: .workouts)
@@ -165,40 +165,26 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     //MARK: Data Source configuring
     func configureDataSource() {
-        dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, workout -> UICollectionViewCell? in
+        dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, item -> UICollectionViewCell? in
             let section = self.sections[indexPath.section]
             // Switch between sections
             // Configuring cell depends on section
             switch section {
             case .statistics:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier, for: indexPath) as! StatisticsCollectionViewCell
-                // Iterate through the list for making array,
-                // Because diffable data source dosn't support list collection
-                var tempStat = [Statistics]()
-                for i in self.statContainer.statistics {
-                    tempStat.append(i)
-                }
-                //TODO: Send Stat object, not array!
-                cell.configure(with: tempStat)
+                
+                cell.configure(with: item)
                 
                 cell.layer.cornerRadius = 10
-                // If i didn't add this conditional
-                // Border would appear even though there's no data in the tempStat
-//                if !tempStat.isEmpty {
-//                    cell.layer.borderColor = UIColor.black.cgColor
-//                    cell.layer.borderWidth = 1
-//                }
+                cell.backgroundColor = .systemYellow
                 
                 return cell
             case .workouts:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WorkoutCollectionViewCell
-                //TODO: Change what you're configuring
-                print("WORKOUT")
-                print(workout)
-                cell.configure(with: workout)
+                
+                cell.configure(with: item)
                 cell.layer.cornerRadius = 10
-//                cell.layer.borderColor = UIColor.black.cgColor
-//                cell.layer.borderWidth = 1
+
                 cell.backgroundColor = .white
                 return cell
             }
@@ -229,7 +215,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
         var snapshot = Snapshot()
         // add each seciton to the snapshot
         snapshot.appendSections([.statistics])
-        snapshot.appendItems([self.statContainer], toSection: .statistics)
+        snapshot.appendItems(self.statistics, toSection: .statistics)
         
         snapshot.appendSections([.workouts])
         snapshot.appendItems(self.workouts, toSection: .workouts)

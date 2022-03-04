@@ -13,9 +13,9 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     
     let labelsStackView: UIStackView = {
         let stack = UIStackView()
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .fill
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.alignment = .center
         stack.spacing = 10
         
         return stack
@@ -23,7 +23,7 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     
     let workoutTitleLabel: UILabel = {
        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.textAlignment = .left
         
@@ -39,10 +39,16 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    let chevronImage: UIImageView = {
+        let image = UIImageView(image: UIImage(systemName: "chevron.right"), highlightedImage: .none)
+        
+        return image
+    }()
+    
     let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
         
         return dateFormatter
     }()
@@ -54,13 +60,17 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         labelsStackView.addArrangedSubview(dateLabel)
         
         addSubview(labelsStackView)
+        addSubview(chevronImage)
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+        chevronImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             labelsStackView.topAnchor.constraint(equalTo: topAnchor),
-            labelsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            labelsStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30)
+            labelsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            labelsStackView.trailingAnchor.constraint(equalTo: chevronImage.leadingAnchor, constant: -10),
+            labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            chevronImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            chevronImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         ])
     }
     
