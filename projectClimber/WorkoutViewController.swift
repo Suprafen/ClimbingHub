@@ -14,8 +14,8 @@ class WorkoutViewController: UIViewController {
     private let stackView:  UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.alignment = .center
         stackView.spacing = 10
         
         return stackView
@@ -24,14 +24,16 @@ class WorkoutViewController: UIViewController {
     private let startButton: UIButton = {
         if #available(iOS 15, *) {
             
-        var configuration = UIButton.Configuration.filled()
+            var configuration = UIButton.Configuration.filled()
             configuration.image = UIImage(systemName: "play.fill")
             configuration.background.backgroundColor = .systemGreen
+            configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
-        
+
             button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
             
-        return button
+
+            return button
         } else {
             return UIButton()
         }
@@ -47,19 +49,17 @@ class WorkoutViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            startButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 200)
         ])
     }
     
     func configureView() {
         self.view.backgroundColor = .white
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.addArrangedSubview(startButton)
-        view.addSubview(stackView)
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+//        stackView.addArrangedSubview(startButton)
+        view.addSubview(startButton)
     }
 
     //MARK: Selectors

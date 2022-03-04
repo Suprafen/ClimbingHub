@@ -75,7 +75,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
     }
     //MARK: Helper methods
     func viewConfiguration() {
-        self.view.backgroundColor = .white
+        collectionView.backgroundColor = .systemGray6
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Overview"
     }
@@ -178,15 +178,16 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 for i in self.statContainer.statistics {
                     tempStat.append(i)
                 }
-                // Configure with array of Statistics objects
+                //TODO: Send Stat object, not array!
                 cell.configure(with: tempStat)
+                
                 cell.layer.cornerRadius = 10
                 // If i didn't add this conditional
                 // Border would appear even though there's no data in the tempStat
-                if !tempStat.isEmpty {
-                    cell.layer.borderColor = UIColor.black.cgColor
-                    cell.layer.borderWidth = 1
-                }
+//                if !tempStat.isEmpty {
+//                    cell.layer.borderColor = UIColor.black.cgColor
+//                    cell.layer.borderWidth = 1
+//                }
                 
                 return cell
             case .workouts:
@@ -196,9 +197,9 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 print(workout)
                 cell.configure(with: workout)
                 cell.layer.cornerRadius = 10
-                cell.layer.borderColor = UIColor.black.cgColor
-                cell.layer.borderWidth = 1
-                
+//                cell.layer.borderColor = UIColor.black.cgColor
+//                cell.layer.borderWidth = 1
+                cell.backgroundColor = .white
                 return cell
             }
         })

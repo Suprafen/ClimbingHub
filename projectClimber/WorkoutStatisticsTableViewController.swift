@@ -33,17 +33,20 @@ class WorkoutStatisticsTableViewController: UITableViewController {
                 let cell = FirstTableViewCell()
                 cell.accessoryType = .disclosureIndicator
                 cell.configure(with: workout.date)
+                cell.selectionStyle = .none
                 
                 return cell
             case 1:
                 let cell = SecondTableViewCell()
                 cell.configure(totalTime: workout.totalTime)
+                cell.selectionStyle = .none
                 
                 return cell
             case 2:
                 let cell = ThirdTableViewCell()
                 guard let timeOnHangBoard = workout.timeOnHangBoard else { return UITableViewCell()}
                 cell.configure(with: timeOnHangBoard)
+                cell.selectionStyle = .none
                 
                 return cell
             default:

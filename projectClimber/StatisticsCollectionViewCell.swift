@@ -33,6 +33,9 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(collecionView)
         collecionView.translatesAutoresizingMaskIntoConstraints = false
         
+        //corner radius for COLLECTION VIEW
+        collecionView.layer.cornerRadius = 10
+        
         NSLayoutConstraint.activate([
             collecionView.topAnchor.constraint(equalTo: topAnchor),
             collecionView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -69,6 +72,7 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SubCollectionViewCell.reuseIdentifier, for: indexPath) as! SubCollectionViewCell
             
             cell.configure(with: object)
+            cell.layer.cornerRadius = 10
             
             return cell
         })
