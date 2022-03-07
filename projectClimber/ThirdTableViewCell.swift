@@ -11,9 +11,9 @@ class ThirdTableViewCell: UITableViewCell {
 
     let stack: UIStackView = {
         let stack = UIStackView()
-        stack.axis = .horizontal
+        stack.axis = .vertical
         stack.distribution = .fillEqually
-        stack.alignment = .center
+        stack.alignment = .leading
        
         return stack
     }()
@@ -21,8 +21,8 @@ class ThirdTableViewCell: UITableViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-        label.text = "Time on HandBoard"
-        label.textColor = .magenta
+        label.text = "On hangboard"
+        label.textColor = .systemYellow
         label.textAlignment = .left
         
         return label
@@ -30,6 +30,7 @@ class ThirdTableViewCell: UITableViewCell {
     
     let timeLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         label.textColor = .black
         
         return label
@@ -50,10 +51,10 @@ class ThirdTableViewCell: UITableViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: topAnchor),
+            stack.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            stack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stack.bottomAnchor.constraint(equalTo: bottomAnchor)
+            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
     }
     

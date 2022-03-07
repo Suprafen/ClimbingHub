@@ -11,19 +11,28 @@ class WorkoutStatisticsTableViewController: UITableViewController {
 
     var workout: Workout?
     
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        
+        return dateFormatter
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+//        tableView.separatorStyle = .none
+        if let workout = workout {
+            navigationItem.title = dateFormatter.string(from: workout.date)
+        }
+//        self.tableView.rowHeight = UITableView.automaticDimension
+        
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -31,8 +40,7 @@ class WorkoutStatisticsTableViewController: UITableViewController {
             switch(indexPath.row) {
             case 0:
                 let cell = FirstTableViewCell()
-                cell.accessoryType = .disclosureIndicator
-                cell.configure(with: workout.date)
+                cell.configure(with: workout)
                 cell.selectionStyle = .none
                 
                 return cell
@@ -49,6 +57,13 @@ class WorkoutStatisticsTableViewController: UITableViewController {
                 cell.selectionStyle = .none
                 
                 return cell
+            case 3:
+                let cell = FourthTableViewCell()
+                cell.configure(with: workout)
+                cell.selectionStyle = .none
+//                tableView.rowHeight = 250
+                
+                return cell
             default:
                 return UITableViewCell()
             }
@@ -56,4 +71,13 @@ class WorkoutStatisticsTableViewController: UITableViewController {
             return UITableViewCell()
         }
     }
+    
+//    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 250
+//    }
+//
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+//        return UITableView.automaticDimension
+//    }
 }

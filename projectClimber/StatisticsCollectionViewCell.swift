@@ -40,7 +40,6 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
     override init (frame: CGRect) {
         super.init(frame: frame)
 
-        
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(timeLabel)
         

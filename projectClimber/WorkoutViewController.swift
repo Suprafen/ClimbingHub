@@ -56,9 +56,9 @@ class WorkoutViewController: UIViewController {
     
     func configureView() {
         self.view.backgroundColor = .white
-        
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = "Workout"
         startButton.translatesAutoresizingMaskIntoConstraints = false
-//        stackView.addArrangedSubview(startButton)
         view.addSubview(startButton)
     }
 
@@ -71,5 +71,4 @@ class WorkoutViewController: UIViewController {
         
         present(fingerWorkoutViewController, animated: true)
     }
-    
 }

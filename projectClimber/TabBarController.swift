@@ -12,7 +12,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let workoutViewController = WorkoutViewController()
+        let workoutViewController = UINavigationController(rootViewController: WorkoutViewController())
         workoutViewController.title = "Workout"
         //default layout, the real one will be configured when view did load
         let statisticsViewController = UINavigationController(rootViewController: StatisticsCollectionViewController(collectionViewLayout: UICollectionViewLayout()))
