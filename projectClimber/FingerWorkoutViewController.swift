@@ -65,6 +65,7 @@ class FingerWorkoutViewController: UIViewController {
             var configuration = UIButton.Configuration.filled()
             configuration.image = UIImage(systemName: "pause.fill")
             configuration.background.backgroundColor = .systemYellow
+            configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
             button.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
             
@@ -79,6 +80,7 @@ class FingerWorkoutViewController: UIViewController {
             var configuration = UIButton.Configuration.filled()
             configuration.image = UIImage(systemName: "multiply")
             configuration.background.backgroundColor = .systemRed
+            configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
             button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
             
@@ -93,6 +95,7 @@ class FingerWorkoutViewController: UIViewController {
             var configuration = UIButton.Configuration.filled()
             configuration.image = UIImage(systemName: "figure.stand")
             configuration.background.backgroundColor = .systemTeal
+            configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
             button.addTarget(self, action: #selector(restButtonTapped), for: .touchUpInside)
             

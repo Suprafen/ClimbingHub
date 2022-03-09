@@ -8,6 +8,14 @@
 import Foundation
 import RealmSwift
 
+enum WorkoutType: String, PersistableEnum {
+    case fingerWorkout = "Finger Workout"
+}
+// Type for statistics
+enum StatisticsType: String, PersistableEnum {
+    case hangBoard = "hangBoard"
+    case totalTime = "totalTime"
+}
 
 protocol WorkoutInfoProtocol{
     var totalTime: Int {get set}
@@ -26,24 +34,20 @@ class Workout: Object {
         }
     }
 }
-
-enum WorkoutType: String, PersistableEnum {
-    case fingerWorkout = "Finger Workout"
+// Just a container for statistics array
+class StatContainer: Object {
+     @Persisted var statistics = List<Statistics>()
 }
 
 class Statistics: Object {
-    @Persisted var totalTimeOnHangboard: Int
-    @Persisted var totalWorkoutTime: Int
+    @Persisted var titleStatistics: String
+    @Persisted var type: StatisticsType
+    @Persisted var time: Int
     
-    func combineWorkoutTime(in objects: [Object]) {
-        totalTimeOnHangboard = 0
-        totalWorkoutTime = 0
-        let workouts = objects as! [Workout]
-        for workout in workouts {
-            if let timeOnHangboard = workout.timeOnHangBoard {
-                self.totalTimeOnHangboard += timeOnHangboard
-            }
-            self.totalWorkoutTime += workout.totalTime
-        }
+    convenience init(titleStatistics: String, time: Int, type: StatisticsType) {
+        self.init()
+        self.titleStatistics = titleStatistics
+        self.time = time
+        self.type = type
     }
 }

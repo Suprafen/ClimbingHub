@@ -20,15 +20,20 @@ class StatisticsCollectionViewController: UICollectionViewController {
        static let header = "header"
     }
     
+    enum ObjectType {
+        case workout
+        case statistics
+    }
+    
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Object>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Object>
     
+    var sections = [Section]()
     var workouts = [Object]()
-    var statistics = Statistics()
+    var statistics = [Statistics]()
+    
     var dataSource: DataSource!
     var token: NotificationToken?
-    // Array where kept sections
-    var sections = [Section]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +44,16 @@ class StatisticsCollectionViewController: UICollectionViewController {
         collectionView.collectionViewLayout = createLayout()
         
         workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
-        statistics.combineWorkoutTime(in: workouts)
+        let workoutsTime: (totalTime: Int, timeOnHangBoard: Int) = Workout.combineWorkoutTime(in: workouts)
+        // If workouts is empty I must prevent statConteiner's statistics from appending
+        // Because if I didn't do this, I would see empty cells in the collection view
+        if !workouts.isEmpty {
+            statistics.append(contentsOf: [
+                Statistics(titleStatistics: "Total time", time: workoutsTime.totalTime, type: .totalTime),
+                Statistics(titleStatistics: "Time on hangboard", time: workoutsTime.timeOnHangBoard, type: .hangBoard),
+                Statistics(titleStatistics: "Graph", time: 1000, type: .hangBoard)
+            ])
+        }
         observeRealm()
         viewConfiguration()
         configureDataSource()
@@ -62,7 +76,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
     }
     //MARK: Helper methods
     func viewConfiguration() {
-        self.view.backgroundColor = .white
+        collectionView.backgroundColor = .systemGray6
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Overview"
     }
@@ -72,31 +86,29 @@ class StatisticsCollectionViewController: UICollectionViewController {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
             let section = self.sections[sectionIndex]
             
-            
             let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .estimated(44))
             let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerItemSize, elementKind: SupplementaryKind.header, alignment: .top)
             headerItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
-            
-            
             
             // Switch between different sections
             // And create theirown layout for particular section
             switch section {
             case .statistics:
-                let padding: CGFloat = 10
                 
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.4))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
+//                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .fractionalWidth(0.4))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.4))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-                
-                group.interItemSpacing = .fixed(padding * 2)
-                
-                group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: padding, bottom: 0, trailing: padding)
-                
+                group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
                 let section = NSCollectionLayoutSection(group: group)
-                section.boundarySupplementaryItems = [headerItem]
+                // Show supplementary items only if workouts is not empty
+                if !self.workouts.isEmpty {
+                    section.boundarySupplementaryItems = [headerItem]
+                }
+
+                section.orthogonalScrollingBehavior = .groupPagingCentered
                 
                 return section
                 
@@ -107,7 +119,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.2))
                 
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
                 
@@ -116,37 +128,44 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: padding, bottom: 0, trailing: padding)
                 
                 let section = NSCollectionLayoutSection(group: group)
-                section.boundarySupplementaryItems = [headerItem]
-                
+                // Show supplementary items only if workouts is not empty
+                if !self.workouts.isEmpty {
+                    section.boundarySupplementaryItems = [headerItem]
+                }
                 return section
             }
         }
         return layout
-        
     }
     
     func observeRealm() {
         token = RealmManager.sharedInstance.realm.observe { notification, realm in
             self.workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
-            self.statistics.combineWorkoutTime(in: self.workouts)
+            // Remove everything from array
+            self.statistics.removeAll()
+            let workoutsTime: (totalTime: Int, timeOnHangBoard: Int) = Workout.combineWorkoutTime(in: self.workouts)
+            // Append new statistics items
+            self.statistics.append(contentsOf: [
+                Statistics(titleStatistics: "Total time", time: workoutsTime.totalTime, type: .totalTime),
+                Statistics(titleStatistics: "Time on hangboard", time: workoutsTime.timeOnHangBoard, type: .hangBoard)
+            ])
             // Making new snapshot with new values
             var snapshot = Snapshot()
             snapshot.appendSections([.statistics])
-            snapshot.appendItems([self.statistics], toSection: .statistics)
+            snapshot.appendItems(self.statistics, toSection: .statistics)
             // Reaload items. In this case only one item with statistics
-            snapshot.reloadItems([self.statistics])
+            snapshot.reloadItems(self.statistics)
             
             snapshot.appendSections([.workouts])
             snapshot.appendItems(self.workouts, toSection: .workouts)
             // Apply to data source, hence update UI
             self.dataSource.apply(snapshot)
-            print("OBSERVED")
         }
     }
     
     //MARK: Data Source configuring
     func configureDataSource() {
-        dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, workout -> UICollectionViewCell? in
+        dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, item -> UICollectionViewCell? in
             let section = self.sections[indexPath.section]
             // Switch between sections
             // Configuring cell depends on section
@@ -154,18 +173,19 @@ class StatisticsCollectionViewController: UICollectionViewController {
             case .statistics:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier, for: indexPath) as! StatisticsCollectionViewCell
                 
-                cell.configure(with: self.statistics)
+                cell.configure(with: item)
+                
                 cell.layer.cornerRadius = 10
-                cell.backgroundColor = .systemFill
+                cell.backgroundColor = .systemYellow
                 
                 return cell
             case .workouts:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WorkoutCollectionViewCell
                 
-                cell.configure(with: workout)
+                cell.configure(with: item)
                 cell.layer.cornerRadius = 10
-                cell.backgroundColor = .systemOrange
-                
+
+                cell.backgroundColor = .white
                 return cell
             }
         })
@@ -195,13 +215,12 @@ class StatisticsCollectionViewController: UICollectionViewController {
         var snapshot = Snapshot()
         // add each seciton to the snapshot
         snapshot.appendSections([.statistics])
-        snapshot.appendItems([statistics], toSection: .statistics)
+        snapshot.appendItems(self.statistics, toSection: .statistics)
         
         snapshot.appendSections([.workouts])
-        snapshot.appendItems(workouts, toSection: .workouts)
+        snapshot.appendItems(self.workouts, toSection: .workouts)
         // asign sections to the value of snapshot section identifiers
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot)
     }
 }
-

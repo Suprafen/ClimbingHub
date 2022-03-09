@@ -9,12 +9,18 @@ import UIKit
 
 class FirstTableViewCell: UITableViewCell {
 
+    let view: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        view.backgroundColor = .gray
+        
+        return view
+    }()
     
     let stack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .equalSpacing
-        stack.alignment = .leading
+        stack.alignment = .center
         stack.spacing = 10
         
         return stack
@@ -23,27 +29,10 @@ class FirstTableViewCell: UITableViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        label.text = "Finger Workout"
+        label.text = "Workout"
         label.textColor = .black
         
         return label
-    }()
-    
-    let dateLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.text = ""
-        label.textColor = .systemGray
-        
-        return label
-    }()
-    
-    let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .short
-        
-        return dateFormatter
     }()
     
     override func awakeFromNib() {
@@ -54,21 +43,18 @@ class FirstTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        stack.addArrangedSubview(titleLabel)
-        stack.addArrangedSubview(dateLabel)
-        
-        addSubview(stack)
-        stack.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            stack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
     }
     
-    func configure(with date: Date) {
-        dateLabel.text = dateFormatter.string(from: date)
+    func configure(with workout: Workout) {
+        titleLabel.text = workout.type.rawValue
     }
 }

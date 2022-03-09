@@ -11,19 +11,26 @@ class WorkoutStatisticsTableViewController: UITableViewController {
 
     var workout: Workout?
     
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        
+        return dateFormatter
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        tableView.separatorStyle = .none
+        if let workout = workout {
+            navigationItem.title = dateFormatter.string(from: workout.date)
+        }
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -31,19 +38,29 @@ class WorkoutStatisticsTableViewController: UITableViewController {
             switch(indexPath.row) {
             case 0:
                 let cell = FirstTableViewCell()
-                cell.accessoryType = .disclosureIndicator
-                cell.configure(with: workout.date)
+                cell.configure(with: workout)
+                cell.selectionStyle = .none
                 
                 return cell
             case 1:
                 let cell = SecondTableViewCell()
                 cell.configure(totalTime: workout.totalTime)
+                cell.selectionStyle = .none
                 
                 return cell
             case 2:
                 let cell = ThirdTableViewCell()
                 guard let timeOnHangBoard = workout.timeOnHangBoard else { return UITableViewCell()}
                 cell.configure(with: timeOnHangBoard)
+                cell.selectionStyle = .none
+                
+                return cell
+            case 3:
+                let cell = FourthTableViewCell()
+                cell.configure(with: workout)
+                cell.selectionStyle = .none
+                
+                cell.layoutIfNeeded()
                 
                 return cell
             default:
@@ -53,4 +70,5 @@ class WorkoutStatisticsTableViewController: UITableViewController {
             return UITableViewCell()
         }
     }
+    
 }

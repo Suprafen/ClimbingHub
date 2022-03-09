@@ -9,13 +9,13 @@ import UIKit
 import RealmSwift
 
 class WorkoutCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "Cell"
+    static let reuseIdentifier = "WorkoutViewCell"
     
     let labelsStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .fill
+        stack.distribution = .fillEqually
+        stack.alignment = .leading
         stack.spacing = 10
         
         return stack
@@ -23,7 +23,7 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     
     let workoutTitleLabel: UILabel = {
        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .black
         label.textAlignment = .left
         
@@ -39,10 +39,36 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    let chevronImage: UIImageView = {
+        let image = UIImageView(image: UIImage(systemName: "chevron.right"), highlightedImage: .none)
+        image.tintColor = .gray
+        return image
+    }()
+    
+    let circle: UIView = {
+        
+//        let circleDiameter = 20 * UIScreen.main.scale
+        let circleDiameter = UIScreen.main.bounds.height / 13
+        print("SCALE:",UIScreen.main.bounds.height)
+        print("Diameter: \(circleDiameter)")
+
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: circleDiameter, height: circleDiameter))
+        view.backgroundColor = .systemBlue
+        view.layer.cornerRadius = view.frame.height / 2
+        view.clipsToBounds = true
+        view.alpha = 0.2
+
+        view.widthAnchor.constraint(equalToConstant: circleDiameter).isActive = true
+        view.heightAnchor.constraint(equalToConstant: circleDiameter).isActive = true
+        
+        return view
+
+    }()
+    
     let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
         
         return dateFormatter
     }()
@@ -50,17 +76,27 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        labelsStackView.addArrangedSubview(workoutTitleLabel)
         labelsStackView.addArrangedSubview(dateLabel)
+        labelsStackView.addArrangedSubview(workoutTitleLabel)
         
+        addSubview(circle)
         addSubview(labelsStackView)
-        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(chevronImage)
         
+        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
+        chevronImage.translatesAutoresizingMaskIntoConstraints = false
+        circle.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            circle.centerYAnchor.constraint(equalTo: centerYAnchor),
+            circle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            circle.trailingAnchor.constraint(equalTo: labelsStackView.leadingAnchor, constant: -20),
+            
             labelsStackView.topAnchor.constraint(equalTo: topAnchor),
-            labelsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            labelsStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30)
+            labelsStackView.trailingAnchor.constraint(equalTo: chevronImage.leadingAnchor, constant: -10),
+            labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            chevronImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            chevronImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         ])
     }
     
