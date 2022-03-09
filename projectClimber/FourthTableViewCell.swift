@@ -11,9 +11,8 @@ class FourthTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewData
    
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         label.text = "Splits"
-        label.textColor = .systemOrange
         label.textAlignment = .left
         
         return label
@@ -23,18 +22,17 @@ class FourthTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewData
     
     //MARK: Table View
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        splits.count
+         splits.count
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SplitCell.reuseIdentifier, for: indexPath) as! SplitCell
-        print("TABLE CELL CONFIGURED")
         cell.configure(cellWithNumber: indexPath.row + 1, with: splits[indexPath.row])
-
-         tableView.reloadRows(at: [indexPath], with: .none)
+        cell.selectionStyle = .none
+        
         return cell
     }
-    
+        
     var splits: [Int] = []
     
     override func awakeFromNib() {
@@ -44,11 +42,11 @@ class FourthTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewData
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        tableView.dataSource = self
-        tableView.delegate = self
-        //TEST
-        tableView.backgroundColor = .orange
-        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        //just for making table view visible
+        self.tableView.backgroundColor = .orange
+        self.tableView.isScrollEnabled = false
         tableView.register(SplitCell.self, forCellReuseIdentifier: SplitCell.reuseIdentifier)
         
         addSubview(titleLabel)
@@ -58,18 +56,21 @@ class FourthTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewData
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             
-            
             tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+//          tableView.heightAnchor.constraint(equalToConstant: self.tableView.contentSize.height)
+            // 27 stands for:
+            // • 17 is a hight of label in cell
+            // • 10 is a constant of constraints of label in cell
+            tableView.heightAnchor.constraint(equalToConstant: CGFloat(splits.count) * 27)
         ])
-        
-        
     }
 
     func configure(with workout: Workout) {
@@ -87,13 +88,15 @@ class SplitCell: UITableViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.text = "Title"
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         
         return label
     }()
     
     let timeLabel:  UILabel = {
         let label = UILabel()
+        label.text = "Time"
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         
@@ -115,13 +118,13 @@ class SplitCell: UITableViewCell {
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             
-            timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             timeLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 50),
-            timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+            timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
     }
     

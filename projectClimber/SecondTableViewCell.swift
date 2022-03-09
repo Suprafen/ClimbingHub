@@ -22,7 +22,6 @@ class SecondTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
         label.text = "Total time"
-        label.textColor = .systemPurple
         
         return label
     }()
@@ -51,7 +50,7 @@ class SecondTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])

@@ -21,12 +21,10 @@ class WorkoutStatisticsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.separatorStyle = .none
+        tableView.separatorStyle = .none
         if let workout = workout {
             navigationItem.title = dateFormatter.string(from: workout.date)
         }
-//        self.tableView.rowHeight = UITableView.automaticDimension
-        
     }
 
     // MARK: - Table view data source
@@ -61,7 +59,8 @@ class WorkoutStatisticsTableViewController: UITableViewController {
                 let cell = FourthTableViewCell()
                 cell.configure(with: workout)
                 cell.selectionStyle = .none
-//                tableView.rowHeight = 250
+                
+                cell.layoutIfNeeded()
                 
                 return cell
             default:
@@ -72,12 +71,4 @@ class WorkoutStatisticsTableViewController: UITableViewController {
         }
     }
     
-//    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 250
-//    }
-//
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//        return UITableView.automaticDimension
-//    }
 }

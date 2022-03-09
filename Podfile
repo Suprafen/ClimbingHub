@@ -8,5 +8,6 @@ target 'projectClimber' do
   # Pods for projectClimber
 
 pod 'RealmSwift' 
+pod 'Reveal-SDK', configurations: ['Debug'] 
 
 end
