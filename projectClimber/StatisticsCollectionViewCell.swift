@@ -15,15 +15,18 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
     let stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-       
+        stack.distribution = .fillProportionally
+        stack.alignment = .trailing
+        
         return stack
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .light)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.8
+        label.textAlignment = .right
         label.text = "Time: "
         
         return label
@@ -31,24 +34,28 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
     
     let timeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 30, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 70, weight: .bold)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.7
         label.textAlignment = .right
+        label.textColor = UIColor.systemBlue.withAlphaComponent(0.3)
         
         return label
     }()
 
     override init (frame: CGRect) {
         super.init(frame: frame)
-
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(timeLabel)
         
+        stackView.addArrangedSubview(timeLabel)
+        stackView.addArrangedSubview(titleLabel)
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
@@ -60,6 +67,6 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
     func configure(with object: Object) {
         guard let statistics = object as? Statistics else { print("Downcasting error in Workout Cell"); return }
         titleLabel.text = statistics.titleStatistics
-        timeLabel.text = String.makeTimeString(seconds: statistics.time)
+        timeLabel.text = String.makeTimeString(seconds: statistics.time, withLetterDescription: false)
     }
 }

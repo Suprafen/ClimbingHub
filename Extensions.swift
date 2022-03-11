@@ -9,19 +9,29 @@ import Foundation
 import RealmSwift
 
 extension String {
-    static func makeTimeString(seconds: Int) -> String {
+    static func makeTimeString(seconds: Int, withLetterDescription: Bool) -> String {
         
         let tuple = ((seconds / 3600), ((seconds % 3600) / 60), ((seconds % 3600) % 60))
         
         var timeString = ""
-        
-        timeString += String(format: "%02d", tuple.0)
-        timeString += " : "
-        timeString += String(format: "%02d", tuple.1)
-        timeString += " : "
-        timeString += String(format: "%02d", tuple.2)
-        
-        return timeString
+        if withLetterDescription {
+            timeString += String(format: "%02d", tuple.0)
+            timeString += "h "
+            timeString += String(format: "%02d", tuple.1)
+            timeString += "m "
+            timeString += String(format: "%02d", tuple.2)
+            timeString += "s"
+            
+            return timeString
+        } else {
+            timeString += String(format: "%02d", tuple.0)
+            timeString += " : "
+            timeString += String(format: "%02d", tuple.1)
+            timeString += " : "
+            timeString += String(format: "%02d", tuple.2)
+            
+            return timeString
+        }
     }
 }
 

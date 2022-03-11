@@ -57,6 +57,6 @@ class SecondTableViewCell: UITableViewCell {
     }
     
     func configure(totalTime: Int) {
-        timeLabel.text = String.makeTimeString(seconds: totalTime)
+        timeLabel.text = String.makeTimeString(seconds: totalTime, withLetterDescription: false)
     }
 }

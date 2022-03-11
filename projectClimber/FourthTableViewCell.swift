@@ -130,6 +130,6 @@ class SplitCell: UITableViewCell {
     
     func configure(cellWithNumber number: Int, with time: Int) {
         titleLabel.text = "Split #\(number)"
-        timeLabel.text = String.makeTimeString(seconds: time)
+        timeLabel.text = String.makeTimeString(seconds: time, withLetterDescription: false)
     }
 }

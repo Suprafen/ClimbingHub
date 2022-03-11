@@ -14,6 +14,7 @@ class TabBarController: UITabBarController {
         
         let workoutViewController = UINavigationController(rootViewController: WorkoutViewController())
         workoutViewController.title = "Workout"
+        self.tabBar.tintColor = .black
         //default layout, the real one will be configured when view did load
         let statisticsViewController = UINavigationController(rootViewController: StatisticsCollectionViewController(collectionViewLayout: UICollectionViewLayout()))
         statisticsViewController.title = "Overview"

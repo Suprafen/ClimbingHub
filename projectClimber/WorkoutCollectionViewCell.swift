@@ -14,17 +14,30 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     let labelsStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.distribution = .fillEqually
+        stack.distribution = .fillProportionally
         stack.alignment = .leading
-        stack.spacing = 10
+        stack.spacing = 5
         
         return stack
     }()
     
     let workoutTitleLabel: UILabel = {
-       let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.82
         label.textColor = .black
+        label.textAlignment = .left
+        
+        return label
+    }()
+    
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.4
+        label.textColor = .darkGray
         label.textAlignment = .left
         
         return label
@@ -32,9 +45,11 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     
     let dateLabel: UILabel = {
        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10, weight: .light)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.4
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = .gray
         
         return label
     }()
@@ -47,6 +62,8 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     
     let circle: UIView = {
         
+        
+        
 //        let circleDiameter = 20 * UIScreen.main.scale
         let circleDiameter = UIScreen.main.bounds.height / 13
         print("SCALE:",UIScreen.main.bounds.height)
@@ -57,10 +74,19 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         view.layer.cornerRadius = view.frame.height / 2
         view.clipsToBounds = true
         view.alpha = 0.2
-
+        
         view.widthAnchor.constraint(equalToConstant: circleDiameter).isActive = true
         view.heightAnchor.constraint(equalToConstant: circleDiameter).isActive = true
         
+//        let image = UIImageView(image: UIImage(systemName: "ellipsis.rectangle.fill"))
+//
+//        image.tintColor = .systemBlue.withAlphaComponent(1)
+//
+//        view.addSubview(image)
+//        image.translatesAutoresizingMaskIntoConstraints = false
+//        image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        image.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+//        
         return view
 
     }()
@@ -77,6 +103,7 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         labelsStackView.addArrangedSubview(dateLabel)
+        labelsStackView.addArrangedSubview(timeLabel)
         labelsStackView.addArrangedSubview(workoutTitleLabel)
         
         addSubview(circle)
@@ -91,9 +118,9 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
             circle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             circle.trailingAnchor.constraint(equalTo: labelsStackView.leadingAnchor, constant: -20),
             
-            labelsStackView.topAnchor.constraint(equalTo: topAnchor),
+            labelsStackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             labelsStackView.trailingAnchor.constraint(equalTo: chevronImage.leadingAnchor, constant: -10),
-            labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
 
             chevronImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             chevronImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
@@ -111,5 +138,6 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         
         workoutTitleLabel.text = workout.type.rawValue
         dateLabel.text = dateFormatter.string(from: workout.date)
+        timeLabel.text = String.makeTimeString(seconds: workout.totalTime, withLetterDescription: true)
     }
 }

@@ -58,6 +58,6 @@ class ThirdTableViewCell: UITableViewCell {
     }
     
     func configure(with timeOnHandBoard: Int) {
-        timeLabel.text = String.makeTimeString(seconds: timeOnHandBoard)
+        timeLabel.text = String.makeTimeString(seconds: timeOnHandBoard, withLetterDescription: false)
     }
 }

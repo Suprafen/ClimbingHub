@@ -176,7 +176,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 cell.configure(with: item)
                 
                 cell.layer.cornerRadius = 10
-                cell.backgroundColor = .systemYellow
+                cell.backgroundColor = .white
                 
                 return cell
             case .workouts:
