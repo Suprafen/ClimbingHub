@@ -50,7 +50,7 @@ class SecondTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
