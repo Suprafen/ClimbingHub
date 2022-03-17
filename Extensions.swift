@@ -15,22 +15,40 @@ extension String {
         
         var timeString = ""
         if withLetterDescription {
-            timeString += String(format: "%02d", tuple.0)
-            timeString += "h "
-            timeString += String(format: "%02d", tuple.1)
-            timeString += "m "
-            timeString += String(format: "%02d", tuple.2)
-            timeString += "s"
             
-            return timeString
+            switch tuple {
+            case (0, 0, 0...59):
+                timeString += String(format: "%2d", tuple.2)
+                timeString += "s"
+                return timeString
+            case (0 ,0...59 ,0...59):
+                timeString += String(format: "%2d", tuple.1)
+                timeString += "m "
+                timeString += String(format: "%2d", tuple.2)
+                timeString += "s"
+                
+                return timeString
+            case (0...1000, 0...59, 0...59):
+                timeString += String(format: "%2d", tuple.0)
+                timeString += "h"
+                timeString += String(format: "%2d", tuple.1)
+                timeString += "m "
+                timeString += String(format: "%2d", tuple.2)
+                timeString += "s"
+                return timeString
+            default:
+                return timeString
+            }
         } else {
-            timeString += String(format: "%02d", tuple.0)
-            timeString += " : "
-            timeString += String(format: "%02d", tuple.1)
-            timeString += " : "
-            timeString += String(format: "%02d", tuple.2)
             
-            return timeString
+            
+                timeString += String(format: "%02d", tuple.0)
+                timeString += ":"
+                timeString += String(format: "%02d", tuple.1)
+                timeString += ":"
+                timeString += String(format: "%02d", tuple.2)
+                return timeString
+            
         }
     }
 }

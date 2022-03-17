@@ -26,7 +26,7 @@ class WorkoutViewController: UIViewController {
             
             var configuration = UIButton.Configuration.filled()
             configuration.image = UIImage(systemName: "play.fill")
-            configuration.background.backgroundColor = .systemGreen
+            configuration.background.backgroundColor = .systemBlue.withAlphaComponent(0.8)
             configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
 

@@ -15,6 +15,7 @@ enum WorkoutType: String, PersistableEnum {
 enum StatisticsType: String, PersistableEnum {
     case hangBoard = "hangBoard"
     case totalTime = "totalTime"
+    case graph = "graph"
 }
 
 protocol WorkoutInfoProtocol{
@@ -44,10 +45,13 @@ class Statistics: Object {
     @Persisted var type: StatisticsType
     @Persisted var time: Int
     
-    convenience init(titleStatistics: String, time: Int, type: StatisticsType) {
+    var workouts: [Workout]?
+    
+    convenience init(titleStatistics: String, time: Int, type: StatisticsType, workouts: [Workout]? = nil) {
         self.init()
         self.titleStatistics = titleStatistics
         self.time = time
         self.type = type
+        self.workouts = workouts
     }
 }

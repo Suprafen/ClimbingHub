@@ -57,7 +57,7 @@ class FourthTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewData
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             
             tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
@@ -119,7 +119,7 @@ class SplitCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             
             timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),

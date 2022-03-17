@@ -49,9 +49,9 @@ class StatisticsCollectionViewController: UICollectionViewController {
         // Because if I didn't do this, I would see empty cells in the collection view
         if !workouts.isEmpty {
             statistics.append(contentsOf: [
+//                Statistics(titleStatistics: "Graph", time: 1000, type: .graph),
                 Statistics(titleStatistics: "Total time", time: workoutsTime.totalTime, type: .totalTime),
-                Statistics(titleStatistics: "Time on hangboard", time: workoutsTime.timeOnHangBoard, type: .hangBoard),
-                Statistics(titleStatistics: "Graph", time: 1000, type: .hangBoard)
+                Statistics(titleStatistics: "Time on hangboard", time: workoutsTime.timeOnHangBoard, type: .hangBoard)
             ])
         }
         observeRealm()
@@ -95,10 +95,10 @@ class StatisticsCollectionViewController: UICollectionViewController {
             switch section {
             case .statistics:
                 
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.4))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 //                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .fractionalWidth(0.4))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .fractionalWidth(0.6))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
@@ -172,18 +172,20 @@ class StatisticsCollectionViewController: UICollectionViewController {
             switch section {
             case .statistics:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier, for: indexPath) as! StatisticsCollectionViewCell
+                guard let statistics = item as? Statistics else { return UICollectionViewCell()}
                 
-                cell.configure(with: item)
+                let biggestSplit: Int = self.biggestSplitInFingerWorkouts()
+                cell.configure(with: statistics, countityOfWokrouts: self.workouts.count, longestAttemptOnHangboard: biggestSplit)
                 
-                cell.layer.cornerRadius = 10
-                cell.backgroundColor = .white
+                cell.layer.cornerRadius = 15
+                cell.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
                 
                 return cell
             case .workouts:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WorkoutCollectionViewCell
                 
                 cell.configure(with: item)
-                cell.layer.cornerRadius = 10
+                cell.layer.cornerRadius = 15
 
                 cell.backgroundColor = .white
                 return cell
@@ -222,5 +224,22 @@ class StatisticsCollectionViewController: UICollectionViewController {
         // asign sections to the value of snapshot section identifiers
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot)
+    }
+    
+    //MARK: Helper methods
+    func biggestSplitInFingerWorkouts() -> Int {
+        
+        var maxSplit: Int = 0
+        guard let workouts = self.workouts as? [Workout] else { return 0 }
+        
+        for workout in workouts {
+            for split in workout.splits {
+                if split > maxSplit {
+                    maxSplit = split
+                }
+            }
+        }
+        
+        return maxSplit
     }
 }

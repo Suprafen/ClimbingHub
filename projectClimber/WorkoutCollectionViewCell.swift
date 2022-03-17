@@ -139,5 +139,6 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         workoutTitleLabel.text = workout.type.rawValue
         dateLabel.text = dateFormatter.string(from: workout.date)
         timeLabel.text = String.makeTimeString(seconds: workout.totalTime, withLetterDescription: true)
+        print(String.makeTimeString(seconds: workout.totalTime, withLetterDescription: true))
     }
 }
