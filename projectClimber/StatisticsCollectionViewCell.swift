@@ -70,7 +70,7 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 21, weight: .bold)
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.8
+        label.minimumScaleFactor = 0.7
         label.textAlignment = .left
         label.textColor = .white
         label.text = "🏆Your best attempt on hangboard"
@@ -134,21 +134,27 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
             
             totalWorkoutsCountityLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
             totalWorkoutsCountityLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            totalWorkoutsCountityLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             
             totalTitleLabel.topAnchor.constraint(equalTo: totalWorkoutsCountityLabel.bottomAnchor, constant: 20),
             totalTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            totalTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             
             totalDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             totalDescriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
-
+            totalDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+            
             hangboardTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             hangboardTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            hangboardTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             
             longestHangboardTimeLabel.topAnchor.constraint(equalTo: hangboardTitleLabel.bottomAnchor, constant: 30),
             longestHangboardTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            longestHangboardTimeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             
             hangboardDescription.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-            hangboardDescription.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
+            hangboardDescription.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+            hangboardDescription.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
         ])
     }
     

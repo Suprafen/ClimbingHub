@@ -40,6 +40,18 @@ class WorkoutViewController: UIViewController {
         return label
     }()
     
+    private let workoutDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.8
+        label.textColor = .white
+        label.numberOfLines = 0
+        label.text = "Open goal finger workout helps you to develop your grip strength."
+        
+        return label
+    }()
+    
     private let overviewFingerWorkoutBackground: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "FingerWorkoutImage"))
         imageView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
@@ -82,17 +94,21 @@ class WorkoutViewController: UIViewController {
         NSLayoutConstraint.activate([
             
             
-            overviewFingerWorkoutBackground.heightAnchor.constraint(equalTo: overviewFingerWorkoutBackground.widthAnchor, multiplier: 3/2),
+//            overviewFingerWorkoutBackground.heightAnchor.constraint(equalTo: overviewFingerWorkoutBackground.widthAnchor, multiplier: 3/2),
             overviewFingerWorkoutBackground.topAnchor.constraint(equalTo: margins.topAnchor, constant: 20),
             overviewFingerWorkoutBackground.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5),
             overviewFingerWorkoutBackground.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -5),
-            overviewFingerWorkoutBackground.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20),
+            overviewFingerWorkoutBackground.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -30),
             
             firstTitleLabel.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.topAnchor, constant: 20),
             firstTitleLabel.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
             
             secondTitleLabel.topAnchor.constraint(equalTo: firstTitleLabel.bottomAnchor, constant: 5),
             secondTitleLabel.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
+            
+            workoutDescriptionLabel.topAnchor.constraint(equalTo: secondTitleLabel.bottomAnchor, constant: 15),
+            workoutDescriptionLabel.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
+            workoutDescriptionLabel.trailingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.trailingAnchor, constant: -20),
             
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startButton.bottomAnchor.constraint(equalTo: overviewFingerWorkoutBackground.bottomAnchor, constant: -20)
@@ -108,13 +124,13 @@ class WorkoutViewController: UIViewController {
         view.addSubview(startButton)
         view.addSubview(firstTitleLabel)
         view.addSubview(secondTitleLabel)
+        view.addSubview(workoutDescriptionLabel)
         
         startButton.translatesAutoresizingMaskIntoConstraints = false
         overviewFingerWorkoutBackground.translatesAutoresizingMaskIntoConstraints = false
         firstTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         secondTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        overviewFingerWorkoutBackground
+        workoutDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
     }
 
     //MARK: Selectors
