@@ -48,6 +48,7 @@ class FingerWorkoutViewController: UIViewController {
         stack.distribution = .equalSpacing
         stack.alignment = .center
         stack.spacing = 20
+        stack.isHidden = true
         
         return stack
     }()
@@ -107,7 +108,7 @@ class FingerWorkoutViewController: UIViewController {
     //Label that appear only when need to count down before next split begins
     private let countDownLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 100, weight: .black)
         label.textColor = .black
         label.text = "3"
         label.textAlignment = .center
@@ -117,10 +118,13 @@ class FingerWorkoutViewController: UIViewController {
     // Split timer label
     private let splitLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .regular)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 80, weight: .bold)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.8
         label.textColor = .black
-        label.text = "00:00"
+        label.text = "00:00:00"
         label.textAlignment = .center
+        label.isHidden = true
         
         return label
     }()
@@ -129,10 +133,30 @@ class FingerWorkoutViewController: UIViewController {
        let label = UILabel()
         label.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .regular)
         label.textColor = .gray
-        label.text = "00:00"
+        label.text = "00:00:00"
         label.textAlignment = .center
         
         return label
+    }()
+    
+    private let tableViewTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
+        label.text = "Attempts"
+        label.textColor = .white
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    private let tableViewBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+        view.layer.cornerRadius = 15
+        view.isHidden = true
+        view.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 2/2.5).isActive = true
+        
+        return view
     }()
     
     //MARK: Properties
@@ -146,11 +170,12 @@ class FingerWorkoutViewController: UIViewController {
     private var splitTimer: Timer!
     
     private var splits: [Int] = []
-    private var currentSplit: Int = 0
+//    private var currentSplit: Int = 0
     
     private var isRestModeActive: Bool = false
     private var isPauseActive:Bool = false
     
+    private let splitsTableView = UITableView()
         
     
     override func viewDidLoad() {
@@ -163,43 +188,63 @@ class FingerWorkoutViewController: UIViewController {
         
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        let margins = view.layoutMarginsGuide
         countDownLabel.center = view.center
         
         NSLayoutConstraint.activate([
-            // outermost stack view constraints
-            outermostStackView.topAnchor.constraint(equalTo: view.topAnchor),
-            outermostStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            outermostStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            outermostStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            countDownLabel.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
+            countDownLabel.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
             
-            countDownLabelStack.topAnchor.constraint(equalTo: view.topAnchor),
-            countDownLabelStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            countDownLabelStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            countDownLabelStack.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            splitLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 40),
+            splitLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
+            splitLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
+            
+            tableViewBackgroundView.topAnchor.constraint(greaterThanOrEqualTo: splitLabel.bottomAnchor, constant: 50),
+            tableViewBackgroundView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
+            tableViewBackgroundView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
+            tableViewBackgroundView.bottomAnchor.constraint(equalTo: buttonsStackView.topAnchor, constant: -20),
+            
+            tableViewTitleLabel.topAnchor.constraint(equalTo: tableViewBackgroundView.topAnchor, constant: 20),
+            tableViewTitleLabel.leadingAnchor.constraint(equalTo: tableViewBackgroundView.leadingAnchor, constant: 20),
+            
+            splitsTableView.topAnchor.constraint(equalTo: tableViewTitleLabel.bottomAnchor, constant: 10),
+            splitsTableView.leadingAnchor.constraint(equalTo: tableViewBackgroundView.leadingAnchor, constant: 20),
+            splitsTableView.trailingAnchor.constraint(equalTo: tableViewBackgroundView.trailingAnchor, constant: -20),
+            splitsTableView.bottomAnchor.constraint(equalTo: tableViewBackgroundView.bottomAnchor, constant: -20),
+            
+            buttonsStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
+            buttonsStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
+            buttonsStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20)
             
         ])
     }
     
     func configureView() {
         self.view.backgroundColor = .white
+        splitsTableView.delegate = self
+        splitsTableView.dataSource = self
+        splitsTableView.register(SplitTableViewCell.self, forCellReuseIdentifier: SplitTableViewCell.reuseIdentifier)
+        splitsTableView.backgroundColor = UIColor.clear
+        splitsTableView.separatorStyle = .none
         
-        buttonsStackView.addArrangedSubview(pauseButton)
         buttonsStackView.addArrangedSubview(cancelButton)
+        buttonsStackView.addArrangedSubview(pauseButton)
         buttonsStackView.addArrangedSubview(restButton)
         
+        view.addSubview(countDownLabel)
+        view.addSubview(splitLabel)
+        view.addSubview(tableViewBackgroundView)
+        view.addSubview(tableViewTitleLabel)
+        view.addSubview(splitsTableView)
+        view.addSubview(buttonsStackView)
         
-        outermostStackView.addArrangedSubview(splitLabel)
-        outermostStackView.addArrangedSubview(buttonsStackView)
-        outermostStackView.addArrangedSubview(totalTimeLabel)
-        
-        countDownLabelStack.addArrangedSubview(countDownLabel)
-        
-        outermostStackView.translatesAutoresizingMaskIntoConstraints = false
-        countDownLabelStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(outermostStackView)
-        view.addSubview(countDownLabelStack)
+        countDownLabel.translatesAutoresizingMaskIntoConstraints = false
+        splitLabel.translatesAutoresizingMaskIntoConstraints = false
+        tableViewBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        tableViewTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        splitsTableView.translatesAutoresizingMaskIntoConstraints = false
+        buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
     }
     // MARK: Timers' perform methods
     
@@ -222,7 +267,7 @@ class FingerWorkoutViewController: UIViewController {
     
     @objc func pauseButtonTapped() {
         isPauseActive.toggle()
-        self.pauseButton.setImage(isPauseActive ? UIImage(systemName: "arrow.clockwise") : UIImage(systemName: "pause.fill"), for: .normal)
+        self.pauseButton.setImage(isPauseActive ? UIImage(systemName: "play.fill") : UIImage(systemName: "pause.fill"), for: .normal)
         
         // if both timers are not active, means pause button tapped,
         // we'll wake them
@@ -294,8 +339,8 @@ class FingerWorkoutViewController: UIViewController {
         self.restButton.setImage(isRestModeActive ? UIImage(systemName: "figure.wave") : UIImage(systemName: "figure.stand"), for: .normal)
         // if is not valid it means we are in the rest mode
         if !splitTimer.isValid {
-            splitLabel.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .regular)
-            splitLabel.text = "00 : 00"
+            splitLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 80, weight: .bold)
+            splitLabel.text = "00:00:00"
             // awake timer
             splitTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(splitTimerFire), userInfo: nil, repeats: true)
             RunLoop.current.add(splitTimer, forMode: .common)
@@ -303,10 +348,11 @@ class FingerWorkoutViewController: UIViewController {
             // if timer is valid turn rest mode
             // append last split to splits array
             splits.append(splitTimeCounter)
+            self.splitsTableView.reloadData()
             // set counter's value to 0
             splitTimeCounter = 0
-            splitLabel.text = "REST"
-            splitLabel.font = UIFont.boldSystemFont(ofSize: 30)
+            splitLabel.text = "😴 REST"
+            splitLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 80, weight: .bold)
             // invalidate timer
             splitTimer.invalidate()
         }
@@ -323,10 +369,14 @@ class FingerWorkoutViewController: UIViewController {
             countDownTimer?.invalidate()
             // asign to nil
             countDownTimer = nil
-            // make stack where was label hidden
-            self.countDownLabelStack.isHidden = true
-            // show finger workout interface
-            self.outermostStackView.isHidden = false
+            // make label hidden
+            self.countDownLabel.isHidden = true
+            // make everything visible
+            self.tableViewBackgroundView.isHidden = false
+            self.splitLabel.isHidden = false
+            self.buttonsStackView.isHidden = false
+            self.tableViewBackgroundView.isHidden = false
+            self.tableViewTitleLabel.isHidden = false
             // awake timer
             totalTimeTimerPerform(timeInterval: 1)
             splitTimerPerform(timeInterval: 1)
@@ -344,8 +394,8 @@ class FingerWorkoutViewController: UIViewController {
     @objc func splitTimerFire() {
         splitTimeCounter += 1
         
-        let time = secondsToHoursMinutesSeconds(seconds: splitTimeCounter)
-        let timeString = makeTimeString(hours: time.0, minutes: time.1, seconds: time.2)
+//        let timeString = makeTimeString(hours: time.0, minutes: time.1, seconds: time.2)
+        let timeString = String.makeTimeString(seconds: splitTimeCounter, withLetterDescription: false)
         splitLabel.text = timeString
     }
     //MARK: Helper methods
@@ -367,5 +417,20 @@ class FingerWorkoutViewController: UIViewController {
         timeStirng += ""
         
         return timeStirng
+    }
+}
+
+//MARK: Table view protocols
+extension FingerWorkoutViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.splits.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SplitTableViewCell.reuseIdentifier, for: indexPath) as! SplitTableViewCell
+        
+        cell.configure(cellWithNumber: indexPath.row + 1, with: self.splits[indexPath.row])
+        cell.backgroundColor = UIColor.clear
+        return cell
     }
 }

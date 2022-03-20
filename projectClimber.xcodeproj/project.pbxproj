@@ -21,6 +21,7 @@
 		E281518B279AD7D900E8C2D4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E281518A279AD7D900E8C2D4 /* SceneDelegate.swift */; };
 		E2815192279AD7DB00E8C2D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2815191279AD7DB00E8C2D4 /* Assets.xcassets */; };
 		E2815195279AD7DB00E8C2D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2815193279AD7DB00E8C2D4 /* LaunchScreen.storyboard */; };
+		E2856B7127E7A73F00443E63 /* SplitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2856B7027E7A73F00443E63 /* SplitTableViewCell.swift */; };
 		E2CEE4C3279AE0970088278D /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CEE4C2279AE0970088278D /* Workout.swift */; };
 		E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */; };
 		E2F1CFFF27BC22C3007ADEE2 /* FirstTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFE27BC22C3007ADEE2 /* FirstTableViewCell.swift */; };
@@ -48,6 +49,7 @@
 		E2815191279AD7DB00E8C2D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2815194279AD7DB00E8C2D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2815196279AD7DB00E8C2D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2856B7027E7A73F00443E63 /* SplitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitTableViewCell.swift; sourceTree = "<group>"; };
 		E2CEE4C2279AE0970088278D /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Workout.swift; path = projectClimber/Workout.swift; sourceTree = SOURCE_ROOT; };
 		E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatisticsTableViewController.swift; sourceTree = "<group>"; };
 		E2F1CFFE27BC22C3007ADEE2 /* FirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTableViewCell.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */,
 				E2F1D00027BC22CA007ADEE2 /* Statistics Table View Cells */,
 				E205A88027AD4DD0002BA08B /* FingerWorkoutViewController.swift */,
+				E2856B7027E7A73F00443E63 /* SplitTableViewCell.swift */,
 				E2815191279AD7DB00E8C2D4 /* Assets.xcassets */,
 				E2815193279AD7DB00E8C2D4 /* LaunchScreen.storyboard */,
 				E2815196279AD7DB00E8C2D4 /* Info.plist */,
@@ -301,6 +304,7 @@
 				E27B660327D2A3C000239D5C /* FourthTableViewCell.swift in Sources */,
 				E205A87B27AD18B2002BA08B /* StatisticsCollectionViewController.swift in Sources */,
 				E2F1D00227BC26C7007ADEE2 /* SecondTableViewCell.swift in Sources */,
+				E2856B7127E7A73F00443E63 /* SplitTableViewCell.swift in Sources */,
 				E2FFD4F327BD4623004AADEC /* ThirdTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
