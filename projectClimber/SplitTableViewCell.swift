@@ -57,8 +57,13 @@ class SplitTableViewCell: UITableViewCell {
         ])
     }
     
-    func configure(cellWithNumber number: Int, with time: Int) {
+    func configure(cellWithNumber number: Int, with time: Int, isLongestSplit: Bool) {
+        
         titleLabel.text = "Split \(number)"
         timeLabel.text = String.makeTimeString(seconds: time, withLetterDescription: false)
+        print(isLongestSplit)
+        if isLongestSplit {
+            timeLabel.text! += " 🏆"
+        }
     }
 }
