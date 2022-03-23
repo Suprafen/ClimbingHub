@@ -60,11 +60,18 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
+    let imageInsideCircle: UIImageView = {
+        let image = UIImageView(image: UIImage(systemName: "ellipsis.rectangle.fill"))
+        image.tintColor = .systemBlue
+        let screenSize = UIScreen.main.bounds
+        image.frame = CGRect(x: 0, y: 0, width: screenSize.width * 0.7, height: screenSize.height * 0.7)
+//        image.frame = CGRect(x: 0, y: 0, width: image.frame.width * 2, height: image.frame.height * 2)
+        
+        return image
+    }()
+    
     let circle: UIView = {
         
-        
-        
-//        let circleDiameter = 20 * UIScreen.main.scale
         let circleDiameter = UIScreen.main.bounds.height / 13
         print("SCALE:",UIScreen.main.bounds.height)
         print("Diameter: \(circleDiameter)")
@@ -78,17 +85,7 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         view.widthAnchor.constraint(equalToConstant: circleDiameter).isActive = true
         view.heightAnchor.constraint(equalToConstant: circleDiameter).isActive = true
         
-//        let image = UIImageView(image: UIImage(systemName: "ellipsis.rectangle.fill"))
-//
-//        image.tintColor = .systemBlue.withAlphaComponent(1)
-//
-//        view.addSubview(image)
-//        image.translatesAutoresizingMaskIntoConstraints = false
-//        image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        image.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-//        
         return view
-
     }()
     
     let dateFormatter: DateFormatter = {
@@ -109,14 +106,20 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         addSubview(circle)
         addSubview(labelsStackView)
         addSubview(chevronImage)
+        addSubview(imageInsideCircle)
         
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         chevronImage.translatesAutoresizingMaskIntoConstraints = false
         circle.translatesAutoresizingMaskIntoConstraints = false
+        imageInsideCircle.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             circle.centerYAnchor.constraint(equalTo: centerYAnchor),
             circle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             circle.trailingAnchor.constraint(equalTo: labelsStackView.leadingAnchor, constant: -20),
+            
+            imageInsideCircle.centerXAnchor.constraint(equalTo: circle.centerXAnchor),
+            imageInsideCircle.centerYAnchor.constraint(equalTo: circle.centerYAnchor),
             
             labelsStackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             labelsStackView.trailingAnchor.constraint(equalTo: chevronImage.leadingAnchor, constant: -10),

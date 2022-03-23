@@ -31,17 +31,6 @@ import UIKit
 
 class FingerWorkoutViewController: UIViewController {
 
-    private let outermostStackView: UIStackView = {
-       
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        stack.isHidden = true
-        
-        return stack
-    }()
-    
     private let buttonsStackView: UIStackView = {
        let stack = UIStackView()
         stack.axis = .horizontal
@@ -53,14 +42,6 @@ class FingerWorkoutViewController: UIViewController {
         return stack
     }()
     
-    private let countDownLabelStack: UIStackView = {
-       let stack = UIStackView()
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .center
-        
-        return stack
-    }()
     private let pauseButton: UIButton = {
         if #available(iOS 15, *) {
             var configuration = UIButton.Configuration.filled()
@@ -131,16 +112,6 @@ class FingerWorkoutViewController: UIViewController {
         
         return label
     }()
-    // Total time timer label
-    private let totalTimeLabel: UILabel = {
-       let label = UILabel()
-        label.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .regular)
-        label.textColor = .gray
-        label.text = "00:00:00"
-        label.textAlignment = .center
-        
-        return label
-    }()
     
     private let tableViewTitleLabel: UILabel = {
         let label = UILabel()
@@ -174,7 +145,6 @@ class FingerWorkoutViewController: UIViewController {
     
     private var splits: [Int] = []
     private var longestSplit: Int = 0
-//    private var currentSplit: Int = 0
     
     private var isRestModeActive: Bool = false
     private var isPauseActive:Bool = false
@@ -220,7 +190,6 @@ class FingerWorkoutViewController: UIViewController {
             buttonsStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
             buttonsStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
             buttonsStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20)
-            
         ])
     }
     
@@ -353,10 +322,10 @@ class FingerWorkoutViewController: UIViewController {
         if !splitTimer.isValid {
             splitLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 80, weight: .bold)
             
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.2) {
                 self.splitLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
             } completion: { _ in
-                UIView.animate(withDuration: 0.3) {
+                UIView.animate(withDuration: 0.2) {
                     self.splitLabel.transform = CGAffineTransform.identity
                     self.splitLabel.text = "00:00:00"
                 }
@@ -377,10 +346,10 @@ class FingerWorkoutViewController: UIViewController {
             // set counter's value to 0
             splitTimeCounter = 0
             
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.2) {
                 self.splitLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
             } completion: { _ in
-                UIView.animate(withDuration: 0.3) {
+                UIView.animate(withDuration: 0.2) {
                     self.splitLabel.transform = CGAffineTransform.identity
                     self.splitLabel.text = "😴 REST"
                 }
@@ -435,10 +404,6 @@ class FingerWorkoutViewController: UIViewController {
     
     @objc func totalTimeTimerFire() {
         totalTimeCounter += 1
-        
-        let time = secondsToHoursMinutesSeconds(seconds: totalTimeCounter)
-        let timeString = makeTimeString(hours: time.0, minutes: time.1, seconds: time.2)
-        totalTimeLabel.text = timeString
     }
     
     @objc func splitTimerFire() {
@@ -447,26 +412,6 @@ class FingerWorkoutViewController: UIViewController {
 //        let timeString = makeTimeString(hours: time.0, minutes: time.1, seconds: time.2)
         let timeString = String.makeTimeString(seconds: splitTimeCounter, withLetterDescription: false)
         splitLabel.text = timeString
-    }
-    //MARK: Helper methods
-    
-    func secondsToHoursMinutesSeconds(seconds: Int) -> (Int, Int, Int){
-        return ((seconds / 3600), ((seconds % 3600) / 60), ((seconds % 3600) % 60))
-    }
-    
-    func makeTimeString(hours: Int, minutes: Int, seconds: Int) -> String{
-        var timeStirng = ""
-        if hours > 0 {
-            timeStirng += String(format: "%02d", hours)
-            timeStirng += " : "
-        }
-        
-        timeStirng += String(format: "%02d", minutes)
-        timeStirng += " : "
-        timeStirng += String(format: "%02d", seconds)
-        timeStirng += ""
-        
-        return timeStirng
     }
 }
 
