@@ -73,8 +73,6 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     let circle: UIView = {
         
         let circleDiameter = UIScreen.main.bounds.height / 13
-        print("SCALE:",UIScreen.main.bounds.height)
-        print("Diameter: \(circleDiameter)")
 
         let view = UIView(frame: CGRect(x: 0, y: 0, width: circleDiameter, height: circleDiameter))
         view.backgroundColor = .systemBlue
@@ -137,11 +135,10 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     //using Object type from Realm
     func configure(with object: Object) {
         // Downcasting to FingerWorkout
-        guard let workout = object as? Workout else { print("Downcasting error in Workout Cell"); return }
+        guard let workout = object as? Workout else { return }
         
         workoutTitleLabel.text = workout.type.rawValue
         dateLabel.text = dateFormatter.string(from: workout.date)
         timeLabel.text = String.makeTimeString(seconds: workout.totalTime, withLetterDescription: true)
-        print(String.makeTimeString(seconds: workout.totalTime, withLetterDescription: true))
     }
 }

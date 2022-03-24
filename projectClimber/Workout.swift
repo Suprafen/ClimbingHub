@@ -55,3 +55,26 @@ class Statistics: Object {
         self.workouts = workouts
     }
 }
+
+struct SectionForHistory: Hashable{
+    var title: String
+    var workouts: [Workout]
+    
+    var customHashValue: Int {
+        var result: Int = 0
+        for i in workouts {
+            result += i.splits.reduce(0, +)
+            
+        }
+        result += workouts.count
+        return result
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+    }
+    
+    static func ==(lhs: SectionForHistory, rhs: SectionForHistory) -> Bool{
+        return lhs.title == rhs.title || lhs.workouts.count == rhs.workouts.count || lhs.customHashValue == rhs.customHashValue
+    }
+}

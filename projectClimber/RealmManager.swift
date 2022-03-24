@@ -16,7 +16,7 @@ class RealmManager {
     private init() {
         realm = {
             let realm = try! Realm(configuration: Realm.Configuration(objectTypes:[Workout.self]))
-            print(realm.configuration.fileURL?.path ?? "PATH IS NIL")
+//            print(realm.configuration.fileURL?.path ?? "PATH IS NIL")
             return realm
         }()
     }
