@@ -22,8 +22,5 @@ class TabBarController: UITabBarController {
         
         tabBar.items?[0].image = UIImage(systemName: "rectangle.grid.1x2")
         tabBar.items?[1].image = UIImage(systemName: "arrowtriangle.right.circle")
-        
-        // Choose which tab should appear first
-        selectedIndex = 1
     }
 }
