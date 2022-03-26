@@ -11,6 +11,27 @@ import RealmSwift
 
 class StatisticsCollectionViewController: UICollectionViewController {
     
+    let absenceOfWorkoutLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.80
+        label.textColor = .systemGray3
+        label.text = "No workouts here yet."
+        
+        return label
+    }()
+    
+    let moveToTheTabButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        let button = UIButton()
+        configuration.attributedTitle = "Move to workout tab"
+        button.configuration = configuration
+        button.addTarget(self, action: #selector(moveToTheTabButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
     enum Section: Hashable {
         case statistics
         case workouts
@@ -76,6 +97,30 @@ class StatisticsCollectionViewController: UICollectionViewController {
         configureDataSource()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !workouts.isEmpty {
+            absenceOfWorkoutLabel.isHidden = true
+            moveToTheTabButton.isHidden = true
+            collectionView.isScrollEnabled = true
+        } else {
+            collectionView.isScrollEnabled = false
+            absenceOfWorkoutLabel.isHidden = false
+            moveToTheTabButton.isHidden = false
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        NSLayoutConstraint.activate([
+            absenceOfWorkoutLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            absenceOfWorkoutLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            moveToTheTabButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            moveToTheTabButton.topAnchor.constraint(equalTo: absenceOfWorkoutLabel.bottomAnchor, constant: 20)
+        ])
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = sections[indexPath.section]
         // If section is .workouts we can push to stats for specific workout
@@ -96,6 +141,12 @@ class StatisticsCollectionViewController: UICollectionViewController {
         collectionView.backgroundColor = .systemGray6
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Overview"
+        
+        view.addSubview(absenceOfWorkoutLabel)
+        view.addSubview(moveToTheTabButton)
+        
+        absenceOfWorkoutLabel.translatesAutoresizingMaskIntoConstraints = false
+        moveToTheTabButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -103,13 +154,13 @@ class StatisticsCollectionViewController: UICollectionViewController {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
             let section = self.sections[sectionIndex]
             
-            let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .estimated(44))
+            let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.98), heightDimension: .estimated(44))
             let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerItemSize, elementKind: SupplementaryKind.header, alignment: .topLeading)
-            headerItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0)
+            headerItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0)
             
-            let showMoreButtonSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .estimated(44))
+            let showMoreButtonSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.98), heightDimension: .estimated(44))
             let showMoreButtonItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: showMoreButtonSize, elementKind: SupplementaryKind.button, alignment: .topLeading)
-            showMoreButtonItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 0)
+            showMoreButtonItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20)
             // Switch between different sections
             // And create theirown layout for particular section
             switch section {
@@ -139,7 +190,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 //                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.2))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.98), heightDimension: .fractionalWidth(0.2))
                 
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
                 
@@ -148,6 +199,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: padding, bottom: 0, trailing: padding)
                 
                 let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: padding, bottom: 0, trailing: 0)
                 // Show supplementary items only if workouts is not empty
                 if !self.workouts.isEmpty {
                     section.boundarySupplementaryItems = [showMoreButtonItem]
@@ -163,14 +215,13 @@ class StatisticsCollectionViewController: UICollectionViewController {
             self.workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
             var counter = 0
             self.workoutsForSection.removeAll()
-            
+            // Getting 3 last wokrouts from workouts array
             if self.workouts.count < 4 {
                 for workout in self.workouts {
                     self.workoutsForSection.append(workout)
                 }
             } else {
                 while (counter < 3){
-                    
                     self.workoutsForSection.append(self.workouts[counter])
                     counter += 1
                 }
@@ -251,7 +302,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 case . workouts:
                     sectionName = "Workouts"
                 default:
-                    sectionName = ""
+                    sectionName = "Statistics"
                 }
                 
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryKind.button, withReuseIdentifier: ShowMoreButtonHeaderView.reuseIdentifier, for: indexPath) as? ShowMoreButtonHeaderView
@@ -289,18 +340,20 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 }
             }
         }
-        
         return maxSplit
     }
     
     //MARK: Selectors
-    
     @objc func showMoreButtonTapped() {
-        //TODO: Add functionality to show more button
+        
         let viewToGo = WorkoutsHistoryCollectionViewController(collectionViewLayout: UICollectionViewLayout())
         guard let workouts = self.workouts as? [Workout] else { return }
         viewToGo.workouts = workouts
         viewToGo.navigationItem.largeTitleDisplayMode = .always
         navigationController?.pushViewController(viewToGo, animated: true)
+    }
+    
+    @objc func moveToTheTabButtonTapped(){
+        tabBarController?.selectedIndex = 1
     }
 }

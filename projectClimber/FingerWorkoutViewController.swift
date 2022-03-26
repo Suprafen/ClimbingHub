@@ -61,7 +61,7 @@ class FingerWorkoutViewController: UIViewController {
     private let cancelButton: UIButton = {
         if #available(iOS 15, *) {
             var configuration = UIButton.Configuration.filled()
-            configuration.image = UIImage(systemName: "multiply")
+            configuration.image = UIImage(systemName: "xmark")
             configuration.baseBackgroundColor = UIColor(rgb: 0xEC6A5E)
             configuration.baseForegroundColor = UIColor(rgb: 0x8C1A10)
             configuration.buttonSize = .large
@@ -292,7 +292,6 @@ class FingerWorkoutViewController: UIViewController {
             // If rest mode active I don't want to save last split, which will be 0
             // In other cases it's ok
             dismiss(animated: true, completion: nil)
-            print(splits)
             // create an instance of workout
             let instance = Workout()
             instance.date = Date()

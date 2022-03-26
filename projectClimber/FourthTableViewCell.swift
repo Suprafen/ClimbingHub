@@ -74,7 +74,6 @@ class FourthTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewData
     }
 
     func configure(with workout: Workout) {
-        print("Configure func, workout's splits \(workout.splits.count)")
         for item in workout.splits {
             self.splits.append(item)
         }

@@ -61,7 +61,6 @@ class SplitTableViewCell: UITableViewCell {
         
         titleLabel.text = "Split \(number)"
         timeLabel.text = String.makeTimeString(seconds: time, withLetterDescription: false)
-        print(isLongestSplit)
         if isLongestSplit {
             timeLabel.text! += " 🏆"
         }

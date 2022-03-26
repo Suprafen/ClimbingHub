@@ -20,10 +20,10 @@ class TabBarController: UITabBarController {
         statisticsViewController.title = "Overview"
         setViewControllers([statisticsViewController, workoutViewController], animated: false)
         
-        // Do any additional setup after loading the view.
+        tabBar.items?[0].image = UIImage(systemName: "rectangle.grid.1x2")
+        tabBar.items?[1].image = UIImage(systemName: "arrowtriangle.right.circle")
         
-        tabBar.items?[0].image = UIImage(systemName: "text.justify")
-        tabBar.items?[1].image = UIImage(systemName: "gear")
+        // Choose which tab should appear first
+        selectedIndex = 1
     }
-    
 }

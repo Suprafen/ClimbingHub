@@ -118,7 +118,7 @@ class WorkoutsHistoryCollectionViewController: UICollectionViewController {
                 
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.2))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.98), heightDimension: .fractionalWidth(0.2))
                 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
                 
@@ -127,7 +127,7 @@ class WorkoutsHistoryCollectionViewController: UICollectionViewController {
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: padding, bottom: 0, trailing: padding)
                 
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: 0, bottom: padding, trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: 10, bottom: padding, trailing: 0)
         
             // Show supplementary items only if workouts is not empty
 //        if !self.workouts.isEmpty {

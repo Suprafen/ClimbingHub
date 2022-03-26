@@ -25,7 +25,7 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.82
+        label.minimumScaleFactor = 0.5
         label.textColor = .black
         label.textAlignment = .left
         
@@ -57,16 +57,6 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     let chevronImage: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "chevron.right"), highlightedImage: .none)
         image.tintColor = .gray
-        return image
-    }()
-    
-    let imageInsideCircle: UIImageView = {
-        let image = UIImageView(image: UIImage(systemName: "ellipsis.rectangle.fill"))
-        image.tintColor = .systemBlue
-        let screenSize = UIScreen.main.bounds
-        image.frame = CGRect(x: 0, y: 0, width: screenSize.width * 0.7, height: screenSize.height * 0.7)
-//        image.frame = CGRect(x: 0, y: 0, width: image.frame.width * 2, height: image.frame.height * 2)
-        
         return image
     }()
     
@@ -104,20 +94,15 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         addSubview(circle)
         addSubview(labelsStackView)
         addSubview(chevronImage)
-        addSubview(imageInsideCircle)
         
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         chevronImage.translatesAutoresizingMaskIntoConstraints = false
         circle.translatesAutoresizingMaskIntoConstraints = false
-        imageInsideCircle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             circle.centerYAnchor.constraint(equalTo: centerYAnchor),
             circle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             circle.trailingAnchor.constraint(equalTo: labelsStackView.leadingAnchor, constant: -20),
-            
-            imageInsideCircle.centerXAnchor.constraint(equalTo: circle.centerXAnchor),
-            imageInsideCircle.centerYAnchor.constraint(equalTo: circle.centerYAnchor),
             
             labelsStackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             labelsStackView.trailingAnchor.constraint(equalTo: chevronImage.leadingAnchor, constant: -10),

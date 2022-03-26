@@ -34,7 +34,7 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let totalWorkoutsCountityLabel: UILabel = {
+    let totalWorkoutsQuantityLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 43, weight: .bold)
         label.adjustsFontSizeToFitWidth = true
@@ -47,7 +47,7 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
     
     let totalDescriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .light)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.6
         label.textAlignment = .left
@@ -91,7 +91,7 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
     
     let hangboardDescription: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .light)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.7
         label.textAlignment = .left
@@ -114,7 +114,7 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
         
         addSubview(totalTitleLabel)
         addSubview(totalDescriptionLabel)
-        addSubview(totalWorkoutsCountityLabel)
+        addSubview(totalWorkoutsQuantityLabel)
 
         addSubview(longestHangboardTimeLabel)
         addSubview(hangboardDescription)
@@ -123,7 +123,7 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
         // Total stat....
         totalTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         totalDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalWorkoutsCountityLabel.translatesAutoresizingMaskIntoConstraints = false
+        totalWorkoutsQuantityLabel.translatesAutoresizingMaskIntoConstraints = false
         
         // Hangboard stat ...
         hangboardTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -132,11 +132,11 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             
-            totalWorkoutsCountityLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-            totalWorkoutsCountityLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-            totalWorkoutsCountityLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+            totalWorkoutsQuantityLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+            totalWorkoutsQuantityLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            totalWorkoutsQuantityLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             
-            totalTitleLabel.topAnchor.constraint(equalTo: totalWorkoutsCountityLabel.bottomAnchor, constant: 20),
+            totalTitleLabel.topAnchor.constraint(equalTo: totalWorkoutsQuantityLabel.bottomAnchor, constant: 20),
             totalTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             totalTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             
@@ -172,11 +172,11 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
             hangboardTitleLabel.isHidden = true
             
             totalDescriptionLabel.text = "You've been working out for \(String.makeTimeString(seconds: statistics.time, withLetterDescription: true))"
-            totalWorkoutsCountityLabel.text = countityOfWokrouts != nil ? String(countityOfWokrouts!) : ""
+            totalWorkoutsQuantityLabel.text = countityOfWokrouts != nil ? String(countityOfWokrouts!) : ""
         } else if statistics.type == .hangBoard {
             totalTitleLabel.isHidden = true
             totalDescriptionLabel.isHidden = true
-            totalWorkoutsCountityLabel.isHidden = true
+            totalWorkoutsQuantityLabel.isHidden = true
             
             hangboardDescription.text = "You've been on hangboard for \(String.makeTimeString(seconds: statistics.time, withLetterDescription: true))"
             longestHangboardTimeLabel.text = longestAttemptOnHangboard != nil ? String.makeTimeString(seconds: longestAttemptOnHangboard!, withLetterDescription: true) : ""

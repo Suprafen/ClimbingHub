@@ -14,7 +14,7 @@ class SectionHeaderView: UICollectionReusableView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
-        stackView.alignment = .center
+        stackView.alignment = .bottom
         
         return stackView
     }()
@@ -27,22 +27,11 @@ class SectionHeaderView: UICollectionReusableView {
         return label
     }()
     
-    let showMoreButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Show more", for: .normal)
-        button.setTitleColor(.link, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        button.setContentHuggingPriority(.required, for: .horizontal)
-       
-        return button
-    }()
-    
     override init(frame: CGRect){
         super.init(frame: frame)
         
         stackView.addArrangedSubview(titleLabel)
-//        stackView.addArrangedSubview(showMoreButton)
-        
+
         addSubview(stackView)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -50,8 +39,8 @@ class SectionHeaderView: UICollectionReusableView {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
         
     }
