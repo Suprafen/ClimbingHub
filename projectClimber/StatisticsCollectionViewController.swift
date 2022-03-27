@@ -7,7 +7,7 @@
 
 import UIKit
 import RealmSwift
-
+import SafariServices
 
 class StatisticsCollectionViewController: UICollectionViewController {
     
@@ -61,6 +61,15 @@ class StatisticsCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Privacy button diclaration
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "checkerboard.shield")
+        configuration.baseForegroundColor = .systemBlue.withAlphaComponent(0.8)
+        let privacyPolicyButton = UIButton(configuration: configuration, primaryAction: nil)
+        privacyPolicyButton.addTarget(self, action: #selector(privacyPolicyButtonTapped), for: .touchUpInside)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: privacyPolicyButton)
+        
         self.collectionView.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier)
         self.collectionView.register(StatisticsCollectionViewCell.self, forCellWithReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier)
         self.collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
@@ -77,7 +86,6 @@ class StatisticsCollectionViewController: UICollectionViewController {
             }
         } else {
             while (counter < 3){
-                
                 self.workoutsForSection.append(workouts[counter])
                 counter += 1
             }
@@ -189,7 +197,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.2))
                 
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0)
+
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.98), heightDimension: .fractionalWidth(0.2))
                 
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
@@ -355,5 +363,13 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     @objc func moveToTheTabButtonTapped(){
         tabBarController?.selectedIndex = 1
+    }
+    
+    @objc func privacyPolicyButtonTapped(sender: UIButton) {
+        let privacyPolicyStringURL = "https://johny77.notion.site/ClimbingHub-Main-page-8882b7030b5645ba8cdfc9af7e6d6efa"
+        if let url = URL(string: privacyPolicyStringURL) {
+            let safariController = SFSafariViewController(url: url)
+            present(safariController, animated: true)
+        }
     }
 }
