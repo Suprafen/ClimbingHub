@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AuthenticationServices
 
 //class with HUGE start button
 
@@ -76,7 +75,7 @@ class WorkoutViewController: UIViewController {
             configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
 
-            button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+            button.addTarget(nil, action: #selector(startButtonTapped), for: .touchUpInside)
             
 
             return button

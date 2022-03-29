@@ -32,7 +32,7 @@ class ShowMoreButtonHeaderView: UICollectionReusableView {
         button.setTitle("Show more", for: .normal)
         button.setTitleColor(.link, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-//        button.setContentHuggingPriority(.required, for: .horizontal)
+        button.setContentHuggingPriority(.required, for: .horizontal)
        
         return button
     }()

@@ -117,7 +117,6 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         fatalError(" init?(coder: NSCoder) has not been implemented")
     }
     
-    //using Object type from Realm
     func configure(with object: Object) {
         // Downcasting to FingerWorkout
         guard let workout = object as? Workout else { return }

@@ -27,7 +27,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
         let button = UIButton()
         configuration.attributedTitle = "Move to workout tab"
         button.configuration = configuration
-        button.addTarget(self, action: #selector(moveToTheTabButtonTapped), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(moveToTheTabButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -100,9 +100,9 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 Statistics(titleStatistics: "Time on hangboard", time: workoutsTime.timeOnHangBoard, type: .hangBoard)
             ])
         }
+        configureDataSource()
         observeRealm()
         viewConfiguration()
-        configureDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -248,7 +248,6 @@ class StatisticsCollectionViewController: UICollectionViewController {
             snapshot.appendSections([.statistics])
             snapshot.appendItems(self.statistics, toSection: .statistics)
             // Reaload items. In this case only one item with statistics
-            snapshot.reloadItems(self.statistics)
             
             snapshot.appendSections([.workouts])
             snapshot.appendItems(self.workoutsForSection, toSection: .workouts)
@@ -268,9 +267,9 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier, for: indexPath) as! StatisticsCollectionViewCell
                 guard let statistics = item as? Statistics else { return UICollectionViewCell()}
                 
-                let biggestSplit: Int = self.biggestSplitInFingerWorkouts()
-                cell.configure(with: statistics, countityOfWokrouts: self.workouts.count, longestAttemptOnHangboard: biggestSplit)
-                
+                let longestSplit: Int = self.biggestSplitInFingerWorkouts()
+                cell.configure(with: statistics, quantityOfWorkouts: self.workouts.count, longestAttemptOnHangboard: longestSplit)
+
                 cell.layer.cornerRadius = 15
                 cell.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
                 

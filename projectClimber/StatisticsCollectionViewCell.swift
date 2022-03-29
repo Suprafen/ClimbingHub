@@ -13,15 +13,6 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "StatisticsCollectionViewCell"
     
     //MARK: Total stats
-    let totalStatStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .leading
-        
-        return stack
-    }()
-    
     let totalTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
@@ -57,15 +48,6 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
     }()
 
     //MARK: Hangboard stats
-    let hangBoardStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.alignment = .leading
-        
-        return stack
-    }()
-    
     let hangboardTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 21, weight: .bold)
@@ -163,16 +145,24 @@ class StatisticsCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: Helper methods
-    func configure(with object: Object, countityOfWokrouts: Int? = nil, longestAttemptOnHangboard: Int? = nil) {
+    func configure(with object: Object, quantityOfWorkouts: Int? = nil, longestAttemptOnHangboard: Int? = nil) {
+        // Just for avoiding disappearing particular elements of the cell, when it's configured
+        hangboardDescription.isHidden = false
+        longestHangboardTimeLabel.isHidden = false
+        hangboardTitleLabel.isHidden = false
+        totalTitleLabel.isHidden = false
+        totalDescriptionLabel.isHidden = false
+        totalWorkoutsQuantityLabel.isHidden = false
+        
         guard let statistics = object as? Statistics else { return }
-
+        
         if statistics.type == .totalTime {
             hangboardDescription.isHidden = true
             longestHangboardTimeLabel.isHidden = true
             hangboardTitleLabel.isHidden = true
             
             totalDescriptionLabel.text = "You've been working out for \(String.makeTimeString(seconds: statistics.time, withLetterDescription: true))"
-            totalWorkoutsQuantityLabel.text = countityOfWokrouts != nil ? String(countityOfWokrouts!) : ""
+            totalWorkoutsQuantityLabel.text = quantityOfWorkouts != nil ? String(quantityOfWorkouts!) : ""
         } else if statistics.type == .hangBoard {
             totalTitleLabel.isHidden = true
             totalDescriptionLabel.isHidden = true

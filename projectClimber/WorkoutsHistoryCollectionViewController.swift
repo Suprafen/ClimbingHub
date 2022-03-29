@@ -17,19 +17,15 @@ class WorkoutsHistoryCollectionViewController: UICollectionViewController {
         case main
     }
     
-//    typealias DataSource = UICollectionViewDiffableDataSource<SectionForHistory, Object>
-//    typealias Snapshot = NSDiffableDataSourceSnapshot<SectionForHistory, Object>
     
     let monthDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         
-//        dateFormatter.timeStyle = .none
         dateFormatter.dateStyle = .full
         dateFormatter.dateFormat = "MMMM yyyy"
         return dateFormatter
     }()
     
-//    var dataSource: DataSource!
     var workouts: [Workout] = []
     var sections = [SectionForHistory]()
     
@@ -129,33 +125,8 @@ class WorkoutsHistoryCollectionViewController: UICollectionViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: 10, bottom: padding, trailing: 0)
         
-            // Show supplementary items only if workouts is not empty
-//        if !self.workouts.isEmpty {
              section.boundarySupplementaryItems = [header]
         
         return UICollectionViewCompositionalLayout(section: section)
     }
-    
-//    func configureDataSource() {
-//        dataSource = .init(collectionView: collectionView, cellProvider: { (collectionView, indexPath, workout) -> UICollectionViewCell? in
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WorkoutCollectionViewCell
-//            cell.configure(with: workout)
-//            return cell
-//        })
-//
-//        dataSource.supplementaryViewProvider = {collectionView, kind, indexPath -> UICollectionReusableView? in
-//            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderWorkoutsHistoryView.reuseIdentifier, for: indexPath) as! SectionHeaderWorkoutsHistoryView
-//
-//            headerView.titleLabel.text = self.sections[indexPath.section].title
-//
-//            return headerView
-//        }
-//
-//        var snapshot = Snapshot()
-//
-//        snapshot.appendSections(self.sections)
-//        snapshot.appendItems(workouts, toSection: SectionForHistory)
-//
-//    }
-  
 }

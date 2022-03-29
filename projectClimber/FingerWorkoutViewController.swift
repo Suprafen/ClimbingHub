@@ -50,7 +50,7 @@ class FingerWorkoutViewController: UIViewController {
             configuration.baseForegroundColor = UIColor(rgb: 0x8E5A1D)
             configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
-            button.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
+            button.addTarget(nil, action: #selector(pauseButtonTapped), for: .touchUpInside)
             
             return button
         } else {
@@ -66,7 +66,7 @@ class FingerWorkoutViewController: UIViewController {
             configuration.baseForegroundColor = UIColor(rgb: 0x8C1A10)
             configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
-            button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+            button.addTarget(nil, action: #selector(cancelButtonTapped), for: .touchUpInside)
             
             return button
         } else {
@@ -82,7 +82,7 @@ class FingerWorkoutViewController: UIViewController {
             configuration.baseForegroundColor = UIColor(rgb: 0x296117)
             configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
-            button.addTarget(self, action: #selector(restButtonTapped), for: .touchUpInside)
+            button.addTarget(nil, action: #selector(restButtonTapped), for: .touchUpInside)
             
             return button
         } else {
