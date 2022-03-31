@@ -15,8 +15,15 @@ class RealmManager {
     static let sharedInstance = RealmManager()
     private init() {
         realm = {
-            let realm = try! Realm(configuration: Realm.Configuration(objectTypes:[Workout.self]))
-//            print(realm.configuration.fileURL?.path ?? "PATH IS NIL")
+            let configuration = Realm.Configuration(schemaVersion: 1, migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    migration.enumerateObjects(ofType: Workout.className()) { old, new in
+                        new?["goalType"] = WorkoutGoal.openGoal
+                    }
+                }
+            }, objectTypes: [Workout.self] )
+            let realm = try! Realm(configuration: configuration)
+            print(realm.configuration.fileURL?.path ?? "PATH IS NIL")
             return realm
         }()
     }

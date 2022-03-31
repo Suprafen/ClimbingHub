@@ -276,7 +276,8 @@ class StatisticsCollectionViewController: UICollectionViewController {
                 return cell
             case .workouts:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WorkoutCollectionViewCell
-                
+                guard let workout = item as? Workout else { return UICollectionViewCell()}
+                print("WORKOUT GOAL TYPE: \(workout.goalType.rawValue)")
                 cell.configure(with: item)
                 cell.layer.cornerRadius = 15
 

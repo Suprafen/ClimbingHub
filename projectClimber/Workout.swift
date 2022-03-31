@@ -8,6 +8,12 @@
 import Foundation
 import RealmSwift
 
+enum WorkoutGoal: String, PersistableEnum {
+    case openGoal = "Open Goal"
+    case time = "Time"
+    case custom = "Custom"
+}
+
 enum WorkoutType: String, PersistableEnum {
     case fingerWorkout = "Finger Workout"
 }
@@ -28,6 +34,7 @@ class Workout: Object {
     @Persisted var date: Date
     @Persisted var splits: List<Int>
     @Persisted var type: WorkoutType
+    @Persisted var goalType: WorkoutGoal
     //Computed time on handboard according to splits
     var timeOnHangBoard: Int? {
         return splits.reduce(0) { totalValue, currentNum in
@@ -77,4 +84,20 @@ struct SectionForHistory: Hashable{
     static func ==(lhs: SectionForHistory, rhs: SectionForHistory) -> Bool{
         return lhs.title == rhs.title || lhs.workouts.count == rhs.workouts.count || lhs.customHashValue == rhs.customHashValue
     }
+}
+
+struct WorkoutParamters {
+    var workoutGoal: WorkoutGoal = .openGoal
+    var workoutType: WorkoutType = .fingerWorkout
+    var numberOfSplits: Int?
+    
+    var numberOfRests: Int? {
+        get {
+            guard let splits = numberOfSplits else { return nil }
+            return splits - 1
+        }
+    }
+    
+    var durationOfEachSplit: Int?
+    var durationOfEachRest: Int?
 }

@@ -11,6 +11,25 @@ import UIKit
 
 class WorkoutViewController: UIViewController {
 
+    private let changeGoalTypeButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "ellipsis.circle")
+        configuration.baseForegroundColor = .white
+        let button = UIButton(configuration: configuration, primaryAction: nil)
+        button.addTarget(nil, action: #selector(changeGoalTypeButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private let openGoalAction = UIAction(title: "Open Goal", image: UIImage(systemName: "")) {(action) in
+    }
+    
+    private let customGoalAction = UIAction(title: "Custom", image: UIImage(systemName: "")) {(action) in
+    }
+    
+    private let timeGoalAction = UIAction(title: "Time", image: UIImage(systemName: "")) {(action) in
+    }
+    
     private let stackView:  UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -84,6 +103,8 @@ class WorkoutViewController: UIViewController {
         }
     }()
     
+    var workoutParameters: WorkoutParamters = WorkoutParamters()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -100,6 +121,9 @@ class WorkoutViewController: UIViewController {
             overviewFingerWorkoutBackground.topAnchor.constraint(equalTo: margins.topAnchor, constant: 0),
             overviewFingerWorkoutBackground.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
             overviewFingerWorkoutBackground.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
+            
+            changeGoalTypeButton.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.topAnchor, constant: 20),
+            changeGoalTypeButton.trailingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.trailingAnchor, constant: -10),
             
             firstTitleLabel.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.topAnchor, constant: 20),
             firstTitleLabel.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
@@ -118,17 +142,35 @@ class WorkoutViewController: UIViewController {
         ])
     }
     
+    func setGoal() {
+        workoutParameters.workoutGoal = .openGoal
+    }
+    
+    func setChosenGoal() {
+        openGoalAction
+        
+        switch workoutParameters.workoutGoal {
+        case .openGoal:
+            openGoalAction.state = .on
+        case .custom:
+            customGoalAction.state = .on
+        case .time:
+            timeGoalAction.state = .on
+        }
+    }
     func configureView() {
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Workout"
         
         view.addSubview(overviewFingerWorkoutBackground)
+        view.addSubview(changeGoalTypeButton)
         view.addSubview(startButton)
         view.addSubview(firstTitleLabel)
         view.addSubview(secondTitleLabel)
         view.addSubview(workoutDescriptionLabel)
         
+        changeGoalTypeButton.translatesAutoresizingMaskIntoConstraints = false
         startButton.translatesAutoresizingMaskIntoConstraints = false
         overviewFingerWorkoutBackground.translatesAutoresizingMaskIntoConstraints = false
         firstTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -137,12 +179,22 @@ class WorkoutViewController: UIViewController {
     }
 
     //MARK: Selectors
-    
     @objc func startButtonTapped() {
         //define transition
         let fingerWorkoutViewController = FingerWorkoutViewController()
         fingerWorkoutViewController.modalPresentationStyle = .fullScreen
+        fingerWorkoutViewController.workoutParameters = self.workoutParameters
         
         present(fingerWorkoutViewController, animated: true)
+    }
+    
+    @objc func changeGoalTypeButtonTapped() {
+        let controllerToPresent = GoalPickerViewController()
+        controllerToPresent.currentGoalType = self.workoutParameters.workoutGoal
+        if let sheet = controllerToPresent.sheetPresentationController {
+            sheet.detents = [.medium()]
+        }
+        
+        self.present(controllerToPresent, animated: true)
     }
 }
