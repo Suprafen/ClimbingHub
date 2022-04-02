@@ -135,6 +135,8 @@ class FingerWorkoutViewController: UIViewController {
     
     //MARK: Properties
     
+    var workoutParameters: WorkoutParamters!
+    
     private var countDownCounter: Int = 3
     private var totalTimeCounter: Int = 0
     private var splitTimeCounter: Int = 0
