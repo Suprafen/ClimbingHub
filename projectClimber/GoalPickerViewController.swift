@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol GoalPickerDelegate {
+    func getGoalType(_ goalType: WorkoutGoal)
+}
+
 class GoalPickerViewController: UIViewController {
 
     let titleLabel: UILabel = {
@@ -43,7 +47,6 @@ class GoalPickerViewController: UIViewController {
         var configuration = UIButton.Configuration.filled()
         configuration.image = UIImage(systemName: "infinity")
         configuration.imagePlacement = .top
-//        configuration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0)
         configuration.imagePadding = 10
         configuration.title = "Open"
         configuration.baseBackgroundColor = .systemBlue.withAlphaComponent(0.6)
@@ -135,22 +138,14 @@ class GoalPickerViewController: UIViewController {
         
         return view
     }()
-    
-    let dismissButton: UIButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "xmark.circle.fill")
-        configuration.baseForegroundColor = .systemGray2
         
-        let button = UIButton(configuration: configuration, primaryAction: nil)
-        button.addTarget(nil, action: #selector(dismissButtonTapped), for: .touchUpInside)
-        
-        return button
-    }()
-    
     var currentGoalType: WorkoutGoal!
+    var delegate: GoalPickerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissButtonTapped))
+        
         configureView()
     }
     
@@ -158,9 +153,6 @@ class GoalPickerViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         NSLayoutConstraint.activate([
-            
-            dismissButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            dismissButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
             
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -192,7 +184,6 @@ class GoalPickerViewController: UIViewController {
         stackView.addArrangedSubview(customGoalButton)
         stackView.addArrangedSubview(timeGoalButton)
         
-        self.view.addSubview(dismissButton)
         self.view.addSubview(titleLabel)
         self.view.addSubview(subTitleLabel)
         self.view.addSubview(openGoalCircle)
@@ -201,7 +192,6 @@ class GoalPickerViewController: UIViewController {
         
         self.view.addSubview(stackView)
         
-        self.dismissButton.translatesAutoresizingMaskIntoConstraints = false
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -227,8 +217,23 @@ class GoalPickerViewController: UIViewController {
         }
     }
     
-    //MARK: Selectors
+    func retreiveGoalType(_ sender: UIButton) {
+        switch sender {
+        case openGoalButton:
+            delegate?.getGoalType(.openGoal)
+            print("openGoalButton")
+        case customGoalButton:
+            print("customGoalButton")
+            delegate?.getGoalType(.custom)
+        case timeGoalButton:
+            print("timeGoalButton")
+            delegate?.getGoalType(.time)
+        default:
+            return
+        }
+    }
     
+    //MARK: Selectors
     @objc func openGoalButtonTapped(sender: UIButton) {
         UIView.animate(withDuration: 0.1) {
             sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
@@ -239,8 +244,8 @@ class GoalPickerViewController: UIViewController {
                 self.customGoalCircle.isHidden = true
                 self.timeGoalCircle.isHidden = true
             }
-            
         }
+        retreiveGoalType(sender)
     }
     
     @objc func customGoalButtonTapped(sender: UIButton) {
@@ -253,8 +258,8 @@ class GoalPickerViewController: UIViewController {
                 self.customGoalCircle.isHidden = false
                 self.timeGoalCircle.isHidden = true
             }
-            
         }
+        retreiveGoalType(sender)
     }
     
     @objc func timeGoalButtonTapped(sender: UIButton) {
@@ -267,11 +272,11 @@ class GoalPickerViewController: UIViewController {
                 self.customGoalCircle.isHidden = true
                 self.timeGoalCircle.isHidden = false
             }
-            
         }
+        retreiveGoalType(sender)
     }
     
     @objc func dismissButtonTapped() {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
 }

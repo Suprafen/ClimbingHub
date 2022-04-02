@@ -89,15 +89,11 @@ struct SectionForHistory: Hashable{
 struct WorkoutParamters {
     var workoutGoal: WorkoutGoal = .openGoal
     var workoutType: WorkoutType = .fingerWorkout
-    var numberOfSplits: Int?
+    var numberOfSplits: Int = 10
     
-    var numberOfRests: Int? {
-        get {
-            guard let splits = numberOfSplits else { return nil }
-            return splits - 1
-        }
-    }
+    var numberOfRests: Int { get { numberOfSplits - 1 } }
     
-    var durationOfEachSplit: Int?
-    var durationOfEachRest: Int?
+    var durationOfEachSplit: Int = 30
+    var durationOfEachRest: Int = 10
+    var durationForTimeGoal: Int = 3600
 }
