@@ -95,5 +95,5 @@ struct WorkoutParamters {
     
     var durationOfEachSplit: Int = 30
     var durationOfEachRest: Int = 10
-    var durationForTimeGoal: Int = 3600
+    var durationForTimeGoal: Int = 600
 }

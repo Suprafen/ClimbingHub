@@ -16,7 +16,7 @@ class TimeGoalSettingsViewController: UIViewController {
     let stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.distribution = .fill
+        stack.distribution = .fillProportionally
         stack.alignment = .center
         stack.spacing = 15
         
@@ -26,30 +26,31 @@ class TimeGoalSettingsViewController: UIViewController {
     let labelsStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.distribution = .fill
+        stack.distribution = .fillProportionally
         stack.alignment = .center
-        stack.backgroundColor = .systemOrange
+        stack.spacing = 15
         
         return stack
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 40, weight: .semibold)
-        label.text = "Time Goal"
-//        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.text = "Set Time Goal"
+        label.contentHuggingPriority(for: .vertical)
         
         return label
     }()
     
     let subTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.7
+        label.minimumScaleFactor = 0.6
         label.numberOfLines = 2
         label.textColor = .systemGray2
         label.text = "Set time goal and let's start!"
+        label.contentHuggingPriority(for: .vertical)
         
         return label
     }()
@@ -68,7 +69,7 @@ class TimeGoalSettingsViewController: UIViewController {
     
     let timePicker: UIPickerView = {
         let timePicker = UIPickerView()
-        
+//        timePicker.heightAnchor.constraint(equalToConstant: 400).isActive = true
         return timePicker
     }()
     
@@ -87,15 +88,17 @@ class TimeGoalSettingsViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
+//            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            subTitleLabel.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
+//            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+//            subTitleLabel.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
             
-            stackView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 15),
+//            stackView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 15),
+            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15)
         ])
     }
     
@@ -109,15 +112,17 @@ class TimeGoalSettingsViewController: UIViewController {
         self.timePicker.selectRow(self.minutes, inComponent: 0, animated: true)
         self.timePicker.selectRow(self.seconds, inComponent: 1, animated: true)
         
+        stackView.addArrangedSubview(titleLabel)
+//        stackView.addArrangedSubview(subTitleLabel)
         stackView.addArrangedSubview(timePicker)
         
-        self.view.addSubview(titleLabel)
-        self.view.addSubview(subTitleLabel)
+//        self.view.addSubview(titleLabel)
+//        self.view.addSubview(subTitleLabel)
         self.view.addSubview(stackView)
         
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+//        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+//        self.subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func retrieveTime(_ time: Int) {
@@ -182,12 +187,12 @@ extension TimeGoalSettingsViewController: UIPickerViewDelegate, UIPickerViewData
             }
             
         case 1:
-            if row == 0 {
-                pickerView.selectRow(row + 1, inComponent: 0, animated: true)
-                seconds = 1
-            } else {
+//            if row == 0 {
+//                pickerView.selectRow(row + 1, inComponent: 0, animated: true)
+//                seconds = 1
+//            } else {
                 seconds = row
-            }
+//            }
         default:
             break
         }
