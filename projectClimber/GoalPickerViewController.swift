@@ -15,25 +15,47 @@ class GoalPickerViewController: UIViewController {
 
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 40, weight: .semibold)
-        label.text = "Goal Type"
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.text = "Select Goal Type"
+        label.contentHuggingPriority(for: .vertical)
         
         return label
     }()
     
     let subTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.7
+        label.minimumScaleFactor = 0.6
         label.numberOfLines = 2
         label.textColor = .systemGray2
-        label.text = "Select goal type for your next workout."
+        label.text = "You can choose something here. But I don't know how to describe this."
+        label.contentHuggingPriority(for: .vertical)
         
         return label
     }()
     
-    let stackView: UIStackView = {
+    let outerMostStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .center
+        stack.spacing = 15
+        
+        return stack
+    }()
+    
+    let labelsStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .center
+        stack.spacing = 15
+        
+        return stack
+    }()
+    
+    let buttonsStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fillEqually
@@ -66,6 +88,7 @@ class GoalPickerViewController: UIViewController {
         configuration.title = "Custom"
         configuration.baseBackgroundColor = UIColor(rgb: 0xEC6A5E)
         configuration.baseForegroundColor = UIColor(rgb: 0x8C1A10)
+//        configuration.buttonSize = .medium
         configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
         button.addTarget(nil, action: #selector(customGoalButtonTapped), for: .touchUpInside)
@@ -154,17 +177,16 @@ class GoalPickerViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
+//            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//
+//            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+//            subTitleLabel.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
             
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            subTitleLabel.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
-            
-            stackView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 30),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
-            
+            outerMostStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
+            outerMostStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            outerMostStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            outerMostStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15),
             
             openGoalCircle.centerXAnchor.constraint(equalTo: openGoalButton.centerXAnchor),
             openGoalCircle.topAnchor.constraint(equalTo: openGoalButton.bottomAnchor, constant: 10),
@@ -180,21 +202,26 @@ class GoalPickerViewController: UIViewController {
     //MARK: Helper methods
     func configureView() {
         self.view.backgroundColor = .white
-        stackView.addArrangedSubview(openGoalButton)
-        stackView.addArrangedSubview(customGoalButton)
-        stackView.addArrangedSubview(timeGoalButton)
+        buttonsStackView.addArrangedSubview(openGoalButton)
+        buttonsStackView.addArrangedSubview(timeGoalButton)
+        buttonsStackView.addArrangedSubview(customGoalButton)
         
-        self.view.addSubview(titleLabel)
-        self.view.addSubview(subTitleLabel)
+        labelsStackView.addArrangedSubview(titleLabel)
+        
+        outerMostStack.addArrangedSubview(labelsStackView)
+        outerMostStack.addArrangedSubview(buttonsStackView)
+        
+        self.view.addSubview(outerMostStack)
         self.view.addSubview(openGoalCircle)
         self.view.addSubview(customGoalCircle)
         self.view.addSubview(timeGoalCircle)
         
-        self.view.addSubview(stackView)
+//        self.view.addSubview(buttonsStackView)
         
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.stackView.translatesAutoresizingMaskIntoConstraints = false
+//        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+//        self.subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.outerMostStack.translatesAutoresizingMaskIntoConstraints = false
+//        self.buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
         self.openGoalCircle.translatesAutoresizingMaskIntoConstraints = false
         self.customGoalCircle.translatesAutoresizingMaskIntoConstraints = false
         self.timeGoalCircle.translatesAutoresizingMaskIntoConstraints = false

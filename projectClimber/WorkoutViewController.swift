@@ -23,26 +23,19 @@ class WorkoutViewController: UIViewController {
     
     private let stackView:  UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
         stackView.alignment = .center
-        stackView.spacing = 10
+        stackView.spacing = 8
         
         return stackView
     }()
     
     private let firstTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Finger"
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
-        label.textColor = .white
-        
-        return label
-    }()
-    
-    private let secondTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Workout"
+        label.text = "Finger Workout"
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.8
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.textColor = .white
         
@@ -60,6 +53,19 @@ class WorkoutViewController: UIViewController {
         
         return label
     }()
+    
+    private let workoutSettingsRepresentation: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.6
+        label.textColor = .white
+        label.numberOfLines = 0
+        
+        return label
+    }()
+    
     
     private let overviewFingerWorkoutBackground: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "FingerWorkoutImage"))
@@ -80,14 +86,14 @@ class WorkoutViewController: UIViewController {
             configuration.image = UIImage(systemName: "play.fill")
             configuration.attributedTitle = "Start"
             configuration.imagePadding = 10
-            configuration.imagePlacement = .trailing
+            configuration.imagePlacement = .leading
             configuration.baseBackgroundColor = .systemBlue.withAlphaComponent(0.8)
             configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
 
             button.addTarget(nil, action: #selector(startButtonTapped), for: .touchUpInside)
             
-
+            
             return button
         } else {
             return UIButton()
@@ -95,9 +101,8 @@ class WorkoutViewController: UIViewController {
     }()
   
     private let settingsWorkoutButton: UIButton = {
-        var configuration = UIButton.Configuration.filled()
-        configuration.baseBackgroundColor = .systemGray5
-        configuration.baseForegroundColor = .systemGray
+        var configuration = UIButton.Configuration.gray()
+        configuration.image = UIImage(systemName: "gear")
         configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
         button.addTarget(nil, action: #selector(settingsWorkoutButtonTapped), for: .touchUpInside)
@@ -105,6 +110,20 @@ class WorkoutViewController: UIViewController {
         
         return button
     }()
+    
+    private let showGoalTypesButton: UIButton = {
+        var configuration = UIButton.Configuration.gray()
+//        configuration.baseBackgroundColor = .white
+        configuration.image = UIImage(systemName: "ellipsis")
+        configuration.buttonSize = .large
+        let button = UIButton(configuration: configuration, primaryAction: nil)
+
+        button.addTarget(nil, action: #selector(changeGoalTypeButtonTapped), for: .touchUpInside)
+        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        return button
+    }()
+
+    
     
     var workoutParameters: WorkoutParamters = WorkoutParamters()
         
@@ -122,8 +141,8 @@ class WorkoutViewController: UIViewController {
             
 //            overviewFingerWorkoutBackground.heightAnchor.constraint(equalTo: overviewFingerWorkoutBackground.widthAnchor, multiplier: 3/2),
             overviewFingerWorkoutBackground.topAnchor.constraint(equalTo: margins.topAnchor, constant: 0),
-            overviewFingerWorkoutBackground.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
-            overviewFingerWorkoutBackground.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
+            overviewFingerWorkoutBackground.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 0),
+            overviewFingerWorkoutBackground.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 0),
             
             changeGoalTypeButton.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.topAnchor, constant: 20),
             changeGoalTypeButton.trailingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.trailingAnchor, constant: -10),
@@ -131,22 +150,24 @@ class WorkoutViewController: UIViewController {
             firstTitleLabel.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.topAnchor, constant: 20),
             firstTitleLabel.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
             
-            secondTitleLabel.topAnchor.constraint(equalTo: firstTitleLabel.bottomAnchor, constant: 5),
-            secondTitleLabel.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
-            
-            workoutDescriptionLabel.topAnchor.constraint(equalTo: secondTitleLabel.bottomAnchor, constant: 15),
+            workoutDescriptionLabel.topAnchor.constraint(equalTo: firstTitleLabel.bottomAnchor, constant: 15),
             workoutDescriptionLabel.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
             workoutDescriptionLabel.trailingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.trailingAnchor, constant: -20),
             
-            settingsWorkoutButton.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.bottomAnchor, constant: 15),
-            settingsWorkoutButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
-            settingsWorkoutButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
+            workoutSettingsRepresentation.topAnchor.constraint(equalTo: workoutDescriptionLabel.bottomAnchor, constant: 15),
+            workoutSettingsRepresentation.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
+            workoutSettingsRepresentation.trailingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.trailingAnchor, constant: -20),
+            
+            
+//            settingsWorkoutButton.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.bottomAnchor, constant: 15),
+//            settingsWorkoutButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
+//            settingsWorkoutButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
 //            settingsWorkoutButton.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20)
             
-            startButton.topAnchor.constraint(equalTo: settingsWorkoutButton.bottomAnchor, constant: 15),
-            startButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
-            startButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
-            startButton.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -15)
+            stackView.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.bottomAnchor, constant: 8),
+            stackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 0),
+            stackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 0),
+            stackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -10)
         ])
     }
     
@@ -160,21 +181,27 @@ class WorkoutViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Workout"
         
+        stackView.addArrangedSubview(startButton)
+        stackView.addArrangedSubview(settingsWorkoutButton)
+        stackView.addArrangedSubview(showGoalTypesButton)
+        
         view.addSubview(overviewFingerWorkoutBackground)
-        view.addSubview(changeGoalTypeButton)
-        view.addSubview(settingsWorkoutButton)
-        view.addSubview(startButton)
         view.addSubview(firstTitleLabel)
-        view.addSubview(secondTitleLabel)
         view.addSubview(workoutDescriptionLabel)
+        view.addSubview(workoutSettingsRepresentation)
+        
+        view.addSubview(stackView)
+        view.addSubview(changeGoalTypeButton)
+        
         
         changeGoalTypeButton.translatesAutoresizingMaskIntoConstraints = false
-        settingsWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
-        startButton.translatesAutoresizingMaskIntoConstraints = false
+//        settingsWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         overviewFingerWorkoutBackground.translatesAutoresizingMaskIntoConstraints = false
         firstTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        secondTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+//        secondTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         workoutDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        workoutSettingsRepresentation.translatesAutoresizingMaskIntoConstraints = false
         
         updateUI()
     }
@@ -192,28 +219,27 @@ class WorkoutViewController: UIViewController {
     }
     
     func changeConfigurationForSettingsWorkoutButton() {
-        var configuration = UIButton.Configuration.filled()
+        var configuration = UIButton.Configuration.gray()
         configuration.imagePadding = 10
-        configuration.baseBackgroundColor = .systemGray5
-        configuration.baseForegroundColor = .systemGray
         configuration.buttonSize = .large
         
         let parameters = self.workoutParameters
         
         switch parameters.workoutGoal {
         case .openGoal:
-            configuration.attributedTitle = "Unavailable"
+            workoutSettingsRepresentation.text = ""
             settingsWorkoutButton.isEnabled = false
         case .custom:
             // Need to calculate duration according to duration of each split and rest and their quantity
             let duration = (parameters.durationOfEachRest * parameters.numberOfRests)
             + (parameters.durationOfEachSplit * parameters.numberOfSplits)
-            configuration.title = "Splits: \(parameters.numberOfSplits)  Duration: \(String.makeTimeString(seconds: duration, withLetterDescription: true))"
+            workoutSettingsRepresentation.text = "Splits: \(parameters.numberOfSplits)\nDuration: \(String.makeTimeString(seconds: duration, withLetterDescription: true))"
             settingsWorkoutButton.isEnabled = true
         case .time:
-            configuration.title = "Duration: \(String.makeTimeString(seconds: parameters.durationForTimeGoal, withLetterDescription: true))"
+            workoutSettingsRepresentation.text = "Duration: \(String.makeTimeString(seconds: parameters.durationForTimeGoal, withLetterDescription: true))"
             settingsWorkoutButton.isEnabled = true
         }
+        configuration.image = UIImage(systemName: "gear")
         self.settingsWorkoutButton.configuration = configuration
     }
     
@@ -257,18 +283,37 @@ class WorkoutViewController: UIViewController {
     }
     
     @objc func settingsWorkoutButtonTapped() {
-        let vc = TimeGoalSettingsViewController()
-        vc.delegate = self
-        let parameters = self.workoutParameters
-        vc.minutes = (parameters.durationForTimeGoal % 3600) / 60
-        vc.seconds =  (parameters.durationForTimeGoal % 3600) % 60
-        let controllerToPresent = UINavigationController(rootViewController: vc)
-        if let sheet = controllerToPresent.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.preferredCornerRadius = 15
-        }
         
-        self.present(controllerToPresent, animated: true)
+        if workoutParameters.workoutGoal == .time {
+            
+            let timeGoalController = TimeGoalSettingsViewController()
+            timeGoalController.delegate = self
+            let parameters = self.workoutParameters
+            timeGoalController.minutes = (parameters.durationForTimeGoal % 3600) / 60
+            timeGoalController.seconds =  (parameters.durationForTimeGoal % 3600) % 60
+            let controllerToPresent = UINavigationController(rootViewController: timeGoalController)
+            if let sheet = controllerToPresent.sheetPresentationController {
+                sheet.detents = [.medium()]
+                sheet.preferredCornerRadius = 15
+            }
+            self.present(controllerToPresent, animated: true)
+            
+        } else if workoutParameters.workoutGoal == .custom {
+            
+            let customGoalController = CustomGoalSettingsViewController()
+            let parameters = self.workoutParameters
+            customGoalController.delegate = self
+            customGoalController.timeForSplit = parameters.durationOfEachSplit
+            customGoalController.timeForRest = parameters.durationOfEachRest
+            customGoalController.numberOfSplits = parameters.numberOfSplits
+            if let sheet = customGoalController.sheetPresentationController {
+                sheet.prefersGrabberVisible = true
+                sheet.detents = [.large()]
+                sheet.preferredCornerRadius = 15
+            }
+            self.present(customGoalController, animated: true)
+            
+        }
     }
 }
 
@@ -282,6 +327,15 @@ extension WorkoutViewController: GoalPickerDelegate {
 extension WorkoutViewController: TimeGoalSettingsDelegate {
     func getTime(_ time: Int) {
         self.workoutParameters.durationForTimeGoal = time
+        self.updateUI()
+    }
+}
+
+extension WorkoutViewController: CustomGoalSettingsProtocol {
+    func retrieveSettingsForCustomGoalType(numberOfSplits: Int, timeForSplit: Int, timeForRest: Int) {
+        self.workoutParameters.numberOfSplits = numberOfSplits
+        self.workoutParameters.durationOfEachSplit = timeForSplit
+        self.workoutParameters.durationOfEachRest = timeForRest
         self.updateUI()
     }
 }
