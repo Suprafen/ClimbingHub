@@ -16,7 +16,6 @@ class TimePickerCell: UITableViewCell {
     
     let timePicker: UIPickerView = {
         let timePicker = UIPickerView()
-        timePicker.heightAnchor.constraint(greaterThanOrEqualToConstant: 0).isActive = true
         return timePicker
     }()
     
@@ -48,7 +47,7 @@ class TimePickerCell: UITableViewCell {
             timePicker.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             timePicker.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             timePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-            timePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            timePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15)
         ])
     }
 }

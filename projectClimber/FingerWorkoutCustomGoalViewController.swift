@@ -1,35 +1,13 @@
 //
-//  FingerWorkoutViewController.swift
-//  projectClimber
+//  FingerWorkoutCustomGoalViewController.swift
+//  ClimbingHub
 //
-//  Created by Ivan Pryhara on 4.02.22.
+//  Created by Ivan Pryhara on 11.04.22.
 //
-
 import UIKit
+import SwiftUI
 
-// How does it work?
-// Countdown timer appears on the screen 3..2..1.. Go
-// Countdown timer was invalidated. At this moment started two timers:
-// TotalTimeTimer and Split timer.
-// ---------
-// REST BUTTON
-// When user tap rest button (the most left one) rest mode activated;
-// Split timer was invalidated. Splits array is appanded by split;
-// Total time timer, meanwhile, still counting.
-// If user tap to rest button, the action is active workout mode and new split is calculating.
-// ---------
-// PAUSE MODE
-// Both timers will be invalidated (if were active);
-// Rest mode button is disabled, although if a user was in the rest mode this state would be save;
-// Another tap on pause button returns to previous workout state either rest or active mode;
-// ---------
-// CANCEL
-// Check wheter timers are active. If so, invalidate them
-// If workout lasted less than 30 seconds, data won't be saved and splits array will be erased, regardless number of splits;
-// Otherwise, array will be populated last time with split
-// View will be dismissed in any case
-
-class FingerWorkoutViewController: UIViewController {
+class FingerWorkoutCustomGoalViewController: UIViewController {
 
     private let buttonsStackView: UIStackView = {
        let stack = UIStackView()
@@ -69,23 +47,6 @@ class FingerWorkoutViewController: UIViewController {
             let button = UIButton(configuration: configuration, primaryAction: nil)
             button.addTarget(nil, action: #selector(anyButtonTapped(_:)), for: .touchDown)
             button.addTarget(nil, action: #selector(cancelButtonTapped), for: .touchUpInside)
-            
-            return button
-        } else {
-            return UIButton()
-        }
-    }()
-    
-    private let restButton: UIButton = {
-        if #available(iOS 15, *) {
-            var configuration = UIButton.Configuration.filled()
-            configuration.image = UIImage(systemName: "figure.stand")
-            configuration.baseBackgroundColor = UIColor(rgb: 0x62C654)
-            configuration.baseForegroundColor = UIColor(rgb: 0x296117)
-            configuration.buttonSize = .large
-            let button = UIButton(configuration: configuration, primaryAction: nil)
-            button.addTarget(nil, action: #selector(anyButtonTapped(_:)), for: .touchDown)
-            button.addTarget(nil, action: #selector(restButtonTapped), for: .touchUpInside)
             
             return button
         } else {
@@ -141,12 +102,15 @@ class FingerWorkoutViewController: UIViewController {
     var workoutParameters: WorkoutParamters!
     
     private var countDownCounter: Int = 3
+    private var splitsDone: Int = 0
     private var totalTimeCounter: Int = 0
     private var splitTimeCounter: Int = 0
+    private var restTimeCounter: Int = 0
     
     private var countDownTimer: Timer!
     private var totalTimeTimer: Timer!
     private var splitTimer: Timer!
+    private var restTimer: Timer!
     
     private var splits: [Int] = []
     private var longestSplit: Int = 0
@@ -159,7 +123,7 @@ class FingerWorkoutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.restTimeCounter = self.workoutParameters.durationOfEachRest
         configureView()
         countDownTimerPerform(withInterval: 1, duration: 3)
     }
@@ -208,7 +172,6 @@ class FingerWorkoutViewController: UIViewController {
         
         buttonsStackView.addArrangedSubview(cancelButton)
         buttonsStackView.addArrangedSubview(pauseButton)
-        buttonsStackView.addArrangedSubview(restButton)
         
         view.addSubview(countDownLabel)
         view.addSubview(splitLabel)
@@ -241,6 +204,11 @@ class FingerWorkoutViewController: UIViewController {
         RunLoop.current.add(splitTimer, forMode: .common)
     }
     
+    func restTimerPerform(timeInterval: Double) {
+        restTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(restTimerFire), userInfo: nil, repeats: true)
+        RunLoop.current.add(splitTimer, forMode: .common)
+    }
+    
     // MARK: Selectors
     
     @objc func pauseButtonTapped(sender: UIButton) {
@@ -251,7 +219,7 @@ class FingerWorkoutViewController: UIViewController {
         // we'll wake them
         if !splitTimer.isValid && !totalTimeTimer.isValid {
             //rest button again enable for us
-            restButton.isEnabled = true
+            
             splitLabel.textColor = .black
             // if the rest mode is not active launch split timer
             // otherwise do nothing
@@ -263,8 +231,8 @@ class FingerWorkoutViewController: UIViewController {
             // if conditional different, that means that timers are active,
             // so we invalidate them and turn on pause mode
         } else {
-            // the rest button is no longer available
-            restButton.isEnabled = false
+            
+            
             splitLabel.textColor = .systemGray
             // if the rest mode is not active, invalidate split timer
             if !isRestModeActive {
@@ -310,7 +278,7 @@ class FingerWorkoutViewController: UIViewController {
             instance.date = Date()
             instance.splits.append(objectsIn: splits)
             instance.totalTime = totalTimeCounter
-            instance.goalType = .openGoal
+            instance.goalType = .custom
             RealmManager.sharedInstance.saveData(object: instance)
             
         }
@@ -409,20 +377,90 @@ class FingerWorkoutViewController: UIViewController {
     }
     
     @objc func totalTimeTimerFire() {
+        
+//        if totalTimeCounter != self.workoutParameters.durationOfWorkout {
+//
+//        } else {
+//            //TODO: Return new instance of workout
+//            dismiss(animated: true)
+//        }
         totalTimeCounter += 1
     }
     
     @objc func splitTimerFire() {
-        splitTimeCounter += 1
+        guard splitsDone < workoutParameters.numberOfSplits else {
+            splitTimer.invalidate()
+            //TODO: Add an instance to the realm
+            dismiss(animated: true)
+            return
+        }
         
-//        let timeString = makeTimeString(hours: time.0, minutes: time.1, seconds: time.2)
-        let timeString = String.makeTimeString(seconds: splitTimeCounter, withLetterDescription: false)
-        splitLabel.text = timeString
+        if splitTimeCounter < workoutParameters.durationOfEachSplit {
+            self.splitTimeCounter += 1
+            let timeString = String.makeTimeString(seconds: splitTimeCounter, withLetterDescription: false)
+            splitLabel.text = timeString
+        } else {
+            // Append split to the array
+            self.splits.append(self.splitTimeCounter)
+            // Reload table view
+            self.splitsTableView.reloadData()
+            
+            self.splitTimeCounter = self.workoutParameters.durationOfEachRest
+            self.restTimeCounter = self.workoutParameters.durationOfEachRest
+            self.splitsDone += 1
+            guard splitsDone < workoutParameters.numberOfSplits else {
+                
+                let instance = Workout()
+                instance.date = Date()
+                instance.splits.append(objectsIn: splits)
+                instance.totalTime = totalTimeCounter
+                instance.goalType = self.workoutParameters.workoutGoal
+                RealmManager.sharedInstance.saveData(object: instance)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(20)) {
+                    self.dismiss(animated: true) 
+                }
+                return
+            }
+            print("Splits done \(splitsDone)")
+            splitTimer.invalidate()
+            self.restTimerPerform(timeInterval: 1)
+            
+            UIView.animate(withDuration: 0.2, delay: 0) {
+                self.splitLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+            } completion: { _ in
+                UIView.animate(withDuration: 0.2, delay: 0) {
+                    self.splitLabel.transform = .identity
+                    self.splitLabel.text = "\(self.splitTimeCounter)"
+                }
+            }
+        }
+    }
+    
+    @objc func restTimerFire() {
+        if restTimeCounter > 1 {
+            self.restTimeCounter -= 1
+            let timeString = restTimeCounter
+            splitLabel.text = "\(timeString)"
+        } else {
+            self.splitTimeCounter = 0
+            restTimer.invalidate()
+            self.splitTimerPerform(timeInterval: 1)
+            
+            UIView.animate(withDuration: 0.2, delay: 0) {
+                self.splitLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+            } completion: { _ in
+                UIView.animate(withDuration: 0.2, delay: 0) {
+                    self.splitLabel.transform = .identity
+                    self.splitLabel.text = String.makeTimeString(seconds: self.splitTimeCounter, withLetterDescription: false)
+                }
+            }
+        }
     }
 }
 
 //MARK: Table view protocols
-extension FingerWorkoutViewController: UITableViewDelegate, UITableViewDataSource {
+extension FingerWorkoutCustomGoalViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.splits.count
     }

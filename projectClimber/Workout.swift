@@ -8,13 +8,13 @@
 import Foundation
 import RealmSwift
 
-enum WorkoutGoal: String, PersistableEnum {
+enum WorkoutGoal: String, Codable, PersistableEnum {
     case openGoal = "Open Goal"
     case time = "Time"
     case custom = "Custom"
 }
 
-enum WorkoutType: String, PersistableEnum {
+enum WorkoutType: String, Codable, PersistableEnum {
     case fingerWorkout = "Finger Workout"
 }
 // Type for statistics
@@ -86,7 +86,7 @@ struct SectionForHistory: Hashable{
     }
 }
 
-struct WorkoutParamters {
+struct WorkoutParamters: Codable {
     var workoutGoal: WorkoutGoal = .openGoal
     var workoutType: WorkoutType = .fingerWorkout
     var numberOfSplits: Int = 10
@@ -96,4 +96,9 @@ struct WorkoutParamters {
     var durationOfEachSplit: Int = 30
     var durationOfEachRest: Int = 10
     var durationForTimeGoal: Int = 600
+    
+    var durationOfWorkout: Int {
+        get { (durationOfEachRest * numberOfRests)
+            + (durationOfEachSplit * numberOfSplits)}
+    }
 }

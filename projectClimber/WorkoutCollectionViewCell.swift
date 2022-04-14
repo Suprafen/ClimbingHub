@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import SwiftUI
 
 class WorkoutCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "WorkoutViewCell"
@@ -60,6 +61,12 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
+    let insideCirlceImage: UIImageView = {
+        let image = UIImageView(image: UIImage(systemName: "infinity"))
+        
+        return image
+    }()
+    
     let circle: UIView = {
         
         let circleDiameter = UIScreen.main.bounds.height / 13
@@ -91,10 +98,13 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         labelsStackView.addArrangedSubview(timeLabel)
         labelsStackView.addArrangedSubview(workoutTitleLabel)
         
+        addSubview(insideCirlceImage)
+        
         addSubview(circle)
         addSubview(labelsStackView)
         addSubview(chevronImage)
         
+        insideCirlceImage.translatesAutoresizingMaskIntoConstraints = false
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         chevronImage.translatesAutoresizingMaskIntoConstraints = false
         circle.translatesAutoresizingMaskIntoConstraints = false
@@ -103,6 +113,9 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
             circle.centerYAnchor.constraint(equalTo: centerYAnchor),
             circle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             circle.trailingAnchor.constraint(equalTo: labelsStackView.leadingAnchor, constant: -20),
+            
+            insideCirlceImage.centerXAnchor.constraint(equalTo: circle.centerXAnchor),
+            insideCirlceImage.centerYAnchor.constraint(equalTo: circle.centerYAnchor),
             
             labelsStackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             labelsStackView.trailingAnchor.constraint(equalTo: chevronImage.leadingAnchor, constant: -10),
@@ -124,5 +137,19 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         workoutTitleLabel.text = workout.type.rawValue
         dateLabel.text = dateFormatter.string(from: workout.date)
         timeLabel.text = String.makeTimeString(seconds: workout.totalTime, withLetterDescription: true)
+        switch workout.goalType {
+        case .openGoal:
+            self.circle.backgroundColor = .systemBlue
+            self.insideCirlceImage.tintColor = .systemBlue
+            self.insideCirlceImage.image = UIImage(systemName: "infinity")
+        case .time:
+            self.circle.backgroundColor = UIColor(rgb: 0xF4BF4F)
+            self.insideCirlceImage.tintColor = UIColor(rgb: 0xF4BF4F)
+            self.insideCirlceImage.image = UIImage(systemName: "timer")
+        case .custom:
+            self.circle.backgroundColor = UIColor(rgb: 0xEC6A5E)
+            self.insideCirlceImage.tintColor = UIColor(rgb: 0xEC6A5E)
+            self.insideCirlceImage.image = UIImage(systemName: "wrench")
+        }
     }
 }

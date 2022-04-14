@@ -75,6 +75,7 @@ class GoalPickerViewController: UIViewController {
         configuration.baseForegroundColor = .systemBlue
         configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
+        button.addTarget(nil, action: #selector(anyButtonTapped), for: .touchDown)
         button.addTarget(nil, action: #selector(openGoalButtonTapped), for: .touchUpInside)
             
         return button
@@ -91,6 +92,7 @@ class GoalPickerViewController: UIViewController {
 //        configuration.buttonSize = .medium
         configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
+        button.addTarget(nil, action: #selector(anyButtonTapped(sender:)), for: .touchDown)
         button.addTarget(nil, action: #selector(customGoalButtonTapped), for: .touchUpInside)
             
         return button
@@ -106,6 +108,7 @@ class GoalPickerViewController: UIViewController {
         configuration.baseForegroundColor = UIColor(rgb: 0x8E5A1D)
         configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
+        button.addTarget(nil, action: #selector(anyButtonTapped(sender:)), for: .touchDown)
         button.addTarget(nil, action: #selector(timeGoalButtonTapped), for: .touchUpInside)
             
         return button
@@ -263,10 +266,9 @@ class GoalPickerViewController: UIViewController {
     //MARK: Selectors
     @objc func openGoalButtonTapped(sender: UIButton) {
         UIView.animate(withDuration: 0.1) {
-            sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            sender.transform = CGAffineTransform.identity
         } completion: { _ in
             UIView.animate(withDuration: 0.1) {
-                sender.transform = CGAffineTransform.identity
                 self.openGoalCircle.isHidden = false
                 self.customGoalCircle.isHidden = true
                 self.timeGoalCircle.isHidden = true
@@ -277,10 +279,9 @@ class GoalPickerViewController: UIViewController {
     
     @objc func customGoalButtonTapped(sender: UIButton) {
         UIView.animate(withDuration: 0.1) {
-            sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            sender.transform = CGAffineTransform.identity
         } completion: { _ in
             UIView.animate(withDuration: 0.1) {
-                sender.transform = CGAffineTransform.identity
                 self.openGoalCircle.isHidden = true
                 self.customGoalCircle.isHidden = false
                 self.timeGoalCircle.isHidden = true
@@ -291,10 +292,9 @@ class GoalPickerViewController: UIViewController {
     
     @objc func timeGoalButtonTapped(sender: UIButton) {
         UIView.animate(withDuration: 0.1) {
-            sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            sender.transform = CGAffineTransform.identity
         } completion: { _ in
             UIView.animate(withDuration: 0.1) {
-                sender.transform = CGAffineTransform.identity
                 self.openGoalCircle.isHidden = true
                 self.customGoalCircle.isHidden = true
                 self.timeGoalCircle.isHidden = false
@@ -305,5 +305,11 @@ class GoalPickerViewController: UIViewController {
     
     @objc func dismissButtonTapped() {
         dismiss(animated: true)
+    }
+    
+    @objc func anyButtonTapped(sender: UIButton) {
+        UIView.animate(withDuration: 0.1, delay: 0) {
+            sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        }
     }
 }

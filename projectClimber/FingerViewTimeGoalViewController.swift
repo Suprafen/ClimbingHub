@@ -1,35 +1,14 @@
 //
-//  FingerWorkoutViewController.swift
-//  projectClimber
+//  FingerViewTimeGoalViewController.swift
+//  ClimbingHub
 //
-//  Created by Ivan Pryhara on 4.02.22.
+//  Created by Ivan Pryhara on 7.04.22.
 //
 
 import UIKit
+import SwiftUI
 
-// How does it work?
-// Countdown timer appears on the screen 3..2..1.. Go
-// Countdown timer was invalidated. At this moment started two timers:
-// TotalTimeTimer and Split timer.
-// ---------
-// REST BUTTON
-// When user tap rest button (the most left one) rest mode activated;
-// Split timer was invalidated. Splits array is appanded by split;
-// Total time timer, meanwhile, still counting.
-// If user tap to rest button, the action is active workout mode and new split is calculating.
-// ---------
-// PAUSE MODE
-// Both timers will be invalidated (if were active);
-// Rest mode button is disabled, although if a user was in the rest mode this state would be save;
-// Another tap on pause button returns to previous workout state either rest or active mode;
-// ---------
-// CANCEL
-// Check wheter timers are active. If so, invalidate them
-// If workout lasted less than 30 seconds, data won't be saved and splits array will be erased, regardless number of splits;
-// Otherwise, array will be populated last time with split
-// View will be dismissed in any case
-
-class FingerWorkoutViewController: UIViewController {
+class FingerViewTimeGoalViewController: UIViewController {
 
     private let buttonsStackView: UIStackView = {
        let stack = UIStackView()
@@ -50,7 +29,6 @@ class FingerWorkoutViewController: UIViewController {
             configuration.baseForegroundColor = UIColor(rgb: 0x8E5A1D)
             configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
-            button.addTarget(nil, action: #selector(anyButtonTapped(_:)), for: .touchDown)
             button.addTarget(nil, action: #selector(pauseButtonTapped), for: .touchUpInside)
             
             return button
@@ -67,7 +45,6 @@ class FingerWorkoutViewController: UIViewController {
             configuration.baseForegroundColor = UIColor(rgb: 0x8C1A10)
             configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
-            button.addTarget(nil, action: #selector(anyButtonTapped(_:)), for: .touchDown)
             button.addTarget(nil, action: #selector(cancelButtonTapped), for: .touchUpInside)
             
             return button
@@ -84,7 +61,6 @@ class FingerWorkoutViewController: UIViewController {
             configuration.baseForegroundColor = UIColor(rgb: 0x296117)
             configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
-            button.addTarget(nil, action: #selector(anyButtonTapped(_:)), for: .touchDown)
             button.addTarget(nil, action: #selector(restButtonTapped), for: .touchUpInside)
             
             return button
@@ -136,9 +112,29 @@ class FingerWorkoutViewController: UIViewController {
         return view
     }()
     
+    private let goalAnnouncementLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Goal Complete!"
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.isHidden = true
+        
+        return label
+    }()
+    
+    private let progressView: UIProgressView = {
+        let progressView = UIProgressView(progressViewStyle: .bar)
+        progressView.trackTintColor = .systemGray6
+        progressView.progressTintColor = .systemOrange
+        progressView.setProgress(0, animated: false)
+        progressView.isHidden = true
+        
+        return progressView
+    }()
+    
     //MARK: Properties
     
-    var workoutParameters: WorkoutParamters!
+    // in seconds
+    var timeGoal: Int = 0
     
     private var countDownCounter: Int = 3
     private var totalTimeCounter: Int = 0
@@ -179,6 +175,10 @@ class FingerWorkoutViewController: UIViewController {
             splitLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
             splitLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
             
+            progressView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
+            progressView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
+            progressView.bottomAnchor.constraint(equalTo: tableViewBackgroundView.topAnchor, constant: -20),
+            
             tableViewBackgroundView.topAnchor.constraint(greaterThanOrEqualTo: splitLabel.bottomAnchor, constant: 50),
             tableViewBackgroundView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
             tableViewBackgroundView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
@@ -191,6 +191,9 @@ class FingerWorkoutViewController: UIViewController {
             splitsTableView.leadingAnchor.constraint(equalTo: tableViewBackgroundView.leadingAnchor, constant: 20),
             splitsTableView.trailingAnchor.constraint(equalTo: tableViewBackgroundView.trailingAnchor, constant: -20),
             splitsTableView.bottomAnchor.constraint(equalTo: tableViewBackgroundView.bottomAnchor, constant: -20),
+            
+            goalAnnouncementLabel.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
+            goalAnnouncementLabel.bottomAnchor.constraint(equalTo: tableViewBackgroundView.topAnchor, constant: -20),
             
             buttonsStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
             buttonsStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
@@ -210,12 +213,17 @@ class FingerWorkoutViewController: UIViewController {
         buttonsStackView.addArrangedSubview(pauseButton)
         buttonsStackView.addArrangedSubview(restButton)
         
+        view.addSubview(progressView)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(countDownLabel)
         view.addSubview(splitLabel)
         view.addSubview(tableViewBackgroundView)
         view.addSubview(tableViewTitleLabel)
         view.addSubview(splitsTableView)
         view.addSubview(buttonsStackView)
+        view.addSubview(goalAnnouncementLabel)
+        
         
         countDownLabel.translatesAutoresizingMaskIntoConstraints = false
         splitLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -223,6 +231,7 @@ class FingerWorkoutViewController: UIViewController {
         tableViewTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         splitsTableView.translatesAutoresizingMaskIntoConstraints = false
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        goalAnnouncementLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     // MARK: Timers' perform methods
     
@@ -231,6 +240,12 @@ class FingerWorkoutViewController: UIViewController {
         countDownTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(countDownTimerFire), userInfo: nil, repeats: true)
     }
 
+    func countDownTimerPerformCongratsLabel(withInterval timeInterval: Double, duration countDownCounterValue: Int) {
+        countDownCounter = countDownCounterValue
+        countDownTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(countDownTimerCongratsLabelShow), userInfo: nil, repeats: true)
+    }
+    
+    
     func totalTimeTimerPerform(timeInterval: Double) {
         totalTimeTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(totalTimeTimerFire), userInfo: nil, repeats: true)
         RunLoop.current.add(totalTimeTimer, forMode: .common)
@@ -275,11 +290,15 @@ class FingerWorkoutViewController: UIViewController {
         }
         
         UIView.animate(withDuration: 0.1) {
-            sender.transform = CGAffineTransform.identity
+            sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.1) {
+                sender.transform = CGAffineTransform.identity
+            }
         }
     }
     
-    @objc func cancelButtonTapped(sender: UIButton) {
+    @objc func cancelButtonTapped() {
         // check if timers are valid
         if splitTimer.isValid { splitTimer.invalidate() }
         if totalTimeTimer.isValid { totalTimeTimer.invalidate() }
@@ -310,12 +329,9 @@ class FingerWorkoutViewController: UIViewController {
             instance.date = Date()
             instance.splits.append(objectsIn: splits)
             instance.totalTime = totalTimeCounter
-            instance.goalType = .openGoal
+            instance.goalType = .time
             RealmManager.sharedInstance.saveData(object: instance)
             
-        }
-        UIView.animate(withDuration: 0.1) {
-            sender.transform = CGAffineTransform.identity
         }
     }
     
@@ -365,13 +381,11 @@ class FingerWorkoutViewController: UIViewController {
         }
         
         UIView.animate(withDuration: 0.1) {
-            sender.transform = CGAffineTransform.identity
-        }
-    }
-    
-    @objc func anyButtonTapped(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.1, delay: 0) {
             sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.1) {
+                sender.transform = CGAffineTransform.identity
+            }
         }
     }
     
@@ -392,6 +406,7 @@ class FingerWorkoutViewController: UIViewController {
         } else {
             // invalidate timer
             countDownTimer?.invalidate()
+            countDownCounter = 3
             // asign to nil
             countDownTimer = nil
             // make label hidden
@@ -402,13 +417,43 @@ class FingerWorkoutViewController: UIViewController {
             self.buttonsStackView.isHidden = false
             self.tableViewBackgroundView.isHidden = false
             self.tableViewTitleLabel.isHidden = false
+            self.progressView.isHidden = false
             // awake timer
             totalTimeTimerPerform(timeInterval: 1)
             splitTimerPerform(timeInterval: 1)
         }
     }
     
+    @objc func countDownTimerCongratsLabelShow() {
+        if countDownCounter > 0 {
+            countDownCounter -= 1
+        
+        } else {
+            countDownTimer?.invalidate()
+            countDownTimer = nil
+            UIView.animate(withDuration: 0.4) {
+                self.goalAnnouncementLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+            } completion: { _ in
+                self.goalAnnouncementLabel.isHidden = true
+            }
+        }
+        
+    }
+
     @objc func totalTimeTimerFire() {
+        
+        
+        if totalTimeCounter < timeGoal {
+            self.progressView.setProgress(Float(self.totalTimeCounter)/Float(self.timeGoal), animated: true)
+        } else if totalTimeCounter == timeGoal {
+            self.progressView.isHidden = true
+            self.countDownTimerPerformCongratsLabel(withInterval: 1.0, duration: self.countDownCounter)
+            self.goalAnnouncementLabel.isHidden = false
+            self.goalAnnouncementLabel.transform = CGAffineTransform(scaleX: 0, y: 0)
+            UIView.animate(withDuration: 0.4) {
+                self.goalAnnouncementLabel.transform = .identity
+            }
+        }
         totalTimeCounter += 1
     }
     
@@ -422,7 +467,7 @@ class FingerWorkoutViewController: UIViewController {
 }
 
 //MARK: Table view protocols
-extension FingerWorkoutViewController: UITableViewDelegate, UITableViewDataSource {
+extension FingerViewTimeGoalViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.splits.count
     }

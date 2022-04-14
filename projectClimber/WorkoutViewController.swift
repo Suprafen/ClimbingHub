@@ -11,16 +11,6 @@ import UIKit
 
 class WorkoutViewController: UIViewController {
 
-    private let changeGoalTypeButton: UIButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "ellipsis.circle")
-        configuration.baseForegroundColor = .white
-        let button = UIButton(configuration: configuration, primaryAction: nil)
-        button.addTarget(nil, action: #selector(changeGoalTypeButtonTapped), for: .touchUpInside)
-        
-        return button
-    }()
-    
     private let stackView:  UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -124,12 +114,16 @@ class WorkoutViewController: UIViewController {
     }()
 
     
-    
+    let userDefaults = UserDefaults.standard
     var workoutParameters: WorkoutParamters = WorkoutParamters()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Check for data in user defaults
+        // If there something we'd saved before, get it
+        // Otherwise use return 
+        self.workoutParameters = decodeData(forKey: "SavedWorkoutParameters")
         configureView()
     }
     
@@ -138,14 +132,9 @@ class WorkoutViewController: UIViewController {
         let margins = view.layoutMarginsGuide
         NSLayoutConstraint.activate([
             
-            
-//            overviewFingerWorkoutBackground.heightAnchor.constraint(equalTo: overviewFingerWorkoutBackground.widthAnchor, multiplier: 3/2),
             overviewFingerWorkoutBackground.topAnchor.constraint(equalTo: margins.topAnchor, constant: 0),
             overviewFingerWorkoutBackground.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 0),
             overviewFingerWorkoutBackground.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 0),
-            
-            changeGoalTypeButton.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.topAnchor, constant: 20),
-            changeGoalTypeButton.trailingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.trailingAnchor, constant: -10),
             
             firstTitleLabel.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.topAnchor, constant: 20),
             firstTitleLabel.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
@@ -158,12 +147,6 @@ class WorkoutViewController: UIViewController {
             workoutSettingsRepresentation.leadingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.leadingAnchor, constant: 20),
             workoutSettingsRepresentation.trailingAnchor.constraint(equalTo: overviewFingerWorkoutBackground.trailingAnchor, constant: -20),
             
-            
-//            settingsWorkoutButton.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.bottomAnchor, constant: 15),
-//            settingsWorkoutButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20),
-//            settingsWorkoutButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -20),
-//            settingsWorkoutButton.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20)
-            
             stackView.topAnchor.constraint(equalTo: overviewFingerWorkoutBackground.bottomAnchor, constant: 8),
             stackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 0),
             stackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 0),
@@ -172,6 +155,24 @@ class WorkoutViewController: UIViewController {
     }
     
     //MARK: Helper methods
+    
+    func decodeData(forKey key: String) -> WorkoutParamters {
+        if let savedParameters = self.userDefaults.object(forKey: key) as? Data {
+            let decoder = JSONDecoder()
+            if let parameters = try? decoder.decode(WorkoutParamters.self, from: savedParameters) {
+                return parameters
+            }
+        }
+        return WorkoutParamters()
+    }
+    
+    func encodeData(_ data: WorkoutParamters) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(data) {
+            self.userDefaults.set(encoded, forKey: "SavedWorkoutParameters")
+        }
+    }
+    
     func setGoal() {
         workoutParameters.workoutGoal = .openGoal
     }
@@ -191,15 +192,10 @@ class WorkoutViewController: UIViewController {
         view.addSubview(workoutSettingsRepresentation)
         
         view.addSubview(stackView)
-        view.addSubview(changeGoalTypeButton)
         
-        
-        changeGoalTypeButton.translatesAutoresizingMaskIntoConstraints = false
-//        settingsWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         overviewFingerWorkoutBackground.translatesAutoresizingMaskIntoConstraints = false
         firstTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        secondTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         workoutDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         workoutSettingsRepresentation.translatesAutoresizingMaskIntoConstraints = false
         
@@ -230,9 +226,8 @@ class WorkoutViewController: UIViewController {
             workoutSettingsRepresentation.text = ""
             settingsWorkoutButton.isEnabled = false
         case .custom:
-            // Need to calculate duration according to duration of each split and rest and their quantity
-            let duration = (parameters.durationOfEachRest * parameters.numberOfRests)
-            + (parameters.durationOfEachSplit * parameters.numberOfSplits)
+            // Need to calculate duration according to the duration of each split and rest and their quantity
+            let duration = parameters.durationOfWorkout
             workoutSettingsRepresentation.text = "Splits: \(parameters.numberOfSplits)\nDuration: \(String.makeTimeString(seconds: duration, withLetterDescription: true))"
             settingsWorkoutButton.isEnabled = true
         case .time:
@@ -261,11 +256,25 @@ class WorkoutViewController: UIViewController {
     //MARK: Selectors
     @objc func startButtonTapped() {
         //define transition
-        let fingerWorkoutViewController = FingerWorkoutViewController()
-        fingerWorkoutViewController.modalPresentationStyle = .fullScreen
-        fingerWorkoutViewController.workoutParameters = self.workoutParameters
+        let currentGoal = self.workoutParameters.workoutGoal
         
-        present(fingerWorkoutViewController, animated: true)
+        switch currentGoal {
+        case .openGoal:
+            let controllerToPresent = FingerWorkoutViewController()
+            controllerToPresent.modalPresentationStyle = .fullScreen
+            present(controllerToPresent, animated: true)
+        case .time:
+            let controllerToPresent = FingerViewTimeGoalViewController()
+            controllerToPresent.timeGoal = self.workoutParameters.durationForTimeGoal
+            controllerToPresent.modalPresentationStyle = .fullScreen
+            present(controllerToPresent, animated: true)
+        case .custom:
+            print("NOTHING_HERE_YET!")
+            let controllerToPresent = FingerWorkoutCustomGoalViewController()
+            controllerToPresent.workoutParameters = self.workoutParameters
+            controllerToPresent.modalPresentationStyle = .fullScreen
+            present(controllerToPresent, animated: true)
+        }
     }
     
     @objc func changeGoalTypeButtonTapped() {
@@ -320,6 +329,7 @@ class WorkoutViewController: UIViewController {
 extension WorkoutViewController: GoalPickerDelegate {
     func getGoalType(_ goalType: WorkoutGoal) {
         self.workoutParameters.workoutGoal = goalType
+        encodeData(self.workoutParameters)
         self.updateUI()
     }
 }
@@ -327,6 +337,7 @@ extension WorkoutViewController: GoalPickerDelegate {
 extension WorkoutViewController: TimeGoalSettingsDelegate {
     func getTime(_ time: Int) {
         self.workoutParameters.durationForTimeGoal = time
+        encodeData(self.workoutParameters)
         self.updateUI()
     }
 }
@@ -336,6 +347,7 @@ extension WorkoutViewController: CustomGoalSettingsProtocol {
         self.workoutParameters.numberOfSplits = numberOfSplits
         self.workoutParameters.durationOfEachSplit = timeForSplit
         self.workoutParameters.durationOfEachRest = timeForRest
+        encodeData(self.workoutParameters)
         self.updateUI()
     }
 }

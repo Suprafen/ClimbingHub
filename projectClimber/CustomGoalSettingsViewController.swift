@@ -23,6 +23,7 @@ class CustomGoalSettingsViewController: UIViewController {
     
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
+        
         return tableView
     }()
     
@@ -33,13 +34,13 @@ class CustomGoalSettingsViewController: UIViewController {
         button.setTitleColor(UIColor.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         button.addTarget(nil, action: #selector(saveButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Cancel", for: .normal)
-//        button.setTitleColor(UIColor.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         button.addTarget(nil, action: #selector(cancelButtonTapped), for: .touchUpInside)
         
@@ -54,11 +55,11 @@ class CustomGoalSettingsViewController: UIViewController {
     
     let titleSplitIndexPath = IndexPath(row: 0, section: 1)
     let splitPickerIndexPath = IndexPath(row: 1, section: 1)
-    var isSplitPickerVisible = true
+    var isSplitPickerVisible = false
     
-    let titleRestIndexPath = IndexPath(row: 0, section: 2)
-    let restPickerIndexPath = IndexPath(row: 1, section: 2)
-    var isRestPickerVisible = true
+    let titleRestIndexPath = IndexPath(row: 2, section: 1)
+    let restPickerIndexPath = IndexPath(row: 3, section: 1)
+    var isRestPickerVisible = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,30 +131,38 @@ extension CustomGoalSettingsViewController: UITableViewDataSource, UITableViewDe
         }
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath {
+        case splitPickerIndexPath:
+            return 190
+        case restPickerIndexPath:
+            return 190
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         tableView.beginUpdates()
-        if indexPath == titleSplitIndexPath && isSplitPickerVisible == false {
+        
+        if indexPath == titleSplitIndexPath && isRestPickerVisible == false {
             isSplitPickerVisible.toggle()
-//            tableView.reloadRows(at: [splitPickerIndexPath], with: .fade)
-        } else if indexPath == titleRestIndexPath && isRestPickerVisible == false {
+        } else if indexPath == titleRestIndexPath && isSplitPickerVisible == false {
             isRestPickerVisible.toggle()
-//            tableView.reloadRows(at: [restPickerIndexPath], with: .fade)
-        }else if indexPath == titleSplitIndexPath{
+        }else if indexPath == titleRestIndexPath || indexPath == titleSplitIndexPath{
+            isRestPickerVisible.toggle()
             isSplitPickerVisible.toggle()
-            tableView.reloadRows(at: [splitPickerIndexPath], with: .fade)
-        } else if indexPath == titleRestIndexPath{
-            isRestPickerVisible.toggle()
-            tableView.reloadRows(at: [restPickerIndexPath], with: .fade)
         } else {
             return
         }
-        
+        tableView.reloadRows(at: [splitPickerIndexPath], with: .fade)
+        tableView.reloadRows(at: [restPickerIndexPath], with: .fade)
         tableView.endUpdates()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -161,7 +170,7 @@ extension CustomGoalSettingsViewController: UITableViewDataSource, UITableViewDe
         case 0:
             return 1
         case 1:
-            return 2
+            return 4
         case 2:
             return 2
         default:
@@ -199,6 +208,10 @@ extension CustomGoalSettingsViewController: UITableViewDataSource, UITableViewDe
                 return cell
             // Picker cell
             case 1:
+                // indexPath - using for tracking which one will be changed
+                // isSplitPicker - boolean value to track whether was split picker or rest picker;
+                // For retrieving right value
+                // minutes and seconds converted time for time picker's default row values
                 let cell = TimePickerCell()
                 cell.delegate = self
                 cell.indexPath = titleSplitIndexPath
@@ -206,7 +219,21 @@ extension CustomGoalSettingsViewController: UITableViewDataSource, UITableViewDe
                 cell.minutes = (self.timeForSplit % 3600) / 60
                 cell.seconds = (self.timeForSplit % 3600) % 60
                 return cell
-
+            case 2:
+                let cell = TitleCell()
+                cell.titleLabel.text = "Rest Duration"
+                cell.numberTitleLabel.text = String.makeTimeString(seconds: timeForRest, withLetterDescription: true)
+                return cell
+            // Picker cell
+            case 3:
+                let cell = TimePickerCell()
+                cell.delegate = self
+                cell.indexPath = titleRestIndexPath
+                cell.isSplitPicker = false
+                cell.minutes = (self.timeForRest % 3600) / 60
+                cell.seconds = (self.timeForRest % 3600) % 60
+                
+                return cell
             default:
                 return UITableViewCell()
             }
@@ -247,6 +274,7 @@ extension CustomGoalSettingsViewController: NumberOfSplitsProtocol {
 
 extension CustomGoalSettingsViewController: TimePickerDelegate {
     func recieveTime(inSeconds time: Int, fromPickerIndexPath indexPathForTitleCell: IndexPath, isSplitPicker: Bool) {
+        // Depends on this value conclude which variable to update
         if isSplitPicker {
             self.timeForSplit = time
         } else {
