@@ -30,24 +30,52 @@ protocol WorkoutInfoProtocol{
 }
 
 class Workout: Object {
+    @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var totalTime: Int
     @Persisted var date: Date
     @Persisted var splits: List<Int>
     @Persisted var type: WorkoutType
     @Persisted var goalType: WorkoutGoal
-    //Computed time on handboard according to splits
+    @Persisted var userID: String
+    //Computed time on hangboard according to splits
     var timeOnHangBoard: Int? {
         return splits.reduce(0) { totalValue, currentNum in
             totalValue + currentNum
         }
     }
+    
+    convenience init(totalTime: Int, date: Date, splits: List<Int>, workoutType: WorkoutType, goalType: WorkoutGoal, userID: String) {
+        self.init()
+        self.totalTime = totalTime
+        self.date = date
+        self.splits = splits
+        self.type = workoutType
+        self.goalType = goalType
+        self.userID = userID
+    }
+}
+
+class User: Object {
+    @Persisted(primaryKey: true) var _id: ObjectId
+    @Persisted var email: String
+    @Persisted var userID: String
+    @Persisted var name: String
+    
+    convenience init(email: String, userID: String, name: String) {
+        self.init()
+        self.email = email
+        self.userID = userID
+        self.name = name
+    }
 }
 // Just a container for statistics array
 class StatContainer: Object {
+    @Persisted(primaryKey: true) var _id: ObjectId
      @Persisted var statistics = List<Statistics>()
 }
 
 class Statistics: Object {
+    @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var titleStatistics: String
     @Persisted var type: StatisticsType
     @Persisted var time: Int

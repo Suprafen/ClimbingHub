@@ -57,7 +57,19 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     var dataSource: DataSource!
     var token: NotificationToken?
+    var workoutRealm: Realm
+    
+    init(workoutRealmConfiguration: Realm.Configuration) {
+        self.workoutRealm = try! Realm(configuration: workoutRealmConfiguration)
+        super.init(collectionViewLayout: UICollectionViewLayout())
 
+//        let workouts
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,10 +77,6 @@ class StatisticsCollectionViewController: UICollectionViewController {
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "checkerboard.shield")
         configuration.baseForegroundColor = .systemBlue.withAlphaComponent(0.8)
-        let privacyPolicyButton = UIButton(configuration: configuration, primaryAction: nil)
-        privacyPolicyButton.addTarget(self, action: #selector(privacyPolicyButtonTapped), for: .touchUpInside)
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: privacyPolicyButton)
         
         self.collectionView.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier)
         self.collectionView.register(StatisticsCollectionViewCell.self, forCellWithReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier)
@@ -76,7 +84,10 @@ class StatisticsCollectionViewController: UICollectionViewController {
         self.collectionView.register(ShowMoreButtonHeaderView.self, forSupplementaryViewOfKind: SupplementaryKind.button, withReuseIdentifier: ShowMoreButtonHeaderView.reuseIdentifier)
         collectionView.collectionViewLayout = createLayout()
         
-        workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
+        let resultsWorkout = workoutRealm.objects(Workout.self)
+        for workout in resultsWorkout {
+            self.workouts.append(workout)
+        }
         
         var counter = 0
         
@@ -219,8 +230,13 @@ class StatisticsCollectionViewController: UICollectionViewController {
     }
     
     func observeRealm() {
-        token = RealmManager.sharedInstance.realm.observe { notification, realm in
-            self.workouts = RealmManager.sharedInstance.fetch(isResultReversed: true)
+        token = workoutRealm.observe { notification, realm in
+            let resultsWorkout = self.workoutRealm.objects(Workout.self)
+            self.workouts = []
+            for workout in resultsWorkout {
+                self.workouts.append(workout)
+            }
+            
             var counter = 0
             self.workoutsForSection.removeAll()
             // Getting 3 last wokrouts from workouts array
@@ -363,13 +379,5 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     @objc func moveToTheTabButtonTapped(){
         tabBarController?.selectedIndex = 1
-    }
-    
-    @objc func privacyPolicyButtonTapped(sender: UIButton) {
-        let privacyPolicyStringURL = "https://johny77.notion.site/ClimbingHub-Main-page-8882b7030b5645ba8cdfc9af7e6d6efa"
-        if let url = URL(string: privacyPolicyStringURL) {
-            let safariController = SFSafariViewController(url: url)
-            present(safariController, animated: true)
-        }
     }
 }

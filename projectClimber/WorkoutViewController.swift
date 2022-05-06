@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import RealmSwift
 //class with HUGE start button
 
 class WorkoutViewController: UIViewController {
@@ -116,10 +116,21 @@ class WorkoutViewController: UIViewController {
     
     let userDefaults = UserDefaults.standard
     var workoutParameters: WorkoutParamters = WorkoutParamters()
-        
+    var userData: User?
+    var realmConfiguration: Realm.Configuration
+    
+    init(userData: User?, realmConfiguration: Realm.Configuration) {
+        self.userData = userData
+        self.realmConfiguration = realmConfiguration
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Check for data in user defaults
         // If there something we'd saved before, get it
         // Otherwise use return 
@@ -255,25 +266,23 @@ class WorkoutViewController: UIViewController {
     
     //MARK: Selectors
     @objc func startButtonTapped() {
-        //define transition
+        // Define transition
         let currentGoal = self.workoutParameters.workoutGoal
-        
         switch currentGoal {
         case .openGoal:
-            let controllerToPresent = FingerWorkoutViewController()
+            let controllerToPresent = FingerWorkoutViewController(realmConfiguration: self.realmConfiguration)
             controllerToPresent.modalPresentationStyle = .fullScreen
-            present(controllerToPresent, animated: true)
+            self.present(controllerToPresent, animated: true)
         case .time:
             let controllerToPresent = FingerViewTimeGoalViewController()
             controllerToPresent.timeGoal = self.workoutParameters.durationForTimeGoal
             controllerToPresent.modalPresentationStyle = .fullScreen
-            present(controllerToPresent, animated: true)
+            self.present(controllerToPresent, animated: true)
         case .custom:
-            print("NOTHING_HERE_YET!")
             let controllerToPresent = FingerWorkoutCustomGoalViewController()
             controllerToPresent.workoutParameters = self.workoutParameters
             controllerToPresent.modalPresentationStyle = .fullScreen
-            present(controllerToPresent, animated: true)
+            self.present(controllerToPresent, animated: true)
         }
     }
     

@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RealmSwift
+
+let app = RealmSwift.App(id: "climbinghub-fclag")
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,8 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.makeKeyAndVisible()
         
-        let tabbar = TabBarController()
-        window?.rootViewController = tabbar
+        let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+        window?.rootViewController = rootViewController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
