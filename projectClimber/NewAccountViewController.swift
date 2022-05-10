@@ -196,20 +196,35 @@ class NewAccountViewController: UIViewController {
                     self!.setLoading(true)
                     
                     let userConfiguration = user.configuration(partitionValue: "user=\(user.id)")
+
                     let workoutConfiguration = user.configuration(partitionValue: user.id)
 
+                    let newUser = User(email: self!.emailField.text!, userID: "user=\(user.id)", name: self!.nameField.text!)
+                    
                     Realm.asyncOpen(configuration: userConfiguration) { [weak self](result) in
                         DispatchQueue.main.async {
-                            self!.setLoading(false)
                             switch result {
                             case .failure(let error):
                                 self!.presentAlertController(with: error.localizedDescription.capitalized)
                                 print("\(error.localizedDescription)")
                             case .success:
-                                let viewtoShow = TabBarController(userRealmConfiguration: userConfiguration, workoutRealmConfiguration: workoutConfiguration)
-                                viewtoShow.modalPresentationStyle = .fullScreen
                                 
-                                self!.present(viewtoShow, animated: true)
+                                Realm.asyncOpen(configuration: workoutConfiguration) { [weak self](result) in
+                                    DispatchQueue.main.async {
+                                        self!.setLoading(false)
+                                        switch result {
+                                        case .failure(let error):
+                                            self!.presentAlertController(with: error.localizedDescription.capitalized)
+                                            print("\(error.localizedDescription.capitalized)")
+                                            
+                                        case .success:
+                                            let viewtoShow = TabBarController(userRealmConfiguration: userConfiguration, workoutRealmConfiguration: workoutConfiguration, user: newUser)
+                                            viewtoShow.modalPresentationStyle = .fullScreen
+                                            
+                                            self!.present(viewtoShow, animated: true)
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -230,53 +245,8 @@ class NewAccountViewController: UIViewController {
                     
                     return
                 }
-                
-                let user = app.currentUser!
-                var workoutConfiguration = user.configuration(partitionValue: user.id)
-                workoutConfiguration.objectTypes = [Workout.self, User.self]
-                
-                let localConfig = self!.localRealmConfig()
-                // Open realm with this config
-                let localRealm = try! Realm(configuration: localConfig)
-                // Try to write a copy to sync realm config
-                
-                do {
-                    try localRealm.writeCopy(configuration: workoutConfiguration)
-                } catch {
-                    self!.presentAlertController(with: error.localizedDescription.capitalized)
-                    print("ERROR WE COULDN'T COPY REALM. FUCK THIS SHIT!: \(error.localizedDescription)")
-                }
-                localRealm.invalidate()
-                
-                do {
-                   let _ = try Realm.deleteFiles(for: localConfig)
-                } catch {
-                    self!.presentAlertController(with: error.localizedDescription.uppercased())
-                    print("\(error.localizedDescription)")
-                }
-                
-                self?.setLoading(true)
-                
                 // Create new user config
                 // And a user to save to the realm, with personal data, such as email and name
-                let userConfig = user.configuration(partitionValue: "user=\(user.id)")
-                let newUser = User(email: self!.emailField.text!, userID: "user=\(user.id)", name: self!.nameField.text!)
-                
-                Realm.asyncOpen(configuration: userConfig) { [weak self](result) in
-                    DispatchQueue.main.async {
-                        self!.setLoading(false)
-                        switch result {
-                        case .failure(let error):
-                            self!.presentAlertController(with: error.localizedDescription.capitalized)
-                            print("\(error.localizedDescription)")
-                        case .success(let realm):
-                            
-                            try! realm.write {
-                                realm.add(newUser)
-                            }
-                        }
-                    }
-                }
                 self!.login()
             }
         }

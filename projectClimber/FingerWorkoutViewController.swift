@@ -158,8 +158,7 @@ class FingerWorkoutViewController: UIViewController {
     
     init(realmConfiguration: Realm.Configuration) {
         self.realm = try! Realm(configuration: realmConfiguration)
-//        self.realmConfiguration = realmConfiguration
-        
+        print("REALM CONFIGURATION: ",realmConfiguration)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -309,7 +308,14 @@ class FingerWorkoutViewController: UIViewController {
             
             listSplits.append(objectsIn: splits)
             
-            let instance = Workout(totalTime: totalTimeCounter, date: Date(), splits: listSplits, workoutType: .fingerWorkout, goalType: .openGoal, userID: app.currentUser!.id)
+            let instance = Workout(totalTime: totalTimeCounter,
+                date: Date(),
+                splits: listSplits,
+                workoutType: .fingerWorkout,
+                goalType: .openGoal,
+                userID: app.currentUser?.id ?? "local_realm_dataBase"
+            )
+            print("USER ID for WORKOUT -- ",app.currentUser?.id ?? "_nothing_because_local_realm_")
             
             try! realm.write {
                 realm.add(instance)
@@ -323,8 +329,14 @@ class FingerWorkoutViewController: UIViewController {
             
             listSplits.append(objectsIn: splits)
             
-            let instance = Workout(totalTime: totalTimeCounter, date: Date(), splits: listSplits, workoutType: .fingerWorkout, goalType: .openGoal, userID: app.currentUser!.id)
-            
+            let instance = Workout(totalTime: totalTimeCounter,
+                date: Date(),
+                splits: listSplits,
+                workoutType: .fingerWorkout,
+                goalType: .openGoal,
+                userID: app.currentUser?.id ?? "local_realm_dataBase"
+            )
+            print("USER ID for WORKOUT -- ",app.currentUser?.id ?? "_nothing_because_local_realm_")
             try! realm.write {
                 realm.add(instance)
             }

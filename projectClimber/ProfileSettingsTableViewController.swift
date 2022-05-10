@@ -10,9 +10,21 @@ import SafariServices
 
 class ProfileSettingsTableViewController: UITableViewController {
     
+    var userData: User?
+    
+    init(style: UITableView.Style, userData: User?) {
+        self.userData = userData
+        super.init(style: style)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        print(userData)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -45,7 +57,7 @@ class ProfileSettingsTableViewController: UITableViewController {
         switch section {
         case 0:
             let cell = ProfileTableCell()
-            cell.nameLabel.text = "John Doe"
+            cell.nameLabel.text = self.userData?.name ?? "_local_realm_without_name"
             cell.descriptionLabel.text = "Personal info, Account management"
             cell.accessoryType = .disclosureIndicator
             
@@ -61,7 +73,7 @@ class ProfileSettingsTableViewController: UITableViewController {
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0)
                 cell.accessoryType = .disclosureIndicator
                 
-                return cell
+                return UITableViewCell()
                 
             case 1:
                 let cell = PrivacyTableCell()
@@ -70,7 +82,7 @@ class ProfileSettingsTableViewController: UITableViewController {
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0)
                 cell.accessoryType = .disclosureIndicator
                 
-                return cell
+                return UITableViewCell()
             default:
                 return UITableViewCell()
             }
@@ -151,10 +163,12 @@ class ProfileSettingsTableViewController: UITableViewController {
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Profile"
+        
+        
     }
     
     func logout() {
-        app.currentUser?.logOut { (_) in
+        app.currentUser!.logOut { (_) in
             DispatchQueue.main.async {
                 self.dismiss(animated: true)
             }
@@ -246,6 +260,10 @@ class ProfileTableCell: UITableViewCell {
             outermostStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             outermostStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
         ])
+    }
+    
+    func configure(with name: String) {
+        nameLabel.text = name
     }
 }
 

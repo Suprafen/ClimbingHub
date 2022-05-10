@@ -274,13 +274,13 @@ class WorkoutViewController: UIViewController {
             controllerToPresent.modalPresentationStyle = .fullScreen
             self.present(controllerToPresent, animated: true)
         case .time:
-            let controllerToPresent = FingerViewTimeGoalViewController()
-            controllerToPresent.timeGoal = self.workoutParameters.durationForTimeGoal
+            let controllerToPresent = FingerViewTimeGoalViewController(realmConfiguration: self.realmConfiguration,
+                timeGoal: self.workoutParameters.durationForTimeGoal
+            )
             controllerToPresent.modalPresentationStyle = .fullScreen
             self.present(controllerToPresent, animated: true)
         case .custom:
-            let controllerToPresent = FingerWorkoutCustomGoalViewController()
-            controllerToPresent.workoutParameters = self.workoutParameters
+            let controllerToPresent = FingerWorkoutCustomGoalViewController(realmConfiguration: self.realmConfiguration, workoutParameters: self.workoutParameters)
             controllerToPresent.modalPresentationStyle = .fullScreen
             self.present(controllerToPresent, animated: true)
         }

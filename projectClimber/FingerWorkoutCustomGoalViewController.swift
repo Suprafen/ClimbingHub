@@ -6,6 +6,7 @@
 //
 import UIKit
 import SwiftUI
+import RealmSwift
 
 class FingerWorkoutCustomGoalViewController: UIViewController {
 
@@ -99,7 +100,8 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
     
     //MARK: Properties
     
-    var workoutParameters: WorkoutParamters!
+    var workoutParameters: WorkoutParamters
+    var realm: Realm
     
     private var countDownCounter: Int = 3
     private var splitsDone: Int = 0
@@ -120,6 +122,16 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
     
     private let splitsTableView = UITableView()
         
+    
+    init(realmConfiguration: Realm.Configuration, workoutParameters: WorkoutParamters) {
+        self.realm = try! Realm(configuration: realmConfiguration)
+        self.workoutParameters = workoutParameters
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -261,25 +273,41 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
             // If rest mode active I don't want to save last split, which will be 0
             // In other cases it's ok
             dismiss(animated: true, completion: nil)
+            let listSplits = RealmSwift.List<Int>()
+            
+            listSplits.append(objectsIn: splits)
             // create an instance of workout
-            let instance = Workout()
-            instance.date = Date()
-            // append splits to a model's list
-            instance.splits.append(objectsIn: splits)
-            // save insantiated object
-            instance.totalTime = totalTimeCounter
-            RealmManager.sharedInstance.saveData(object: instance)
+            let instance = Workout(totalTime: totalTimeCounter,
+                date: Date(),
+                splits: listSplits,
+                workoutType: .fingerWorkout,
+                goalType: .custom,
+                userID: app.currentUser?.id ?? "local_realm_dataBase"
+            )
+            
+            try! realm.write {
+                realm.add(instance)
+            }
         } else {
             // append the last split before view dismissed
             splits.append(splitTimeCounter)
             dismiss(animated: true, completion: nil)
             
-            let instance = Workout()
-            instance.date = Date()
-            instance.splits.append(objectsIn: splits)
-            instance.totalTime = totalTimeCounter
-            instance.goalType = .custom
-            RealmManager.sharedInstance.saveData(object: instance)
+            let listSplits = RealmSwift.List<Int>()
+            
+            listSplits.append(objectsIn: splits)
+            
+            let instance = Workout(totalTime: totalTimeCounter,
+                date: Date(),
+                splits: listSplits,
+                workoutType: .fingerWorkout,
+                goalType: .custom,
+                userID: app.currentUser?.id ?? "local_realm_dataBase"
+            )
+            
+            try! realm.write {
+                realm.add(instance)
+            }
             
         }
         UIView.animate(withDuration: 0.1) {
@@ -410,12 +438,21 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
             self.splitsDone += 1
             guard splitsDone < workoutParameters.numberOfSplits else {
                 
-                let instance = Workout()
-                instance.date = Date()
-                instance.splits.append(objectsIn: splits)
-                instance.totalTime = totalTimeCounter
-                instance.goalType = self.workoutParameters.workoutGoal
-                RealmManager.sharedInstance.saveData(object: instance)
+            let listSplits = RealmSwift.List<Int>()
+                
+            listSplits.append(objectsIn: splits)
+                
+            let instance = Workout(totalTime: totalTimeCounter,
+                date: Date(),
+                splits: listSplits,
+                workoutType: .fingerWorkout,
+                goalType: .custom,
+                userID: app.currentUser?.id ?? "local_realm_dataBase"
+            )
+                
+                try! realm.write {
+                    realm.add(instance)
+                }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(20)) {
                     self.dismiss(animated: true) 

@@ -187,6 +187,11 @@ class WelcomeViewController: UIViewController {
     
     @objc func anonymousButtonTapped() {
         let userRealm = Realm.Configuration(schemaVersion: 3)
+        if app.currentUser != nil {
+            app.currentUser!.logOut { (_) in
+            }
+        }
+        
         let viewToShow = TabBarController(userRealmConfiguration: userRealm, workoutRealmConfiguration: localRealmConfig)
         viewToShow.modalPresentationStyle = .fullScreen
         self.present(viewToShow, animated: true)

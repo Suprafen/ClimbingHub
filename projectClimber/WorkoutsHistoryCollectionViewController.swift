@@ -77,7 +77,6 @@ class WorkoutsHistoryCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WorkoutCollectionViewCell
         
         let workout = sections[indexPath.section].workouts[indexPath.item]
-        
         cell.configure(with: workout)
         cell.layer.cornerRadius = 15
         cell.backgroundColor = .white
