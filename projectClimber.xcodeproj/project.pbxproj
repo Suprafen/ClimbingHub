@@ -16,6 +16,8 @@
 		E205A88327B035F5002BA08B /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E205A88227B035F5002BA08B /* RealmManager.swift */; };
 		E22E7B2127BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22E7B2027BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift */; };
 		E23678BE280469F90043F3E9 /* FingerWorkoutCustomGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23678BD280469F90043F3E9 /* FingerWorkoutCustomGoalViewController.swift */; };
+		E2401EEB282B99CA0098CDB4 /* ProfileManagementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2401EEA282B99CA0098CDB4 /* ProfileManagementTableViewController.swift */; };
+		E2401EED282BFB270098CDB4 /* NameChangingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2401EEC282BFB270098CDB4 /* NameChangingTableViewController.swift */; };
 		E24DCBAE27ECD9230002A7FC /* ShowMoreButtonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DCBAA27ECD9230002A7FC /* ShowMoreButtonHeaderView.swift */; };
 		E24DCBAF27ECD9230002A7FC /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DCBAB27ECD9230002A7FC /* SectionHeaderView.swift */; };
 		E24DCBB027ECD9230002A7FC /* SectionHeaderWorkoutsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DCBAC27ECD9230002A7FC /* SectionHeaderWorkoutsHistoryView.swift */; };
@@ -59,6 +61,8 @@
 		E205A88227B035F5002BA08B /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		E22E7B2027BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		E23678BD280469F90043F3E9 /* FingerWorkoutCustomGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerWorkoutCustomGoalViewController.swift; sourceTree = "<group>"; };
+		E2401EEA282B99CA0098CDB4 /* ProfileManagementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagementTableViewController.swift; sourceTree = "<group>"; };
+		E2401EEC282BFB270098CDB4 /* NameChangingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameChangingTableViewController.swift; sourceTree = "<group>"; };
 		E24DCBAA27ECD9230002A7FC /* ShowMoreButtonHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowMoreButtonHeaderView.swift; path = projectClimber/ShowMoreButtonHeaderView.swift; sourceTree = "<group>"; };
 		E24DCBAB27ECD9230002A7FC /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SectionHeaderView.swift; path = projectClimber/SectionHeaderView.swift; sourceTree = "<group>"; };
 		E24DCBAC27ECD9230002A7FC /* SectionHeaderWorkoutsHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SectionHeaderWorkoutsHistoryView.swift; path = projectClimber/SectionHeaderWorkoutsHistoryView.swift; sourceTree = "<group>"; };
@@ -162,6 +166,8 @@
 				E205A87E27AD2A55002BA08B /* WorkoutViewController.swift */,
 				E268889D27F2E4BB00FE5F24 /* Finger Workout */,
 				E2A94A8A2820051A003061D0 /* ProfileSettingsTableViewController.swift */,
+				E2401EEA282B99CA0098CDB4 /* ProfileManagementTableViewController.swift */,
+				E2401EEC282BFB270098CDB4 /* NameChangingTableViewController.swift */,
 			);
 			name = Children;
 			sourceTree = "<group>";
@@ -390,11 +396,13 @@
 				E256AD4F27FC6CB400D146CB /* TitleCell.swift in Sources */,
 				E256AD4C27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift in Sources */,
 				E2A94A8B2820051A003061D0 /* ProfileSettingsTableViewController.swift in Sources */,
+				E2401EED282BFB270098CDB4 /* NameChangingTableViewController.swift in Sources */,
 				E2CEE4C3279AE0970088278D /* Workout.swift in Sources */,
 				E22E7B2127BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift in Sources */,
 				E2D0E2C8281A91C700397C79 /* NewAccountViewController.swift in Sources */,
 				E27B660327D2A3C000239D5C /* FourthTableViewCell.swift in Sources */,
 				E256AD5127FC6CCA00D146CB /* TimePickerCell.swift in Sources */,
+				E2401EEB282B99CA0098CDB4 /* ProfileManagementTableViewController.swift in Sources */,
 				E205A87B27AD18B2002BA08B /* StatisticsCollectionViewController.swift in Sources */,
 				E23678BE280469F90043F3E9 /* FingerWorkoutCustomGoalViewController.swift in Sources */,
 				E2F1D00227BC26C7007ADEE2 /* SecondTableViewCell.swift in Sources */,

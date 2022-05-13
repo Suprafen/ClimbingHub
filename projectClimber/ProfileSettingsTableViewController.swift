@@ -24,7 +24,6 @@ class ProfileSettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        print(userData)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -104,7 +103,11 @@ class ProfileSettingsTableViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 //TODO: Do something
-                print()
+                let viewToShow = ProfileManagementTableViewController(style: .insetGrouped, userData: self.userData)
+                viewToShow.delegate = self
+                viewToShow.navigationItem.largeTitleDisplayMode = .never
+                viewToShow.navigationItem.title = "Profile Management"
+                navigationController?.pushViewController(viewToShow, animated: true)
             default:
                 //TODO: Do something
                 print()
@@ -142,7 +145,9 @@ class ProfileSettingsTableViewController: UITableViewController {
         }
         
     }
-    //MARK: Helper methods
+    
+    // MARK: - Helper methods
+    
     func presentAlertController(withMessage message: String) {
         let alertController = UIAlertController(title: "Sign Out?", message: message, preferredStyle: .alert)
         
@@ -180,7 +185,13 @@ class ProfileSettingsTableViewController: UITableViewController {
     }
 }
 
-//MARK: Cells
+extension ProfileSettingsTableViewController:ProfileManagementTableViewDelegate {
+    func updateTable() {
+        self.tableView.reloadData()
+    }
+}
+
+//MARK: - Cells
 class ProfileTableCell: UITableViewCell {
     static let reuseIdentifier = "ProfileTableCell"
     
