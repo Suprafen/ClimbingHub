@@ -65,14 +65,12 @@ class ProfileSettingsTableViewController: UITableViewController {
             switch (indexPath.row) {
             case 0:
                 let cell = PrivacyTableCell()
-//                let imageConfiguration = UIImage.SymbolConfiguration(scale: .small)
-//                let image = UIImage(systemName: "hand.raised.fill", withConfiguration: imageConfiguration)!
                 let image = UIImage(systemName: "hand.raised.fill")!
                 cell.configureCell(name: "Privacy Policy", image: image, color: .systemBlue)
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0)
                 cell.accessoryType = .disclosureIndicator
                 
-                return UITableViewCell()
+                return cell
                 
             case 1:
                 let cell = PrivacyTableCell()
@@ -81,7 +79,7 @@ class ProfileSettingsTableViewController: UITableViewController {
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0)
                 cell.accessoryType = .disclosureIndicator
                 
-                return UITableViewCell()
+                return cell
             default:
                 return UITableViewCell()
             }
@@ -144,6 +142,10 @@ class ProfileSettingsTableViewController: UITableViewController {
             print()
         }
         
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     // MARK: - Helper methods
@@ -365,16 +367,16 @@ class PrivacyTableCell: UITableViewCell {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        // To dispose of error about ambiguous cell's height
+        // I just added spacing for title and centered iconContainer by title
         NSLayoutConstraint.activate([
-            iconContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             iconContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            iconContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            iconContainer.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 13),
             titleLabel.leadingAnchor.constraint(equalTo: iconContainer.trailingAnchor, constant: 15),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-            
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -13)
         ])
     }
     
