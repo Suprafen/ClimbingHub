@@ -100,14 +100,12 @@ class ProfileSettingsTableViewController: UITableViewController {
         case 0:
             switch indexPath.row {
             case 0:
-                //TODO: Do something
                 let viewToShow = ProfileManagementTableViewController(style: .insetGrouped, userData: self.userData)
                 viewToShow.delegate = self
                 viewToShow.navigationItem.largeTitleDisplayMode = .never
                 viewToShow.navigationItem.title = "Profile Management"
                 navigationController?.pushViewController(viewToShow, animated: true)
             default:
-                //TODO: Do something
                 print()
             }
             // Main functionality in the settings
@@ -120,10 +118,12 @@ class ProfileSettingsTableViewController: UITableViewController {
                     present(safariController, animated: true)
                 }
             case 1:
-                //TODO: Do something
-                print()
+                let viewToShow = DeleteAccountViewController()
+                viewToShow.navigationItem.largeTitleDisplayMode = .never
+                viewToShow.navigationItem.title = "Delete Account"
+                viewToShow.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController(viewToShow, animated: true)
             default:
-                //TODO: Do something
                 print()
             }
             // Logout
