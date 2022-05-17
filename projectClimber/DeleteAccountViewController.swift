@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import RealmSwift
 // - TODO: - Create an independent view that replaces stackLabel.
 
 class DeleteAccountViewController: UIViewController {
@@ -20,7 +20,6 @@ class DeleteAccountViewController: UIViewController {
     
     let baseView: UIView = {
         let view = UIView()
-        view.backgroundColor = .orange
         view.translatesAutoresizingMaskIntoConstraints = false
 //        view.isUserInteractionEnabled = true
         
@@ -203,7 +202,7 @@ class DeleteAccountViewController: UIViewController {
             confirmButton.bottomAnchor.constraint(equalTo: baseView.bottomAnchor, constant: -20)
         ])
     }
-    
+    // MARK: Helper Methods
     func configureView() {
         self.view.backgroundColor = .white
         
@@ -226,8 +225,64 @@ class DeleteAccountViewController: UIViewController {
         self.scrollView.addSubview(baseView)
     }
     
+    func presentAlertController(with message: String) {
+        let alertController = UIAlertController(title: "Account Has Been Deleted.", message: message, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel) { _ in
+            self.dismiss(animated: true)
+        }
+        
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
+    }
+    
+    func setLoading(_ loading: Bool) {
+        if loading {
+            // TODO: Add activity indicator
+//            activityIndicator.startAnimating()
+        } else {
+//            activityIndicator.stopAnimating()
+        }
+        
+        confirmButton.isEnabled = !loading
+        // Hide back button item
+        self.navigationItem.setHidesBackButton(true, animated: true)
+    }
+    
+    func deleteUser() async {
+        guard let user = app.currentUser else { return }
+        let userID = user.id
+        let workoutConfig = user.configuration(partitionValue: userID)
+        let userConfig = user.configuration(partitionValue: "user=\(userID)")
+        do {
+            
+            let userRealm = try! await Realm( configuration: userConfig)
+            let workoutRealm = try! await Realm( configuration: workoutConfig)
+            
+            try! userRealm.write {
+                userRealm.deleteAll()
+            }
+           
+            try! workoutRealm.write {
+                workoutRealm.deleteAll()
+            }
+            
+            try await user.delete()
+
+            presentAlertController(with: "You'll be logged out.")
+            
+        } catch {
+            print(error.localizedDescription)
+            return
+        }
+    }
+    
+    // MARK: Selectors
     @objc func confirmButtonTapped() {
-        print("tapped")
-        //TODO: Add functionality to delete a user
+        setLoading(true)
+        Task {
+            await self.deleteUser()
+        }
     }
 }

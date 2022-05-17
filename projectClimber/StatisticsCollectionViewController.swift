@@ -66,6 +66,10 @@ class StatisticsCollectionViewController: UICollectionViewController {
 //        let workouts
     }
     
+    deinit {
+        token?.invalidate()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -231,6 +235,9 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     func observeRealm() {
         token = workoutRealm.observe { notification, realm in
+            // Whether realm is empty we're not going to do with collection view
+            // This only happens when account is being deleted.
+            guard !self.workoutRealm.isEmpty else { return }
             let resultsWorkout = self.workoutRealm.objects(Workout.self)
             self.workouts = []
             for workout in resultsWorkout {
