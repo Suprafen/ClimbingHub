@@ -62,8 +62,6 @@ class StatisticsCollectionViewController: UICollectionViewController {
     init(workoutRealmConfiguration: Realm.Configuration) {
         self.workoutRealm = try! Realm(configuration: workoutRealmConfiguration)
         super.init(collectionViewLayout: UICollectionViewLayout())
-
-//        let workouts
     }
     
     deinit {
@@ -88,11 +86,8 @@ class StatisticsCollectionViewController: UICollectionViewController {
         self.collectionView.register(ShowMoreButtonHeaderView.self, forSupplementaryViewOfKind: SupplementaryKind.button, withReuseIdentifier: ShowMoreButtonHeaderView.reuseIdentifier)
         collectionView.collectionViewLayout = createLayout()
         
-        let resultsWorkout = workoutRealm.objects(Workout.self)
-        for workout in resultsWorkout {
-            self.workouts.append(workout)
-        }
-        
+        self.workouts = Array(workoutRealm.objects(Workout.self)).sorted(by: {$0.date > $1.date})
+
         var counter = 0
         
         if workouts.count < 4 {
@@ -238,12 +233,9 @@ class StatisticsCollectionViewController: UICollectionViewController {
             // Whether realm is empty we're not going to do with collection view
             // This only happens when account is being deleted.
             guard !self.workoutRealm.isEmpty else { return }
-            let resultsWorkout = self.workoutRealm.objects(Workout.self)
-            self.workouts = []
-            for workout in resultsWorkout {
-                self.workouts.append(workout)
-            }
-            
+
+            self.workouts = Array(self.workoutRealm.objects(Workout.self)).sorted(by: {$0.date > $1.date})
+
             var counter = 0
             self.workoutsForSection.removeAll()
             // Getting 3 last wokrouts from workouts array
