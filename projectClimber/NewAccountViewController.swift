@@ -108,6 +108,17 @@ class NewAccountViewController: UIViewController {
         setConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard !nameField.text!.isEmpty else { return }
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
+    }
     //MARK: Helper methods
     func setConstraints() {
         let margins = view.layoutMarginsGuide
