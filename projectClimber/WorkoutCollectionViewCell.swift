@@ -56,8 +56,8 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
     }()
     
     let chevronImage: UIImageView = {
-        let image = UIImageView(image: UIImage(systemName: "chevron.right"), highlightedImage: .none)
-        image.tintColor = .gray
+        let image = UIImageView(image: UIImage(systemName: "chevron.forward"), highlightedImage: .none)
+        image.tintColor = .systemGray3
         return image
     }()
     
@@ -122,7 +122,7 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
             labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
 
             chevronImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            chevronImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
+            chevronImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
     }
     
@@ -149,7 +149,7 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
         case .custom:
             self.circle.backgroundColor = UIColor(rgb: 0xEC6A5E)
             self.insideCirlceImage.tintColor = UIColor(rgb: 0xEC6A5E)
-            self.insideCirlceImage.image = UIImage(systemName: "wrench")
+            self.insideCirlceImage.image = UIImage(systemName: "paintbrush")
         }
     }
 }

@@ -83,7 +83,7 @@ class GoalPickerViewController: UIViewController {
     
     let customGoalButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
-        configuration.image = UIImage(systemName: "wrench")
+        configuration.image = UIImage(systemName: "paintbrush")
         configuration.imagePlacement = .top
         configuration.imagePadding = 10
         configuration.title = "Custom"
