@@ -11,13 +11,15 @@ import RealmSwift
 class TabBarController: UITabBarController {
 
     let userRealm: Realm
-    var userData: User?
+    let email: String?
+    var userData: User? = nil
     var workoutRealmConfiguration: Realm.Configuration
-    init(userRealmConfiguration: Realm.Configuration, workoutRealmConfiguration: Realm.Configuration, user: User? = nil) {
+    
+    init(userRealmConfiguration: Realm.Configuration, workoutRealmConfiguration: Realm.Configuration, email: String? = nil) {
         self.workoutRealmConfiguration = workoutRealmConfiguration
         self.userRealm = try! Realm(configuration: userRealmConfiguration)
-        self.userData = user
-        print("USER REALM URL: ", userRealmConfiguration.fileURL)
+        self.email = email
+        print("USER REALM URL: ", userRealmConfiguration.fileURL ?? "__here_should_be_URL_to_a_user_realm__")
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,8 +29,11 @@ class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        saveUser()
-        checkForUser()
+        // TODO: Refactor functions. Make them take arguments insted of just using properties
+        // IF the user exists - do nothing
+        // Otherwise, create new one and save to the realm
+        checkForUser() ? () : createNewUser()
+
         let workoutViewController = UINavigationController(rootViewController: WorkoutViewController(userData: self.userData, realmConfiguration: workoutRealmConfiguration))
         workoutViewController.title = "Workout"
         self.tabBar.tintColor = .systemBlue.withAlphaComponent(0.8)
@@ -54,21 +59,31 @@ class TabBarController: UITabBarController {
     }
     // Check whether realm contains this user
     // If it is use this user
-    func checkForUser() {
-        print("DO SOMETHING FUNC")
+    func checkForUser() -> Bool{
         guard let userID = app.currentUser?.id else {
-            return
+            return false
         }
-        print("USER ID - \(userID)")
+        var currentUser: User?
         try! userRealm.write {
             let resultsObjects = userRealm.objects(User.self)
-            let currentUser = resultsObjects.filter { user in
+            currentUser = resultsObjects.filter { user in
                 user.userID == "user=\(userID)"
-            }
-            guard let userData = currentUser.first else { return }
-            self.userData = userData
-            print("USER_DATA: ", userData)
-            print("DO SOMETHING END")
+            }.first
         }
+        // Check whether user was found
+        // Return false if wasn't
+        // Otherwise, true
+        guard let userData = currentUser else { return false }
+        self.userData = userData
+
+        return true
+    }
+    
+    func createNewUser() {
+        let user = app.currentUser
+        guard let user = user,
+                let email = email else { return }
+        self.userData = User(email: email, userID: "user=\(user.id)", name: email)
+        saveUser()
     }
 }

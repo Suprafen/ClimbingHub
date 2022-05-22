@@ -9,16 +9,6 @@ import UIKit
 import RealmSwift
 
 class SignInViewController: UIViewController {
-
-//    let signInButton: UIButton = {
-//        var config = UIButton.Configuration.plain()
-//        config.title = "Sign In"
-//
-//        let button = UIButton(configuration: config)
-//        button.addTarget(nil, action: #selector(signInButtonTapped), for: .touchUpInside)
-//
-//        return button
-//    }()
     
     let signInButton: UIButton = {
         var config = UIButton.Configuration.filled()
@@ -85,6 +75,17 @@ class SignInViewController: UIViewController {
         return passwordField
     }()
     
+    let forgotPasswordButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Forgot Password?", for: .normal)
+        button.setTitleColor(UIColor.systemBlue, for: .normal)
+        button.addTarget(nil, action: #selector(forgotPasswordButtonTapped), for: .touchUpInside)
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
     let activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         
@@ -115,6 +116,7 @@ class SignInViewController: UIViewController {
         view.addSubview(container)
         view.addSubview(signInButton)
         view.addSubview(privacyPolicyLabel)
+        view.addSubview(forgotPasswordButton)
         setConstraints()
     }
     
@@ -135,6 +137,9 @@ class SignInViewController: UIViewController {
             privacyPolicyLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
             privacyPolicyLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
             privacyPolicyLabel.bottomAnchor.constraint(equalTo: signInButton.topAnchor, constant: -20),
+            
+            forgotPasswordButton.topAnchor.constraint(equalTo: container.bottomAnchor, constant: 10),
+            forgotPasswordButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
             
             signInButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
             signInButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
@@ -228,7 +233,7 @@ class SignInViewController: UIViewController {
                                         case .failure(let error):
                                             self!.presentAlertController(with: error.localizedDescription)
                                         case .success:
-                                            let viewtoShow = TabBarController(userRealmConfiguration: userConfiguration, workoutRealmConfiguration: workoutConfiguration)
+                                            let viewtoShow = TabBarController(userRealmConfiguration: userConfiguration, workoutRealmConfiguration: workoutConfiguration, email: self!.emailField.text!)
                                             viewtoShow.modalPresentationStyle = .fullScreen
                                             
                                             self!.present(viewtoShow, animated: true)
@@ -241,5 +246,9 @@ class SignInViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    @objc func forgotPasswordButtonTapped() {
+       // TODO: Provide functionality to this method
     }
 }

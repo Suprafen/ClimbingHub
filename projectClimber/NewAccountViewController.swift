@@ -191,59 +191,6 @@ class NewAccountViewController: UIViewController {
     }
     
     //MARK: Selectors
-    @objc func login() {
-        print("Sign In")
-        setLoading(true)
-                   
-        app.login(credentials: Credentials.emailPassword(email: emailField.text!, password: passwordField.text!)) { [weak self](result) in
-            DispatchQueue.main.async {
-                self!.setLoading(false)
-                switch result {
-                case .failure(let error):
-                    self!.presentAlertController(with: error.localizedDescription.capitalized)
-                    print("\(error.localizedDescription)")
-                case .success(let user):
-                    
-                    self!.setLoading(true)
-                    
-                    let userConfiguration = user.configuration(partitionValue: "user=\(user.id)")
-
-                    let workoutConfiguration = user.configuration(partitionValue: user.id)
-
-                    let newUser = User(email: self!.emailField.text!, userID: "user=\(user.id)", name: self!.nameField.text!)
-                    
-                    Realm.asyncOpen(configuration: userConfiguration) { [weak self](result) in
-                        DispatchQueue.main.async {
-                            switch result {
-                            case .failure(let error):
-                                self!.presentAlertController(with: error.localizedDescription.capitalized)
-                                print("\(error.localizedDescription)")
-                            case .success:
-                                
-                                Realm.asyncOpen(configuration: workoutConfiguration) { [weak self](result) in
-                                    DispatchQueue.main.async {
-                                        self!.setLoading(false)
-                                        switch result {
-                                        case .failure(let error):
-                                            self!.presentAlertController(with: error.localizedDescription.capitalized)
-                                            print("\(error.localizedDescription.capitalized)")
-                                            
-                                        case .success:
-                                            let viewtoShow = TabBarController(userRealmConfiguration: userConfiguration, workoutRealmConfiguration: workoutConfiguration, user: newUser)
-                                            viewtoShow.modalPresentationStyle = .fullScreen
-                                            
-                                            self!.present(viewtoShow, animated: true)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
     @objc func createAccountTapped() {
         setLoading(true)
         
@@ -256,11 +203,11 @@ class NewAccountViewController: UIViewController {
                     
                     return
                 }
-                // Create new user config
-                // And a user to save to the realm, with personal data, such as email and name
-                self!.login()
+                // Bring a user to the view, where app's making clear
+                // that email was sent, and the user must confirm registration.
+                let viewToShow = EmailSentViewController(email: self!.emailField.text!)
+                self?.navigationController?.pushViewController(viewToShow, animated: true)
             }
         }
-        print("Sign Up")
     }
 }
