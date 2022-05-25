@@ -228,6 +228,7 @@ class FingerWorkoutViewController: UIViewController {
         view.addSubview(splitsTableView)
         view.addSubview(buttonsStackView)
         
+        // TODO: move these to the each view
         countDownLabel.translatesAutoresizingMaskIntoConstraints = false
         splitLabel.translatesAutoresizingMaskIntoConstraints = false
         tableViewBackgroundView.translatesAutoresizingMaskIntoConstraints = false

@@ -21,7 +21,8 @@ class StatisticsCollectionViewController: UICollectionViewController {
         
         return label
     }()
-    
+    // TODO: Rename this button, as well as method.
+    // This one is responsible for moving us to the workout tab view
     let moveToTheTabButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         let button = UIButton()
@@ -60,6 +61,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
     var workoutRealm: Realm
     
     init(workoutRealmConfiguration: Realm.Configuration) {
+        // TODO: Try to place token initialization to this init
         self.workoutRealm = try! Realm(configuration: workoutRealmConfiguration)
         super.init(collectionViewLayout: UICollectionViewLayout())
     }
@@ -74,7 +76,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // TODO: Refactor this method. Just add a few functions and place there these calls.
         // Privacy button diclaration
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "checkerboard.shield")
@@ -89,7 +91,13 @@ class StatisticsCollectionViewController: UICollectionViewController {
         self.workouts = Array(workoutRealm.objects(Workout.self)).sorted(by: {$0.date > $1.date})
 
         var counter = 0
-        
+        // Because we need to have only 3 workouts on the main screen in the collection view,
+        // so we need next steps
+        // If we have less than 4 workouts we simply take everything from the array.
+        //
+        // Otherwise,
+        // We fetch workouts array we just got from the realm and get only 3 the latter workouts
+        // and append them to the workoutsForSection var.
         if workouts.count < 4 {
             for workout in workouts {
                 self.workoutsForSection.append(workout)
@@ -117,6 +125,8 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // For removing the label and the button, which suggest moving to the workout window and start training,
+        // if we have something to show
         if !workouts.isEmpty {
             absenceOfWorkoutLabel.isHidden = true
             moveToTheTabButton.isHidden = true
@@ -351,7 +361,7 @@ class StatisticsCollectionViewController: UICollectionViewController {
     
     //MARK: Helper methods
     func biggestSplitInFingerWorkouts() -> Int {
-        
+        // Retreive the biggest split in the finger workouts
         var maxSplit: Int = 0
         guard let workouts = self.workouts as? [Workout] else { return 0 }
         

@@ -72,6 +72,7 @@ class NumberOfSplitsStaticCell: UITableViewCell {
 
         contentView.addSubview(titleLabel)
         
+        // TODO: Move to the views
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         numberOfSplitsLabel.translatesAutoresizingMaskIntoConstraints = false
         numberOfSplitsStepper.translatesAutoresizingMaskIntoConstraints = false
@@ -98,6 +99,7 @@ class NumberOfSplitsStaticCell: UITableViewCell {
     //MARK: Selectors
     @objc func stepperChangedValue(_ sender: UIStepper) {
         self.numberOfSplitsLabel.text = "\(Int(sender.value))"
+        // Send to the delegate's method value from stepper
         delegate?.retrieveNumberOfSplits(Int(sender.value))
     }
 }

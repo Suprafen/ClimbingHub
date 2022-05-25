@@ -175,6 +175,7 @@ class WelcomeViewController: UIViewController {
     }
     
     //MARK: Selectors
+    // Different selectors for different buttons, which moves us to different views
     @objc func getStartedButtonTapped() {
         let viewToShow = NewAccountViewController()
         navigationController?.pushViewController(viewToShow, animated: true)
@@ -187,6 +188,12 @@ class WelcomeViewController: UIViewController {
     
     @objc func anonymousButtonTapped() {
         let userRealm = Realm.Configuration(schemaVersion: 3)
+        // It's a temporary function just for making sure that when we open local realm
+        // We don't have logged in users.
+        // When app closed, user is not loged out, meanwhile app doesn't save the state of logged in user.
+        // So after restart we already logged in, but we can't get access to the workouts through sync realm,
+        // however we can go to local realm and we'll appear as logged in user, which is unlikely behavior.
+        // TODO: Make app save the state of logged in user
         if app.currentUser != nil {
             app.currentUser!.logOut { (_) in
             }
@@ -199,6 +206,7 @@ class WelcomeViewController: UIViewController {
 }
 
 extension WelcomeViewController {
+    // TODO: Make this func static, because it's already appeared third times
     var localRealmConfig: Realm.Configuration {
         let localConfig = Realm.Configuration(schemaVersion: 3, migrationBlock: { migration, oldSchemaVersion in
             if oldSchemaVersion < 1 {

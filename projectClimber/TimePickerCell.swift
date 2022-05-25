@@ -40,6 +40,7 @@ class TimePickerCell: UITableViewCell {
         timePicker.selectRow(seconds, inComponent: 1, animated: false)
         
         self.contentView.addSubview(timePicker)
+        // TODO: Move to the view
         timePicker.translatesAutoresizingMaskIntoConstraints = false
         // Configure the view for the selected state
         
@@ -96,6 +97,7 @@ extension TimePickerCell: UIPickerViewDelegate, UIPickerViewDataSource {
             break
         }
         guard let indexPath = self.indexPath else { return }
+        // Send time values to the delegate's method
         delegate?.recieveTime(inSeconds: (minutes * 60) + seconds, fromPickerIndexPath: indexPath, isSplitPicker: isSplitPicker)
     }
 }

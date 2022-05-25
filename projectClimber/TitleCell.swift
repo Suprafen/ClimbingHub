@@ -38,6 +38,7 @@ class TitleCell: UITableViewCell {
         
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(numberTitleLabel)
+        // TODO: Move to the views
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         numberTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         

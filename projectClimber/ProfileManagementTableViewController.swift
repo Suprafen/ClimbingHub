@@ -69,7 +69,6 @@ class ProfileManagementTableViewController: UITableViewController {
         
         switch section {
         case 0:
-            // - TODO: Move to change user name view. Text field only.
             let viewToShow = NameChangingTableViewController(style: .insetGrouped, userName: userData!.name)
             viewToShow.delegate = self
             viewToShow.navigationItem.largeTitleDisplayMode = .never

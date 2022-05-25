@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// This table view is called when a user tab on the workout and wants to know more about specific workout
 class WorkoutStatisticsTableViewController: UITableViewController {
 
     var workout: Workout?

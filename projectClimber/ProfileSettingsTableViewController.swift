@@ -175,6 +175,7 @@ class ProfileSettingsTableViewController: UITableViewController {
     }
     
     func logout() {
+        // Perform logout if user has been loged in
         app.currentUser!.logOut { (_) in
             DispatchQueue.main.async {
                 self.dismiss(animated: true)

@@ -122,7 +122,7 @@ class SignInViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Remove everything from the password field d
+        // Remove everything from the password field
         passwordField.text?.removeAll()
     }
     //MARK: Helper methods
@@ -205,6 +205,8 @@ class SignInViewController: UIViewController {
         print("Sign In")
         setLoading(true)
                    
+        
+        // Execute method for logining user
         app.login(credentials: Credentials.emailPassword(email: emailField.text!, password: passwordField.text!)) { [weak self](result) in
             DispatchQueue.main.async {
                 self!.setLoading(false)
@@ -216,9 +218,12 @@ class SignInViewController: UIViewController {
                     
                     self!.setLoading(true)
                     
+                    // Define realm configurations based on the user's id
+                    // Set different partition values for user and workout configs
                     let userConfiguration = user.configuration(partitionValue: "user=\(user.id)")
                     let workoutConfiguration = user.configuration(partitionValue: user.id)
 
+                    // Async open a realm, just for making sure that the realm's downloaded everything
                     Realm.asyncOpen(configuration: userConfiguration) { [weak self](result) in
                         DispatchQueue.main.async {
                             self!.setLoading(false)
@@ -227,12 +232,14 @@ class SignInViewController: UIViewController {
                                 self!.presentAlertController(with: error.localizedDescription.capitalized)
                                 print("\(error.localizedDescription)")
                             case .success:
+                                // Another async open, but now this one for workouts
                                 Realm.asyncOpen(configuration: workoutConfiguration) {[weak self](result) in
                                     DispatchQueue.main.async {
                                         switch result {
                                         case .failure(let error):
                                             self!.presentAlertController(with: error.localizedDescription)
                                         case .success:
+                                            // Present tab bar
                                             let viewtoShow = TabBarController(userRealmConfiguration: userConfiguration, workoutRealmConfiguration: workoutConfiguration, email: self!.emailField.text!)
                                             viewtoShow.modalPresentationStyle = .fullScreen
                                             
@@ -250,5 +257,21 @@ class SignInViewController: UIViewController {
     
     @objc func forgotPasswordButtonTapped() {
        // TODO: Provide functionality to this method
+        Task {
+            do {
+                try await getConsent()
+                presentAlertController(with: "Send was sent")
+            }
+            catch {
+                presentAlertController(with: error.localizedDescription)
+            }
+        }
+    }
+    
+    func getConsent() async throws{
+        let client = app.emailPasswordAuth
+        // Send email to a user.
+        // The User must confirm that they are owner of this email
+        client.sendResetPasswordEmail(email: self.emailField.text!)
     }
 }

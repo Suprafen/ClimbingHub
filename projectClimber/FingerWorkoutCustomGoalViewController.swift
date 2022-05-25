@@ -416,6 +416,8 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
     }
     
     @objc func splitTimerFire() {
+        // This one is useful, because dismissed the view
+        // And not going to start another iteration whether splits were done
         guard splitsDone < workoutParameters.numberOfSplits else {
             splitTimer.invalidate()
             //TODO: Add an instance to the realm
@@ -423,6 +425,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
             return
         }
         
+        // Timer is going until we've got to the desirable number in duration for split
         if splitTimeCounter < workoutParameters.durationOfEachSplit {
             self.splitTimeCounter += 1
             let timeString = String.makeTimeString(seconds: splitTimeCounter, withLetterDescription: false)
@@ -432,16 +435,19 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
             self.splits.append(self.splitTimeCounter)
             // Reload table view
             self.splitsTableView.reloadData()
-            
+            // Asign split time counter value to duration of rest, because they're using the same label
+            // So for smooth user experience we're doing this.
             self.splitTimeCounter = self.workoutParameters.durationOfEachRest
             self.restTimeCounter = self.workoutParameters.durationOfEachRest
             self.splitsDone += 1
+            // If we've done every split we'd planned to do
+            // Preform the code
             guard splitsDone < workoutParameters.numberOfSplits else {
                 
             let listSplits = RealmSwift.List<Int>()
                 
             listSplits.append(objectsIn: splits)
-                
+            // Create an instance
             let instance = Workout(totalTime: totalTimeCounter,
                 date: Date(),
                 splits: listSplits,
@@ -449,7 +455,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
                 goalType: .custom,
                 userID: app.currentUser?.id ?? "local_realm_dataBase"
             )
-                
+            // Try to add this instance to the realm
                 try! realm.write {
                     realm.add(instance)
                 }
@@ -461,6 +467,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
             }
             print("Splits done \(splitsDone)")
             splitTimer.invalidate()
+            // Perform rest timer after invalidating
             self.restTimerPerform(timeInterval: 1)
             
             UIView.animate(withDuration: 0.2, delay: 0) {

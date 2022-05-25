@@ -154,25 +154,28 @@ class DeleteAccountViewController: UIViewController {
     }
     
     func deleteUser() async {
+        // Check whether user has been loged in
         guard let user = app.currentUser else { return }
+        // Get user id
         let userID = user.id
+        // Instantiate configurations base on user's data
         let workoutConfig = user.configuration(partitionValue: userID)
         let userConfig = user.configuration(partitionValue: "user=\(userID)")
         do {
-            
+            // Open realms
             let userRealm = try! await Realm( configuration: userConfig)
             let workoutRealm = try! await Realm( configuration: workoutConfig)
-            
+            // Delete all data from user realm
             try! userRealm.write {
                 userRealm.deleteAll()
             }
-           
+            // Delete all data from user realm
             try! workoutRealm.write {
                 workoutRealm.deleteAll()
             }
-            
+            // Try to delete the user
             try await user.delete()
-
+            // Show the user that they data has been deleted
             presentAlertController(with: "You'll be logged out.")
             
         } catch {

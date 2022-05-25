@@ -51,7 +51,6 @@ class NameChangingTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NameChangingTableViewCell()
-//        cell.configureCell(withName: userData?.name)
         cell.textField.text = userName
         cell.startedTextFieldText = userName
         cell.selectionStyle = .none
@@ -62,6 +61,7 @@ class NameChangingTableViewController: UITableViewController {
     
     // MARK: Selectors
     @objc func doneButtonTapped() {
+        // Send userName to the delegate and pop view controller
         delegate?.get(name: userName)
         navigationController?.popViewController(animated: true)
     }
@@ -69,6 +69,7 @@ class NameChangingTableViewController: UITableViewController {
 
 extension NameChangingTableViewController: NameChangingTableViewCellDelegate {
     func retreiveTextFieldState(_ name: String?, _ whetherNewName: Bool) {
+        // We need to ensure that name was changed and new one is not empty
         guard !name!.isEmpty else {
             navigationItem.rightBarButtonItem!.isEnabled = false
             return
@@ -77,6 +78,7 @@ extension NameChangingTableViewController: NameChangingTableViewCellDelegate {
             navigationItem.rightBarButtonItem!.isEnabled = false
             return
         }
+        // If everything is OK so asign name
         self.userName = name!
         navigationItem.rightBarButtonItem!.isEnabled = true
     }
@@ -123,6 +125,7 @@ class NameChangingTableViewCell: UITableViewCell {
     
     // MARK: Selectors
     @objc func textFieldValueChanged() {
+        // Send text field's text and a bool whether something has been changed in the given name
         delegate?.retreiveTextFieldState(self.textField.text,
                                          self.startedTextFieldText == self.textField.text)
     }

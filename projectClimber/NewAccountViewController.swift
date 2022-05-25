@@ -139,6 +139,10 @@ class NewAccountViewController: UIViewController {
     }
     
     func localRealmConfig() -> Realm.Configuration {
+        // Here's a local config I'm using for macking migration whether something has been changed
+        // in realm's model
+        // But only for Workout object
+        // For example if I changed something in User object, I would face with unpredictable behavior.
         let localConfig = Realm.Configuration(schemaVersion: 3, migrationBlock: { migration, oldSchemaVersion in
             if oldSchemaVersion < 1 {
                 migration.enumerateObjects(ofType: Workout.className()) { old, new in
@@ -177,6 +181,7 @@ class NewAccountViewController: UIViewController {
         present(alertController, animated: true)
     }
     
+    // Function that starts activity indicator and disable buttons
     func setLoading(_ loading: Bool) {
         if loading {
             activityIndicator.startAnimating()
@@ -194,6 +199,7 @@ class NewAccountViewController: UIViewController {
     @objc func createAccountTapped() {
         setLoading(true)
         
+        // Execute registrating func
         app.emailPasswordAuth.registerUser(email: emailField.text!, password: passwordField.text!) { [weak self](error) in
             DispatchQueue.main.async {
                 self!.setLoading(false)

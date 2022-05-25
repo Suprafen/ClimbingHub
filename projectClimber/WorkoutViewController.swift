@@ -166,7 +166,7 @@ class WorkoutViewController: UIViewController {
     }
     
     //MARK: Helper methods
-    
+    // Decode method that helps to retreive info from user defaults
     func decodeData(forKey key: String) -> WorkoutParamters {
         if let savedParameters = self.userDefaults.object(forKey: key) as? Data {
             let decoder = JSONDecoder()
@@ -177,6 +177,7 @@ class WorkoutViewController: UIViewController {
         return WorkoutParamters()
     }
     
+    // Encode data for saving to user defaults
     func encodeData(_ data: WorkoutParamters) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(data) {

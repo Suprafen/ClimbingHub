@@ -381,11 +381,15 @@ class FingerViewTimeGoalViewController: UIViewController {
             splitTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(splitTimerFire), userInfo: nil, repeats: true)
             RunLoop.current.add(splitTimer, forMode: .common)
         } else {
-            // if timer is valid turn rest mode
-            // append last split to splits array
+            // If timer is valid turn rest mode
+            
+            // If the current split is bigger than previoous longest split
+            // Redefine.
             if splitTimeCounter > longestSplit {
                 self.longestSplit = splitTimeCounter
             }
+            
+            // Make sure that split is not equal to 0
             if splitTimeCounter != 0 {
                 splits.append(splitTimeCounter)
             }
@@ -434,22 +438,25 @@ class FingerViewTimeGoalViewController: UIViewController {
             // invalidate timer
             countDownTimer?.invalidate()
             countDownCounter = 3
-            // asign to nil
+            // Asign to nil
             countDownTimer = nil
-            // make label hidden
+            // Make count down label hidden
             self.countDownLabel.isHidden = true
-            // make everything visible
+            // Make everything visible
             self.tableViewBackgroundView.isHidden = false
             self.splitLabel.isHidden = false
             self.buttonsStackView.isHidden = false
             self.tableViewBackgroundView.isHidden = false
             self.tableViewTitleLabel.isHidden = false
             self.progressView.isHidden = false
-            // awake timer
+            // Wake timers
             totalTimeTimerPerform(timeInterval: 1)
             splitTimerPerform(timeInterval: 1)
         }
     }
+    
+    // We need to show that a user achieved their goal
+    // But for a little period of time
     
     @objc func countDownTimerCongratsLabelShow() {
         if countDownCounter > 0 {
@@ -464,11 +471,9 @@ class FingerViewTimeGoalViewController: UIViewController {
                 self.goalAnnouncementLabel.isHidden = true
             }
         }
-        
     }
 
     @objc func totalTimeTimerFire() {
-        
         
         if totalTimeCounter < timeGoal {
             self.progressView.setProgress(Float(self.totalTimeCounter)/Float(self.timeGoal), animated: true)

@@ -30,6 +30,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // TODO: Refactor functions. Make them take arguments insted of just using properties
+        
         // IF the user exists - do nothing
         // Otherwise, create new one and save to the realm
         checkForUser() ? () : createNewUser()
@@ -83,6 +84,8 @@ class TabBarController: UITabBarController {
         let user = app.currentUser
         guard let user = user,
                 let email = email else { return }
+        // Create a new user based on given info:
+        // Email and partition value(id)
         self.userData = User(email: email, userID: "user=\(user.id)", name: email)
         saveUser()
     }

@@ -100,6 +100,7 @@ class CustomGoalSettingsViewController: UIViewController {
         self.view.addSubview(saveButton)
         self.view.addSubview(cancelButton)
         
+        // TODO: move to the views
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.saveButton.translatesAutoresizingMaskIntoConstraints = false
@@ -264,14 +265,14 @@ extension CustomGoalSettingsViewController: UITableViewDataSource, UITableViewDe
         }
     }
 }
-
+// For retreiveing number of splits from the cell
 extension CustomGoalSettingsViewController: NumberOfSplitsProtocol {
     func retrieveNumberOfSplits(_ numberOfSplits: Int) {
         self.numberOfSplits = numberOfSplits
         print("\(self.numberOfSplits)")
     }
 }
-
+// For retreiveing time from time picker
 extension CustomGoalSettingsViewController: TimePickerDelegate {
     func recieveTime(inSeconds time: Int, fromPickerIndexPath indexPathForTitleCell: IndexPath, isSplitPicker: Bool) {
         // Depends on this value conclude which variable to update
