@@ -156,7 +156,7 @@ class NewAccountViewController: UIViewController {
             }
             if oldSchemaVersion < 3 {
                 migration.enumerateObjects(ofType: Workout.className()) { old, new in
-                    guard let id = app.currentUser?.id else {
+                    guard let id = realmApp.currentUser?.id else {
                         // Here should be something different for ensure,
                         // That value userID will be the same as Sync Realm, but I have no idea
                         // How to achieve this
@@ -200,7 +200,7 @@ class NewAccountViewController: UIViewController {
         setLoading(true)
         
         // Execute registrating func
-        app.emailPasswordAuth.registerUser(email: emailField.text!, password: passwordField.text!) { [weak self](error) in
+        realmApp.emailPasswordAuth.registerUser(email: emailField.text!, password: passwordField.text!) { [weak self](error) in
             DispatchQueue.main.async {
                 self!.setLoading(false)
                 guard error == nil else {

@@ -314,9 +314,9 @@ class FingerWorkoutViewController: UIViewController {
                 splits: listSplits,
                 workoutType: .fingerWorkout,
                 goalType: .openGoal,
-                userID: app.currentUser?.id ?? "local_realm_dataBase"
+                userID: realmApp.currentUser?.id ?? "local_realm_dataBase"
             )
-            print("USER ID for WORKOUT -- ",app.currentUser?.id ?? "_nothing_because_local_realm_")
+            print("USER ID for WORKOUT -- ",realmApp.currentUser?.id ?? "_nothing_because_local_realm_")
             
             try! realm.write {
                 realm.add(instance)
@@ -335,9 +335,9 @@ class FingerWorkoutViewController: UIViewController {
                 splits: listSplits,
                 workoutType: .fingerWorkout,
                 goalType: .openGoal,
-                userID: app.currentUser?.id ?? "local_realm_dataBase"
+                userID: realmApp.currentUser?.id ?? "local_realm_dataBase"
             )
-            print("USER ID for WORKOUT -- ",app.currentUser?.id ?? "_nothing_because_local_realm_")
+            print("USER ID for WORKOUT -- ",realmApp.currentUser?.id ?? "_nothing_because_local_realm_")
             try! realm.write {
                 realm.add(instance)
             }

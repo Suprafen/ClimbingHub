@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-let app = RealmSwift.App(id: "climbinghub-fclag")
+let realmApp = RealmSwift.App(id: "climbinghub-fclag")
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -23,8 +23,54 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.makeKeyAndVisible()
         
-        let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
-        window?.rootViewController = rootViewController
+//        print("CURRENT USER SCENE DELEGATE: ",realmApp.currentUser)
+//        if let url = connectionOptions.userActivities.first?.webpageURL {
+//            guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
+//                  let host = components.host,
+//                  let user = realmApp.currentUser else  {
+//                print("Invalid host")
+//                return
+//            }
+//            print(components)
+//
+//            guard let deepLink = DeepLink(rawValue: host) else {
+//                print("Deeplink not found: \(host)")
+//                return
+//            }
+//
+//            let userConfiguration = user.configuration(partitionValue: "user=\(user.id)")
+//            let workoutConfiguration = user.configuration(partitionValue: "\(user.id)")
+//
+//            let tabbarController = TabBarController(userRealmConfiguration: userConfiguration, workoutRealmConfiguration: workoutConfiguration, email: "\(user.profile.email!)")
+//
+//                tabbarController.handleDeepLink(deepLink)
+//
+//            window?.rootViewController = tabbarController
+//
+//
+//        } else {
+//            let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+//            window?.rootViewController = rootViewController
+//        }
+        
+        
+        if let user = realmApp.currentUser,
+           user.isLoggedIn == true{
+//
+            let userConfiguration = user.configuration(partitionValue: "user=\(user.id)")
+            let workoutConfiguration = user.configuration(partitionValue: "\(user.id)")
+//
+            let tabbarController = TabBarController(userRealmConfiguration: userConfiguration, workoutRealmConfiguration: workoutConfiguration, email: "\(user.profile.email!)")
+            let signInViewController = SignInViewController()
+            window?.rootViewController = signInViewController
+            signInViewController.modalPresentationStyle = .fullScreen
+            signInViewController.present(tabbarController, animated: true)
+            
+            
+        } else {
+            let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+            window?.rootViewController = rootViewController
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -55,6 +101,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        if let url = userActivity.webpageURL {
+             
+            }
+    }
 }
 

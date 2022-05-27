@@ -107,7 +107,7 @@ class ProfileManagementTableViewController: UITableViewController {
 extension ProfileManagementTableViewController: NameChangingTableViewDelegate {
     func get(name: String) {
         //TODO: Dispose of exclamation mark
-        let userConfiguration = app.currentUser!.configuration(partitionValue: userData!.userID)
+        let userConfiguration = realmApp.currentUser!.configuration(partitionValue: userData!.userID)
         let realm = try! Realm(configuration: userConfiguration)
         
         try! realm.write {

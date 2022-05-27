@@ -27,6 +27,7 @@
 		E256AD4C27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD4B27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift */; };
 		E256AD4F27FC6CB400D146CB /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD4E27FC6CB400D146CB /* TitleCell.swift */; };
 		E256AD5127FC6CCA00D146CB /* TimePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD5027FC6CCA00D146CB /* TimePickerCell.swift */; };
+		E26A904D283FF59E00F45241 /* DeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26A904C283FF59E00F45241 /* DeepLink.swift */; };
 		E27A68D127F615C10006479D /* GoalPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27A68D027F615C10006479D /* GoalPickerViewController.swift */; };
 		E27A68D327F779270006479D /* TimeGoalSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27A68D227F779270006479D /* TimeGoalSettingsViewController.swift */; };
 		E27B660327D2A3C000239D5C /* FourthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27B660227D2A3C000239D5C /* FourthTableViewCell.swift */; };
@@ -75,6 +76,7 @@
 		E256AD4B27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfSplitsStaticCell.swift; sourceTree = "<group>"; };
 		E256AD4E27FC6CB400D146CB /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		E256AD5027FC6CCA00D146CB /* TimePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerCell.swift; sourceTree = "<group>"; };
+		E26A904C283FF59E00F45241 /* DeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLink.swift; sourceTree = "<group>"; };
 		E27A68D027F615C10006479D /* GoalPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalPickerViewController.swift; sourceTree = "<group>"; };
 		E27A68D227F779270006479D /* TimeGoalSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeGoalSettingsViewController.swift; sourceTree = "<group>"; };
 		E27B660227D2A3C000239D5C /* FourthTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthTableViewCell.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				E27A68D027F615C10006479D /* GoalPickerViewController.swift */,
 				E27A68D227F779270006479D /* TimeGoalSettingsViewController.swift */,
 				E256AD4D27FC6C9400D146CB /* Custom Goal Settings View */,
+				E26A904C283FF59E00F45241 /* DeepLink.swift */,
 			);
 			path = projectClimber;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				E2815189279AD7D900E8C2D4 /* AppDelegate.swift in Sources */,
 				E24DCBB127ECD9230002A7FC /* WorkoutsHistoryCollectionViewController.swift in Sources */,
 				E281518B279AD7D900E8C2D4 /* SceneDelegate.swift in Sources */,
+				E26A904D283FF59E00F45241 /* DeepLink.swift in Sources */,
 				E205A87F27AD2A55002BA08B /* WorkoutViewController.swift in Sources */,
 				E205A88127AD4DD0002BA08B /* FingerWorkoutViewController.swift in Sources */,
 				E24DCBB027ECD9230002A7FC /* SectionHeaderWorkoutsHistoryView.swift in Sources */,

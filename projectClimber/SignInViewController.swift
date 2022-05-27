@@ -125,6 +125,8 @@ class SignInViewController: UIViewController {
         // Remove everything from the password field
         passwordField.text?.removeAll()
     }
+    
+    
     //MARK: Helper methods
     func setConstraints() {
         let margins = view.layoutMarginsGuide
@@ -161,7 +163,7 @@ class SignInViewController: UIViewController {
             }
             if oldSchemaVersion < 3 {
                 migration.enumerateObjects(ofType: Workout.className()) { old, new in
-                    guard let id = app.currentUser?.id else {
+                    guard let id = realmApp.currentUser?.id else {
                         // Here should be something different for ensure,
                         // That value userID will be the same as Sync Realm, but I have no idea
                         // How to achieve this
@@ -207,7 +209,7 @@ class SignInViewController: UIViewController {
                    
         
         // Execute method for logining user
-        app.login(credentials: Credentials.emailPassword(email: emailField.text!, password: passwordField.text!)) { [weak self](result) in
+        realmApp.login(credentials: Credentials.emailPassword(email: emailField.text!, password: passwordField.text!)) { [weak self](result) in
             DispatchQueue.main.async {
                 self!.setLoading(false)
                 switch result {
@@ -269,7 +271,7 @@ class SignInViewController: UIViewController {
     }
     
     func getConsent() async throws{
-        let client = app.emailPasswordAuth
+        let client = realmApp.emailPasswordAuth
         // Send email to a user.
         // The User must confirm that they are owner of this email
         client.sendResetPasswordEmail(email: self.emailField.text!)

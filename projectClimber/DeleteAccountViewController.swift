@@ -155,7 +155,7 @@ class DeleteAccountViewController: UIViewController {
     
     func deleteUser() async {
         // Check whether user has been loged in
-        guard let user = app.currentUser else { return }
+        guard let user = realmApp.currentUser else { return }
         // Get user id
         let userID = user.id
         // Instantiate configurations base on user's data

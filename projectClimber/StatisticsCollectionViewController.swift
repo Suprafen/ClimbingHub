@@ -148,7 +148,9 @@ class StatisticsCollectionViewController: UICollectionViewController {
             moveToTheTabButton.topAnchor.constraint(equalTo: absenceOfWorkoutLabel.bottomAnchor, constant: 20)
         ])
     }
-    
+    override func encodeRestorableState(with coder: NSCoder) {
+        
+    }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = sections[indexPath.section]
         // If section is .workouts we can push to stats for specific workout

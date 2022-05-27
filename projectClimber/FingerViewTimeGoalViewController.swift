@@ -333,7 +333,7 @@ class FingerViewTimeGoalViewController: UIViewController {
                 splits: listSplits,
                 workoutType: .fingerWorkout,
                 goalType: .time,
-                userID: app.currentUser?.id ?? "local_realm_dataBase"
+                userID: realmApp.currentUser?.id ?? "local_realm_dataBase"
             )
             
             try! realm.write {
@@ -353,7 +353,7 @@ class FingerViewTimeGoalViewController: UIViewController {
                 splits: listSplits,
                 workoutType: .fingerWorkout,
                 goalType: .time,
-                userID: app.currentUser?.id ?? "local_realm_dataBase"
+                userID: realmApp.currentUser?.id ?? "local_realm_dataBase"
             )
             
             try! realm.write {
