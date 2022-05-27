@@ -130,7 +130,7 @@ class ProfileSettingsTableViewController: UITableViewController {
         case 2:
             switch indexPath.row {
             case 0:
-                if app.currentUser != nil{
+                if realmApp.currentUser != nil{
                     presentAlertController(withMessage: "You can always access your content by signing back in")
                 } else {
                     returnToStartScreen()
@@ -176,7 +176,7 @@ class ProfileSettingsTableViewController: UITableViewController {
     
     func logout() {
         // Perform logout if user has been loged in
-        app.currentUser!.logOut { (_) in
+        realmApp.currentUser!.logOut { (_) in
             DispatchQueue.main.async {
                 self.dismiss(animated: true)
             }

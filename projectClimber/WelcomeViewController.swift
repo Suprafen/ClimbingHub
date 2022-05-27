@@ -194,8 +194,8 @@ class WelcomeViewController: UIViewController {
         // So after restart we already logged in, but we can't get access to the workouts through sync realm,
         // however we can go to local realm and we'll appear as logged in user, which is unlikely behavior.
         // TODO: Make app save the state of logged in user
-        if app.currentUser != nil {
-            app.currentUser!.logOut { (_) in
+        if realmApp.currentUser != nil {
+            realmApp.currentUser!.logOut { (_) in
             }
         }
         
@@ -221,7 +221,7 @@ extension WelcomeViewController {
             }
             if oldSchemaVersion < 3 {
                 migration.enumerateObjects(ofType: Workout.className()) { old, new in
-                    guard let id = app.currentUser?.id else {
+                    guard let id = realmApp.currentUser?.id else {
                         // Here should be something different for ensure,
                         // That value userID will be the same as Sync Realm, but I have no idea
                         // How to achieve this

@@ -61,7 +61,7 @@ class TabBarController: UITabBarController {
     // Check whether realm contains this user
     // If it is use this user
     func checkForUser() -> Bool{
-        guard let userID = app.currentUser?.id else {
+        guard let userID = realmApp.currentUser?.id else {
             return false
         }
         var currentUser: User?
@@ -81,12 +81,23 @@ class TabBarController: UITabBarController {
     }
     
     func createNewUser() {
-        let user = app.currentUser
+        let user = realmApp.currentUser
         guard let user = user,
                 let email = email else { return }
         // Create a new user based on given info:
         // Email and partition value(id)
         self.userData = User(email: email, userID: "user=\(user.id)", name: email)
         saveUser()
+    }
+}
+
+extension TabBarController {
+    func handleDeepLink(_ deepLink: DeepLink) {
+        switch deepLink {
+        case .statistics:
+            tabBarController?.selectedIndex = 0
+        case .startWorkout:
+            tabBarController?.selectedIndex = 1
+        }
     }
 }

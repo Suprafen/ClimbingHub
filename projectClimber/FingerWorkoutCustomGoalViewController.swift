@@ -282,7 +282,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
                 splits: listSplits,
                 workoutType: .fingerWorkout,
                 goalType: .custom,
-                userID: app.currentUser?.id ?? "local_realm_dataBase"
+                userID: realmApp.currentUser?.id ?? "local_realm_dataBase"
             )
             
             try! realm.write {
@@ -302,7 +302,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
                 splits: listSplits,
                 workoutType: .fingerWorkout,
                 goalType: .custom,
-                userID: app.currentUser?.id ?? "local_realm_dataBase"
+                userID: realmApp.currentUser?.id ?? "local_realm_dataBase"
             )
             
             try! realm.write {
@@ -453,7 +453,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
                 splits: listSplits,
                 workoutType: .fingerWorkout,
                 goalType: .custom,
-                userID: app.currentUser?.id ?? "local_realm_dataBase"
+                userID: realmApp.currentUser?.id ?? "local_realm_dataBase"
             )
             // Try to add this instance to the realm
                 try! realm.write {
