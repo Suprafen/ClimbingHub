@@ -18,13 +18,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-        window?.windowScene = windowScene
+        window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
+        print(app.currentUser?.allSessions)
         
-        let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
-        window?.rootViewController = rootViewController
+        if app.currentUser?.isLoggedIn != nil{
+            let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+            window?.rootViewController = rootViewController
+            let controller = retreiveController(for: app.currentUser!.id) as! TabBarController
+            controller.modalPresentationStyle = .fullScreen
+
+            rootViewController.present(controller, animated: true)
+        } else {
+            let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+            window?.rootViewController = rootViewController
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -58,3 +66,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate {
+    // MARK: Helper methods
+    
+    func retreiveController(for userID: String) -> UIViewController {
+        let userConfig = app.currentUser!.configuration(partitionValue: "user=\(userID)")
+        let workoutConfig = app.currentUser!.configuration(partitionValue: "\(userID)")
+        
+        let tabarController = TabBarController(userRealmConfiguration: userConfig, workoutRealmConfiguration: workoutConfig)
+        
+        return tabarController
+    }
+}
