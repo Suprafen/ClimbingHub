@@ -18,23 +18,50 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     
         guard let windowScene = (scene as? UIWindowScene) else { return }
+
+        guard let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity else {
+            window = UIWindow(windowScene: windowScene)
+            window?.makeKeyAndVisible()
+            let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+            window?.rootViewController = rootViewController
+            return
+        }
+        
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
-        print(app.currentUser?.allSessions)
-        
-        if app.currentUser?.isLoggedIn != nil{
-            let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
-            window?.rootViewController = rootViewController
-            let controller = retreiveController(for: app.currentUser!.id) as! TabBarController
-            controller.modalPresentationStyle = .fullScreen
-
-            rootViewController.present(controller, animated: true)
-        } else {
-            let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
-            window?.rootViewController = rootViewController
+        if configure(window: window, with: userActivity) {
+            scene.userActivity = userActivity
         }
     }
 
+    func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool{
+        var succeeded = false
+        
+        window?.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+        
+        if let userInfo = activity.userInfo {
+            if let navigationController = window?.rootViewController as? UINavigationController {
+                if let userID = userInfo[SceneDelegate.userIdForTabBar] as? String, userID.isEmpty != true{
+                    
+                    let tabbarController = retreiveController(for: userID)
+                    
+                    tabbarController.modalPresentationStyle = .fullScreen
+                    
+                    navigationController.present(tabbarController, animated: false)
+                } else {
+                    let tabBarController = TabBarController()
+                    
+                    tabBarController.modalPresentationStyle = .fullScreen
+                    
+                    navigationController.present(tabBarController, animated: false)
+                }
+                
+            }
+            succeeded = true
+        }
+        return succeeded
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
@@ -45,11 +72,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        if let userActivity = window?.windowScene?.userActivity {
+            userActivity.becomeCurrent()
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
+        if let userActivity = window?.windowScene?.userActivity {
+            userActivity.resignCurrent()
+        }
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -76,5 +109,30 @@ extension SceneDelegate {
         let tabarController = TabBarController(userRealmConfiguration: userConfig, workoutRealmConfiguration: workoutConfig)
         
         return tabarController
+    }
+    
+    static let MainSceneActivity = { () -> String in
+        let activityTypes = Bundle.main.infoDictionary?["NSUserActivityTypes"] as? [String]
+        return activityTypes![0]
+    }
+    
+    static let presentedTabBarControllerKey = "tabBarControllerPresentedKey" // Tab bar presented key (presented = true)
+    static let userIdForTabBar = "UserIdForTabBar" // Key for user id tab bar
+    
+    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+        // Offer the user activity for this scene.
+        if app.currentUser?.isLoggedIn != nil {
+            if  let rootViewController = window?.rootViewController as? UINavigationController,
+                let childViewController = rootViewController.topViewController as? SignInViewController,
+                let tabBarViewController = childViewController.presentedViewController as? TabBarController {
+                    tabBarViewController.updateUserActivity()
+            }
+        } else if let userInfo = scene.userActivity?.userInfo, userInfo[SceneDelegate.presentedTabBarControllerKey] != nil, userInfo[SceneDelegate.userIdForTabBar] as? String == "" {
+            if  let rootViewController = window?.rootViewController as? UINavigationController,
+                let tabBarViewController = rootViewController.presentedViewController as? TabBarController {
+                    tabBarViewController.updateUserActivity()
+            }
+        }
+        return scene.userActivity
     }
 }
