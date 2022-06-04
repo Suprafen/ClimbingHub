@@ -10,16 +10,23 @@ import RealmSwift
 
 class TabBarController: UITabBarController {
 
-    let userRealm: Realm
+    let userRealm: Realm?
     let email: String?
     var userData: User? = nil
     var workoutRealmConfiguration: Realm.Configuration
     
-    init(userRealmConfiguration: Realm.Configuration, workoutRealmConfiguration: Realm.Configuration, email: String? = nil) {
+    init(userRealmConfiguration: Realm.Configuration? = nil,
+         workoutRealmConfiguration: Realm.Configuration = Realm.localRealmConfig(),
+         email: String? = nil) {
         self.workoutRealmConfiguration = workoutRealmConfiguration
-        self.userRealm = try! Realm(configuration: userRealmConfiguration)
+        // Check for user config, wether nil, hence local realm
+        if let userRealmConfiguration = userRealmConfiguration {
+            self.userRealm = try! Realm(configuration: userRealmConfiguration)
+        } else {
+            self.userRealm = nil
+        }
         self.email = email
-        print("USER REALM URL: ", userRealmConfiguration.fileURL ?? "__here_should_be_URL_to_a_user_realm__")
+//        print("USER REALM URL: ", userRealmConfiguration.fileURL ?? "__here_should_be_URL_to_a_user_realm__")
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,12 +34,20 @@ class TabBarController: UITabBarController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateUserActivity()
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // TODO: Refactor functions. Make them take arguments insted of just using properties
         
         // IF the user exists - do nothing
         // Otherwise, create new one and save to the realm
+        // Another case is local realm
+        // Check for user will return false
+        // However 'createNewUser()' will be invalidated by guard statement
         checkForUser() ? () : createNewUser()
 
         let workoutViewController = UINavigationController(rootViewController: WorkoutViewController(userData: self.userData, realmConfiguration: workoutRealmConfiguration))
@@ -53,6 +68,7 @@ class TabBarController: UITabBarController {
     
     func saveUser() {
         if let userData = userData {
+            guard let userRealm = userRealm else { return }
             try! userRealm.write {
                 userRealm.add(userData)
             }
@@ -65,6 +81,7 @@ class TabBarController: UITabBarController {
             return false
         }
         var currentUser: User?
+        guard let userRealm = userRealm else { return false }
         try! userRealm.write {
             let resultsObjects = userRealm.objects(User.self)
             currentUser = resultsObjects.filter { user in
@@ -81,12 +98,33 @@ class TabBarController: UITabBarController {
     }
     
     func createNewUser() {
-        let user = app.currentUser
-        guard let user = user,
+        guard let user = app.currentUser,
                 let email = email else { return }
         // Create a new user based on given info:
         // Email and partition value(id)
         self.userData = User(email: email, userID: "user=\(user.id)", name: email)
         saveUser()
+    }
+    
+    func updateUserActivity() {
+        var currentUserActivity = view.window?.windowScene?.userActivity
+        
+        if currentUserActivity == nil {
+            currentUserActivity = NSUserActivity(activityType: SceneDelegate.MainSceneActivity())
+        }
+        
+        guard let userID = app.currentUser?.id else {
+            // If there's no logged user, hence insted of userID paste empty string
+            currentUserActivity?.addUserInfoEntries(from: [SceneDelegate.presentedTabBarControllerKey : true])
+            currentUserActivity?.userInfo = [SceneDelegate.userIdForTabBar: ""]
+            
+            view.window?.windowScene?.userActivity = currentUserActivity
+            return
+        }
+        
+        currentUserActivity?.addUserInfoEntries(from: [SceneDelegate.presentedTabBarControllerKey : true])
+        currentUserActivity?.userInfo  = [SceneDelegate.userIdForTabBar : "\(userID)"]
+        
+        view.window?.windowScene?.userActivity = currentUserActivity
     }
 }

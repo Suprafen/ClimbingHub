@@ -108,6 +108,10 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+          tapGesture.cancelsTouchesInView = true
+          view.addGestureRecognizer(tapGesture)
+        
         emailField.rightView = activityIndicator
         emailField.rightViewMode = .always
         container.addArrangedSubview(emailField)
@@ -273,5 +277,12 @@ class SignInViewController: UIViewController {
         // Send email to a user.
         // The User must confirm that they are owner of this email
         client.sendResetPasswordEmail(email: self.emailField.text!)
+    }
+}
+
+// MARK: Keyboard dismissing
+extension SignInViewController {
+    @objc func hideKeyboard() {
+        view.endEditing(true)
     }
 }
