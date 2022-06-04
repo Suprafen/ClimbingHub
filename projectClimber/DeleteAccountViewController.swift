@@ -175,6 +175,7 @@ class DeleteAccountViewController: UIViewController {
             }
             // Try to delete the user
             try await user.delete()
+            view.window?.windowScene?.userActivity = nil
             // Show the user that they data has been deleted
             presentAlertController(with: "You'll be logged out.")
             

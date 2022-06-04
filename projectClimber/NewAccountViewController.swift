@@ -96,6 +96,10 @@ class NewAccountViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+          tapGesture.cancelsTouchesInView = true
+          view.addGestureRecognizer(tapGesture)
+        
         emailField.rightView = activityIndicator
         emailField.rightViewMode = .always
         container.addArrangedSubview(nameField)
@@ -215,5 +219,9 @@ class NewAccountViewController: UIViewController {
                 self?.navigationController?.pushViewController(viewToShow, animated: true)
             }
         }
+    }
+    
+    @objc func hideKeyboard() {
+        view.endEditing(true)
     }
 }
