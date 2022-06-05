@@ -35,22 +35,22 @@ class DeleteAccountViewController: UIViewController {
         return label
     }()
     
-    let firstNotation: NotationViewController = {
-        let view = NotationViewController(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "You will lose your data", descriptionText: "ere goes text that makes clear user is going to lose their data and so on.", image: UIImage(systemName: "gear")!)
+    let firstNotation: NotationView = {
+        let view = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "You will lose your data", descriptionText: "ere goes text that makes clear user is going to lose their data and so on.", image: UIImage(systemName: "gear")!)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
-    let secondNotation: NotationViewController = {
-        let view = NotationViewController(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "You will lose your data", descriptionText: "ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.", image: UIImage(systemName: "gear")!)
+    let secondNotation: NotationView = {
+        let view = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "You will lose your data", descriptionText: "ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.ere goes text that makes clear user is going to lose their data and so on.", image: UIImage(systemName: "gear")!)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
-    let thirdNotation: NotationViewController = {
-        let view = NotationViewController(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "You will lose your data", descriptionText: "ere goes text that makes clear user is going to lose their data and so on.", image: UIImage(systemName: "gear")!)
+    let thirdNotation: NotationView = {
+        let view = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "You will lose your data", descriptionText: "ere goes text that makes clear user is going to lose their data and so on.", image: UIImage(systemName: "gear")!)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view

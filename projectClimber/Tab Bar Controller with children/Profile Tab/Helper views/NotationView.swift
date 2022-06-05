@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NotationViewController: UIView {
+class NotationView: UIView {
 
     let outerMostStack: UIStackView = {
         let stack = UIStackView()
