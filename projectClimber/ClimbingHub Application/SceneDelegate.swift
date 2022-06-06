@@ -86,14 +86,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let userInfo = activity.userInfo {
             if let navigationController = window?.rootViewController as? UINavigationController {
-                if let userID = userInfo[SceneDelegate.userIdForTabBar] as? String, userID.isEmpty != true{
+                if let userID = userInfo[SceneDelegate.userIdForTabBar] as? String, userID.isEmpty != true, app.currentUser?.isLoggedIn != nil{
                     
                     let tabbarController = retreiveController(for: userID)
                     
                     tabbarController.modalPresentationStyle = .fullScreen
                     
                     navigationController.present(tabbarController, animated: false)
-                } else {
+                } else if let userID = userInfo[SceneDelegate.userIdForTabBar] as? String, userID == SceneDelegate.userIdForLocalRealm {
                     let tabBarController = TabBarController()
                     
                     tabBarController.modalPresentationStyle = .fullScreen

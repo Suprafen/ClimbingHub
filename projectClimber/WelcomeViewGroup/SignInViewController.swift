@@ -260,23 +260,9 @@ class SignInViewController: UIViewController {
     }
     
     @objc func forgotPasswordButtonTapped() {
-       // TODO: Provide functionality to this method
-        Task {
-            do {
-                try await getConsent()
-                presentAlertController(with: "Send was sent")
-            }
-            catch {
-                presentAlertController(with: error.localizedDescription)
-            }
-        }
-    }
-    
-    func getConsent() async throws{
-        let client = app.emailPasswordAuth
-        // Send email to a user.
-        // The User must confirm that they are owner of this email
-        client.sendResetPasswordEmail(email: self.emailField.text!)
+        let controllerToPush = ForgotPasswordViewController()
+        controllerToPush.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(controllerToPush, animated: true)
     }
 }
 

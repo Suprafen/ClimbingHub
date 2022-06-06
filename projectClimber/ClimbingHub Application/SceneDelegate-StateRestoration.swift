@@ -16,6 +16,7 @@ extension SceneDelegate {
     
     static let presentedTabBarControllerKey = "tabBarControllerPresentedKey" // Wether true, then tab bar presented
     static let userIdForTabBar = "UserIdForTabBar" // Key for user id tab bar
+    static let userIdForLocalRealm = "LocalRealm"
     
     func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
         if app.currentUser?.isLoggedIn != nil {

@@ -116,7 +116,7 @@ class TabBarController: UITabBarController {
         guard let userID = app.currentUser?.id else {
             // If there's no logged user, hence insted of userID paste empty string
             currentUserActivity?.addUserInfoEntries(from: [SceneDelegate.presentedTabBarControllerKey : true])
-            currentUserActivity?.userInfo = [SceneDelegate.userIdForTabBar: ""]
+            currentUserActivity?.userInfo = [SceneDelegate.userIdForTabBar: SceneDelegate.userIdForLocalRealm]
             
             view.window?.windowScene?.userActivity = currentUserActivity
             return
