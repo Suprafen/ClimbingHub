@@ -17,6 +17,7 @@ class NewAccountViewController: UIViewController {
         let button = UIButton(configuration: config)
         button.addTarget(nil, action: #selector(createAccountTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isEnabled = false
         
         return button
     }()
@@ -49,19 +50,18 @@ class NewAccountViewController: UIViewController {
         emailField.borderStyle = .roundedRect
         emailField.autocapitalizationType = .none
         emailField.autocorrectionType = .no
-        
+        emailField.addTarget(nil, action: #selector(fieldChanged(_:)), for: .editingChanged)
         return emailField
     }()
     
-    let nameField: UITextField = {
+    let repeatPasswordField: UITextField = {
         // Configure the username text input field.
-        let nameField = UITextField()
-        nameField.placeholder = "Name"
-        nameField.borderStyle = .roundedRect
-        nameField.autocapitalizationType = .none
-        nameField.autocorrectionType = .no
-        
-        return nameField
+        let repeatPasswordField = UITextField()
+        repeatPasswordField.placeholder = "Repeat Password"
+        repeatPasswordField.borderStyle = .roundedRect
+        repeatPasswordField.isSecureTextEntry = true
+        repeatPasswordField.addTarget(nil, action: #selector(fieldChanged(_:)), for: .editingChanged)
+        return repeatPasswordField
     }()
     
     let passwordField: UITextField = {
@@ -70,6 +70,7 @@ class NewAccountViewController: UIViewController {
         passwordField.placeholder = "Password"
         passwordField.borderStyle = .roundedRect
         passwordField.isSecureTextEntry = true
+        passwordField.addTarget(nil, action: #selector(fieldChanged(_:)), for: .editingChanged)
         
         return passwordField
     }()
@@ -102,10 +103,10 @@ class NewAccountViewController: UIViewController {
         
         emailField.rightView = activityIndicator
         emailField.rightViewMode = .always
-        container.addArrangedSubview(nameField)
         container.addArrangedSubview(emailField)
         container.addArrangedSubview(passwordField)
-
+        container.addArrangedSubview(repeatPasswordField)
+        
         view.addSubview(container)
         view.addSubview(createAccountButton)
         view.addSubview(privacyPolicyLabel)
@@ -114,7 +115,7 @@ class NewAccountViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard !nameField.text!.isEmpty else { return }
+        guard !emailField.text!.isEmpty else { return }
         self.navigationController?.popToRootViewController(animated: true)
     }
     
@@ -199,6 +200,21 @@ class NewAccountViewController: UIViewController {
         navigationItem.leftBarButtonItem?.isEnabled = !loading
     }
     
+    func isConfirmButtonActive(){
+        if emailField.isEmail() && isPasswordsIdenticalInFields() {
+            createAccountButton.isEnabled = true
+        } else {
+            createAccountButton.isEnabled = false
+        }
+    }
+    
+    func isPasswordsIdenticalInFields() -> Bool {
+        
+        guard let password = passwordField.text, let repeatedPassword = repeatPasswordField.text,
+              password == repeatedPassword, !password.isEmpty && !repeatedPassword.isEmpty else { return false}
+        return true
+    }
+    
     //MARK: Selectors
     @objc func createAccountTapped() {
         setLoading(true)
@@ -224,4 +240,9 @@ class NewAccountViewController: UIViewController {
     @objc func hideKeyboard() {
         view.endEditing(true)
     }
+    
+    @objc func fieldChanged(_ sender: UITextField) {
+        isConfirmButtonActive()
+    }
+    
 }
