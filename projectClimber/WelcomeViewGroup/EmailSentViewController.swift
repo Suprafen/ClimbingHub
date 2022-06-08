@@ -18,14 +18,24 @@ class EmailSentViewController: UIViewController {
         return label
     }()
     
-    let label: UILabel = {
+    let messageLabel: UILabel = {
         let label  = UILabel()
-        label.font = UIFont.systemFont(ofSize: 19, weight: .regular)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
+    }()
+    
+    let supportText: UITextView = {
+        let textView = UITextView()
+        textView.isEditable = false
+        textView.textAlignment = .center
+        textView.text = "If you encountered with any problems you can write us on climbinghub.help@gmail.com"
+        textView.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .regular)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return textView
     }()
     
     let returnToLogInScreenButton: UIButton = {
@@ -41,7 +51,7 @@ class EmailSentViewController: UIViewController {
     }()
     
     init(email: String) {
-        label.text =  "Thank you. We have sent you a letter to provided email. Please click on the link in the email to confirm a registration."
+        messageLabel.text =  "Thank you. We have sent you a letter to the provided email. Please click on the link in the email to confirm a registration."
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,9 +74,14 @@ class EmailSentViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            messageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
+            messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            messageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            supportText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            supportText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            supportText.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 20),
+            supportText.bottomAnchor.constraint(greaterThanOrEqualTo: returnToLogInScreenButton.topAnchor, constant: 20),
             
             returnToLogInScreenButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             returnToLogInScreenButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
@@ -77,7 +92,8 @@ class EmailSentViewController: UIViewController {
     func configureView() {
         view.backgroundColor = .white
         view.addSubview(titleLabel)
-        view.addSubview(label)
+        view.addSubview(messageLabel)
+        view.addSubview(supportText)
         view.addSubview(returnToLogInScreenButton)
     }
     

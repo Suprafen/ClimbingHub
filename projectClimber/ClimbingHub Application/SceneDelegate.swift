@@ -19,23 +19,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        guard let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity else {
+            window = UIWindow(windowScene: windowScene)
+            window?.makeKeyAndVisible()
+            let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+            window?.rootViewController = rootViewController
+            return
+        }
+
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
-        let rootViewController = UINavigationController(rootViewController: EmailSentViewController(email: "email@mail.com"))
-        window?.rootViewController = rootViewController
-//        guard let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity else {
-//            window = UIWindow(windowScene: windowScene)
-//            window?.makeKeyAndVisible()
-//            let rootViewController = UINavigationController(rootViewController: WelcomeViewController())
-//            window?.rootViewController = rootViewController
-//            return
-//        }
-//
-//        window = UIWindow(windowScene: windowScene)
-//        window?.makeKeyAndVisible()
-//        if configure(window: window, with: userActivity) {
-//            scene.userActivity = userActivity
-//        }
+        if configure(window: window, with: userActivity) {
+            scene.userActivity = userActivity
+        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
