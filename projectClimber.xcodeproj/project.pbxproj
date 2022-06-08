@@ -44,6 +44,7 @@
 		E2D0E2C8281A91C700397C79 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D0E2C7281A91C700397C79 /* NewAccountViewController.swift */; };
 		E2D1333C283A60E100AB2A9A /* EmailSentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */; };
 		E2D1913A284CE3D400E3E596 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */; };
+		E2EFFA822850710800F70C97 /* AttentionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFFA812850710800F70C97 /* AttentionMessageView.swift */; };
 		E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */; };
 		E2F1CFFF27BC22C3007ADEE2 /* FirstTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFE27BC22C3007ADEE2 /* FirstTableViewCell.swift */; };
 		E2F1D00227BC26C7007ADEE2 /* SecondTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1D00127BC26C7007ADEE2 /* SecondTableViewCell.swift */; };
@@ -95,6 +96,7 @@
 		E2D0E2C7281A91C700397C79 /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSentViewController.swift; sourceTree = "<group>"; };
 		E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		E2EFFA812850710800F70C97 /* AttentionMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionMessageView.swift; sourceTree = "<group>"; };
 		E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatisticsTableViewController.swift; sourceTree = "<group>"; };
 		E2F1CFFE27BC22C3007ADEE2 /* FirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTableViewCell.swift; sourceTree = "<group>"; };
 		E2F1D00127BC26C7007ADEE2 /* SecondTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableViewCell.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				E2A94A88281FDD06003061D0 /* SignInViewController.swift */,
 				E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */,
 				E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */,
+				E2EFFA83285075DA00F70C97 /* Helper Views */,
 			);
 			path = WelcomeViewGroup;
 			sourceTree = "<group>";
@@ -336,6 +339,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		E2EFFA83285075DA00F70C97 /* Helper Views */ = {
+			isa = PBXGroup;
+			children = (
+				E2EFFA812850710800F70C97 /* AttentionMessageView.swift */,
+			);
+			path = "Helper Views";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -485,6 +496,7 @@
 				E205A87B27AD18B2002BA08B /* StatisticsCollectionViewController.swift in Sources */,
 				E23678BE280469F90043F3E9 /* FingerWorkoutCustomGoalViewController.swift in Sources */,
 				E2F1D00227BC26C7007ADEE2 /* SecondTableViewCell.swift in Sources */,
+				E2EFFA822850710800F70C97 /* AttentionMessageView.swift in Sources */,
 				E2A94A89281FDD06003061D0 /* SignInViewController.swift in Sources */,
 				E2856B7127E7A73F00443E63 /* SplitTableViewCell.swift in Sources */,
 				E2FFD4F327BD4623004AADEC /* ThirdTableViewCell.swift in Sources */,

@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import SwiftUI
 
 class NewAccountViewController: UIViewController {
     let createAccountButton: UIButton = {
@@ -50,7 +51,7 @@ class NewAccountViewController: UIViewController {
         emailField.borderStyle = .roundedRect
         emailField.autocapitalizationType = .none
         emailField.autocorrectionType = .no
-        emailField.addTarget(nil, action: #selector(fieldChanged(_:)), for: .editingChanged)
+        emailField.addTarget(nil, action: #selector(emailFieldChanged(_:)), for: .editingChanged)
         return emailField
     }()
     
@@ -60,7 +61,7 @@ class NewAccountViewController: UIViewController {
         repeatPasswordField.placeholder = "Repeat Password"
         repeatPasswordField.borderStyle = .roundedRect
         repeatPasswordField.isSecureTextEntry = true
-        repeatPasswordField.addTarget(nil, action: #selector(fieldChanged(_:)), for: .editingChanged)
+        repeatPasswordField.addTarget(nil, action: #selector(passwordFieldChanged(_:)), for: .editingChanged)
         return repeatPasswordField
     }()
     
@@ -70,7 +71,7 @@ class NewAccountViewController: UIViewController {
         passwordField.placeholder = "Password"
         passwordField.borderStyle = .roundedRect
         passwordField.isSecureTextEntry = true
-        passwordField.addTarget(nil, action: #selector(fieldChanged(_:)), for: .editingChanged)
+        passwordField.addTarget(nil, action: #selector(passwordFieldChanged(_:)), for: .editingChanged)
         
         return passwordField
     }()
@@ -93,6 +94,14 @@ class NewAccountViewController: UIViewController {
         return label
     }()
     
+    let attentionMessageView: AttentionMessageView = {
+        let view = AttentionMessageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), .wrongPassword)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -109,6 +118,7 @@ class NewAccountViewController: UIViewController {
         
         view.addSubview(container)
         view.addSubview(createAccountButton)
+        view.addSubview(attentionMessageView)
         view.addSubview(privacyPolicyLabel)
         setConstraints()
     }
@@ -133,6 +143,10 @@ class NewAccountViewController: UIViewController {
             container.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
             container.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
                 
+            attentionMessageView.topAnchor.constraint(equalTo: container.bottomAnchor, constant: 20),
+            attentionMessageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
+            attentionMessageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
+            
             privacyPolicyLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
             privacyPolicyLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
             privacyPolicyLabel.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor, constant: -20),
@@ -200,7 +214,7 @@ class NewAccountViewController: UIViewController {
         navigationItem.leftBarButtonItem?.isEnabled = !loading
     }
     
-    func isConfirmButtonActive(){
+    func updateUI(){
         if emailField.isEmail() && isPasswordsIdenticalInFields() {
             createAccountButton.isEnabled = true
         } else {
@@ -209,9 +223,22 @@ class NewAccountViewController: UIViewController {
     }
     
     func isPasswordsIdenticalInFields() -> Bool {
-        
+        // Bounding value to make sure that text field has a text
+        // then we need to ensure that strings are not empty
         guard let password = passwordField.text, let repeatedPassword = repeatPasswordField.text,
-              password == repeatedPassword, !password.isEmpty && !repeatedPassword.isEmpty else { return false}
+                password == repeatedPassword,
+                !password.isEmpty && !repeatedPassword.isEmpty else {
+            // Check if passwords fields are empty
+            // Because we don't need to show attention message when password fields are empty
+            if let password = passwordField.text, let repeatedPassword = repeatPasswordField.text, password.isEmpty && repeatedPassword.isEmpty {
+                attentionMessageView.isHidden = true
+            } else {
+                attentionMessageView.isHidden = false
+            }
+            return false
+        }
+        // Hide attention view
+        attentionMessageView.isHidden = true
         return true
     }
     
@@ -241,8 +268,11 @@ class NewAccountViewController: UIViewController {
         view.endEditing(true)
     }
     
-    @objc func fieldChanged(_ sender: UITextField) {
-        isConfirmButtonActive()
+    @objc func passwordFieldChanged(_ sender: UITextField) {
+        updateUI()
     }
     
+    @objc func emailFieldChanged(_ sender: UITextField) {
+        updateUI()
+    }
 }
