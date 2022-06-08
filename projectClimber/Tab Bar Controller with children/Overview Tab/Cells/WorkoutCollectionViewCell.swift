@@ -147,8 +147,8 @@ class WorkoutCollectionViewCell: UICollectionViewCell {
             self.insideCirlceImage.tintColor = UIColor(rgb: 0xF4BF4F)
             self.insideCirlceImage.image = UIImage(systemName: "timer")
         case .custom:
-            self.circle.backgroundColor = UIColor(rgb: 0xEC6A5E)
-            self.insideCirlceImage.tintColor = UIColor(rgb: 0xEC6A5E)
+            self.circle.backgroundColor = UIColor(rgb: 0xAB80E2)
+            self.insideCirlceImage.tintColor = UIColor(rgb: 0x47088A)
             self.insideCirlceImage.image = UIImage(systemName: "paintbrush")
         }
     }

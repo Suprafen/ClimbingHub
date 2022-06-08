@@ -87,8 +87,8 @@ class GoalPickerViewController: UIViewController {
         configuration.imagePlacement = .top
         configuration.imagePadding = 10
         configuration.title = "Custom"
-        configuration.baseBackgroundColor = UIColor(rgb: 0xEC6A5E)
-        configuration.baseForegroundColor = UIColor(rgb: 0x8C1A10)
+        configuration.baseBackgroundColor = UIColor(rgb: 0xAB80E2)
+        configuration.baseForegroundColor = UIColor(rgb: 0x47088A)
 //        configuration.buttonSize = .medium
         configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)

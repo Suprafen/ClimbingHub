@@ -257,7 +257,7 @@ class WorkoutViewController: UIViewController {
             self.startButton.configuration = changeConfigurationForStartButton(baseBackgroundColor: .systemBlue.withAlphaComponent(0.6))
         case .custom:
             self.workoutDescriptionLabel.text = "Customize your workout and become a pro."
-            self.startButton.configuration = changeConfigurationForStartButton(baseBackgroundColor: UIColor(rgb: 0xEC6A5E))
+            self.startButton.configuration = changeConfigurationForStartButton(baseBackgroundColor: UIColor(rgb: 0xAB80E2))
         case .time:
             self.workoutDescriptionLabel.text = "Set time you want to exercise."
             self.startButton.configuration = changeConfigurationForStartButton(baseBackgroundColor: UIColor(rgb: 0xF4BF4F))
