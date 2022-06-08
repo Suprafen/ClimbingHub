@@ -78,6 +78,7 @@ class SignInViewController: UIViewController {
     let forgotPasswordButton: UIButton = {
         let button = UIButton()
         button.setTitle("Forgot Password?", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
         button.setTitleColor(UIColor.systemBlue, for: .normal)
         button.addTarget(nil, action: #selector(forgotPasswordButtonTapped), for: .touchUpInside)
 
