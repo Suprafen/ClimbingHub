@@ -44,7 +44,7 @@ class LocalProfileViewController: UIViewController {
     
     let backToMainViewButton: UIButton = {
         let button = UIButton()
-        button.setTitle("To The Main View", for: .normal)
+        button.setTitle("Sign In / Sign Up", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
         button.setTitleColor(UIColor.systemBlue, for: .normal)
         button.addTarget(nil, action: #selector(backToMainViewButtonTapped), for: .touchUpInside)
