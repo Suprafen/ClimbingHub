@@ -120,7 +120,6 @@ class ProfileSettingsTableViewController: UITableViewController {
             case 1:
                 let viewToShow = DeleteAccountViewController()
                 viewToShow.navigationItem.largeTitleDisplayMode = .never
-                viewToShow.navigationItem.title = "Delete Account"
                 viewToShow.hidesBottomBarWhenPushed = true
                 navigationController?.pushViewController(viewToShow, animated: true)
             default:

@@ -56,7 +56,7 @@ class NotationView: UIView {
     
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .black
+//        imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
         imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
