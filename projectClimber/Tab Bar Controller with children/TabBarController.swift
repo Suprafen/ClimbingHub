@@ -57,7 +57,8 @@ class TabBarController: UITabBarController {
         let statisticsViewController = UINavigationController(rootViewController: StatisticsCollectionViewController( workoutRealmConfiguration: self.workoutRealmConfiguration))
         statisticsViewController.title = "Overview"
         
-        let profileSettingsTableViewController = UINavigationController(rootViewController: ProfileSettingsTableViewController(style: .insetGrouped, userData: self.userData))
+        let profileSettingsTableViewController = app.currentUser?.isLoggedIn != nil ? UINavigationController(rootViewController: ProfileSettingsTableViewController(style: .insetGrouped, userData: self.userData)) : UINavigationController(rootViewController:LocalProfileViewController())
+        
         setViewControllers([statisticsViewController, workoutViewController, profileSettingsTableViewController], animated: false)
         profileSettingsTableViewController.title = "Profile"
         

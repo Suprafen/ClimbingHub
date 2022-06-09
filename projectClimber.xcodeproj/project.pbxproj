@@ -45,6 +45,7 @@
 		E2D1333C283A60E100AB2A9A /* EmailSentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */; };
 		E2D1913A284CE3D400E3E596 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */; };
 		E2EFFA822850710800F70C97 /* AttentionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFFA812850710800F70C97 /* AttentionMessageView.swift */; };
+		E2F028BF2851DF3D001289E7 /* LocalProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */; };
 		E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */; };
 		E2F1CFFF27BC22C3007ADEE2 /* FirstTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFE27BC22C3007ADEE2 /* FirstTableViewCell.swift */; };
 		E2F1D00227BC26C7007ADEE2 /* SecondTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1D00127BC26C7007ADEE2 /* SecondTableViewCell.swift */; };
@@ -97,6 +98,7 @@
 		E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSentViewController.swift; sourceTree = "<group>"; };
 		E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		E2EFFA812850710800F70C97 /* AttentionMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionMessageView.swift; sourceTree = "<group>"; };
+		E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalProfileViewController.swift; sourceTree = "<group>"; };
 		E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatisticsTableViewController.swift; sourceTree = "<group>"; };
 		E2F1CFFE27BC22C3007ADEE2 /* FirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTableViewCell.swift; sourceTree = "<group>"; };
 		E2F1D00127BC26C7007ADEE2 /* SecondTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableViewCell.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 		E2D19133284CB75800E3E596 /* Profile Tab */ = {
 			isa = PBXGroup;
 			children = (
+				E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */,
 				E2A94A8A2820051A003061D0 /* ProfileSettingsTableViewController.swift */,
 				E2401EEA282B99CA0098CDB4 /* ProfileManagementTableViewController.swift */,
 				E2401EEC282BFB270098CDB4 /* NameChangingTableViewController.swift */,
@@ -471,6 +474,7 @@
 				E2D1333C283A60E100AB2A9A /* EmailSentViewController.swift in Sources */,
 				E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */,
 				E256AD4A27FB697400D146CB /* CustomGoalSettingsViewController.swift in Sources */,
+				E2F028BF2851DF3D001289E7 /* LocalProfileViewController.swift in Sources */,
 				E205A87D27AD18F1002BA08B /* WorkoutCollectionViewCell.swift in Sources */,
 				E2A94A87281FBE4A003061D0 /* WelcomeViewController.swift in Sources */,
 				E27A68D327F779270006479D /* TimeGoalSettingsViewController.swift in Sources */,
