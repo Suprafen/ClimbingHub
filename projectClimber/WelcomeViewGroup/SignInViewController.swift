@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import SafariServices
 
 class SignInViewController: UIViewController {
     
@@ -96,13 +97,25 @@ class SignInViewController: UIViewController {
     let privacyPolicyLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
         label.textColor = .systemGray2
         label.textAlignment = .center
         label.text = "If you sign in you're agree with our privacy policy."
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
+    }()
+    
+    let privacyPolicyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Learn more...", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+        button.setTitleColor(UIColor.systemBlue, for: .normal)
+        button.addTarget(nil, action: #selector(privacyPolicyButtonTapped), for: .touchUpInside)
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
     }()
     
     override func viewDidLoad() {
@@ -122,6 +135,7 @@ class SignInViewController: UIViewController {
         view.addSubview(signInButton)
         view.addSubview(privacyPolicyLabel)
         view.addSubview(forgotPasswordButton)
+        view.addSubview(privacyPolicyButton)
         setConstraints()
     }
     
@@ -141,7 +155,10 @@ class SignInViewController: UIViewController {
                 
             privacyPolicyLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
             privacyPolicyLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-            privacyPolicyLabel.bottomAnchor.constraint(equalTo: signInButton.topAnchor, constant: -20),
+            privacyPolicyLabel.bottomAnchor.constraint(equalTo: privacyPolicyButton.topAnchor, constant: -5),
+            
+            privacyPolicyButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            privacyPolicyButton.bottomAnchor.constraint(equalTo: signInButton.topAnchor, constant: -20),
             
             forgotPasswordButton.topAnchor.constraint(equalTo: container.bottomAnchor, constant: 10),
             forgotPasswordButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
@@ -264,6 +281,14 @@ class SignInViewController: UIViewController {
         let controllerToPush = ForgotPasswordViewController()
         controllerToPush.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(controllerToPush, animated: true)
+    }
+    
+    @objc func privacyPolicyButtonTapped() {
+        let privacyPolicyStringURL = "https://johny77.notion.site/ClimbingHub-Main-page-8882b7030b5645ba8cdfc9af7e6d6efa"
+        if let url = URL(string: privacyPolicyStringURL) {
+            let safariController = SFSafariViewController(url: url)
+            present(safariController, animated: true)
+        }
     }
 }
 

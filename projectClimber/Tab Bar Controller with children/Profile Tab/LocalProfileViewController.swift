@@ -149,6 +149,7 @@ class LocalProfileViewController: UIViewController {
 
     @objc func backToMainViewButtonTapped() {
         self.dismiss(animated: true)
+        view.window?.windowScene?.userActivity = nil
     }
     
     @objc func privacyPolicyButtonTapped() {
