@@ -31,6 +31,7 @@ class FingerViewTimeGoalViewController: UIViewController {
             configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
             button.addTarget(nil, action: #selector(pauseButtonTapped), for: .touchUpInside)
+            button.addTarget(nil, action: #selector(anyButtonTapped(_:)), for: .touchDown)
             
             return button
         } else {
@@ -47,6 +48,7 @@ class FingerViewTimeGoalViewController: UIViewController {
             configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
             button.addTarget(nil, action: #selector(cancelButtonTapped), for: .touchUpInside)
+            button.addTarget(nil, action: #selector(anyButtonTapped(_:)), for: .touchDown)
             
             return button
         } else {
@@ -63,6 +65,7 @@ class FingerViewTimeGoalViewController: UIViewController {
             configuration.buttonSize = .large
             let button = UIButton(configuration: configuration, primaryAction: nil)
             button.addTarget(nil, action: #selector(restButtonTapped), for: .touchUpInside)
+            button.addTarget(nil, action: #selector(anyButtonTapped(_:)), for: .touchDown)
             
             return button
         } else {
@@ -270,6 +273,12 @@ class FingerViewTimeGoalViewController: UIViewController {
     
     // MARK: Selectors
     
+    @objc func anyButtonTapped(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.1, delay: 0) {
+            sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        }
+    }
+    
     @objc func pauseButtonTapped(sender: UIButton) {
         isPauseActive.toggle()
         self.pauseButton.setImage(isPauseActive ? UIImage(systemName: "play.fill") : UIImage(systemName: "pause.fill"), for: .normal)
@@ -302,15 +311,11 @@ class FingerViewTimeGoalViewController: UIViewController {
         }
         
         UIView.animate(withDuration: 0.1) {
-            sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        } completion: { _ in
-            UIView.animate(withDuration: 0.1) {
-                sender.transform = CGAffineTransform.identity
-            }
+            sender.transform = CGAffineTransform.identity
         }
     }
     
-    @objc func cancelButtonTapped() {
+    @objc func cancelButtonTapped(sender: UIButton) {
         // check if timers are valid
         if splitTimer.isValid { splitTimer.invalidate() }
         if totalTimeTimer.isValid { totalTimeTimer.invalidate() }
@@ -359,6 +364,9 @@ class FingerViewTimeGoalViewController: UIViewController {
             try! realm.write {
                 realm.add(instance)
             }
+        }
+        UIView.animate(withDuration: 0.1) {
+            sender.transform = CGAffineTransform.identity
         }
     }
     
@@ -412,11 +420,7 @@ class FingerViewTimeGoalViewController: UIViewController {
         }
         
         UIView.animate(withDuration: 0.1) {
-            sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        } completion: { _ in
-            UIView.animate(withDuration: 0.1) {
-                sender.transform = CGAffineTransform.identity
-            }
+            sender.transform = CGAffineTransform.identity
         }
     }
     
