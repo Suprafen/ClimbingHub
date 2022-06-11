@@ -229,7 +229,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
         
         // if both timers are not active, means pause button tapped,
         // we'll wake them
-        if !splitTimer.isValid && !totalTimeTimer.isValid {
+        if !splitTimer.isValid && !totalTimeTimer.isValid && !isRestModeActive && !(restTimer?.isValid ?? false) {
             //rest button again enable for us
             
             splitLabel.textColor = .black
@@ -242,9 +242,18 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
             totalTimeTimerPerform(timeInterval: 1)
             // if conditional different, that means that timers are active,
             // so we invalidate them and turn on pause mode
+        } else if isRestModeActive && totalTimeTimer.isValid && !splitTimer.isValid {
+            restTimer.invalidate()
+            totalTimeTimer.invalidate()
+            
+            splitLabel.textColor = .systemGray
+        } else if isRestModeActive && !totalTimeTimer.isValid && !splitTimer.isValid{
+            print("rest timer and total timer are going now!")
+            
+            restTimerPerform(timeInterval: 1)
+            totalTimeTimerPerform(timeInterval: 1)
+            splitLabel.textColor = .black
         } else {
-            
-            
             splitLabel.textColor = .systemGray
             // if the rest mode is not active, invalidate split timer
             if !isRestModeActive {
@@ -314,57 +323,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
             sender.transform = CGAffineTransform.identity
         }
     }
-    
-    @objc func restButtonTapped(sender: UIButton) {
-        isRestModeActive.toggle()
-        sender.setImage(isRestModeActive ? UIImage(named: "figure.on.handboard") : UIImage(systemName: "figure.stand"), for: .normal)
-        // if is not valid it means we are in the rest mode
-        if !splitTimer.isValid {
-            splitLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 80, weight: .bold)
-            
-            UIView.animate(withDuration: 0.2) {
-                self.splitLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-            } completion: { _ in
-                UIView.animate(withDuration: 0.2) {
-                    self.splitLabel.transform = CGAffineTransform.identity
-                    self.splitLabel.text = "00:00:00"
-                }
-            }
-            // awake timer
-            splitTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(splitTimerFire), userInfo: nil, repeats: true)
-            RunLoop.current.add(splitTimer, forMode: .common)
-        } else {
-            // if timer is valid turn rest mode
-            // append last split to splits array
-            if splitTimeCounter > longestSplit {
-                self.longestSplit = splitTimeCounter
-            }
-            if splitTimeCounter != 0 {
-                splits.append(splitTimeCounter)
-            }
-            self.splitsTableView.reloadData()
-            // set counter's value to 0
-            splitTimeCounter = 0
-            
-            UIView.animate(withDuration: 0.2) {
-                self.splitLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-            } completion: { _ in
-                UIView.animate(withDuration: 0.2) {
-                    self.splitLabel.transform = CGAffineTransform.identity
-                    self.splitLabel.text = "😴 REST"
-                }
-            }
-            
-            splitLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 80, weight: .bold)
-            // invalidate timer
-            splitTimer.invalidate()
-        }
         
-        UIView.animate(withDuration: 0.1) {
-            sender.transform = CGAffineTransform.identity
-        }
-    }
-    
     @objc func anyButtonTapped(_ sender: UIButton) {
         UIView.animate(withDuration: 0.1, delay: 0) {
             sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
@@ -405,13 +364,6 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
     }
     
     @objc func totalTimeTimerFire() {
-        
-//        if totalTimeCounter != self.workoutParameters.durationOfWorkout {
-//
-//        } else {
-//            //TODO: Return new instance of workout
-//            dismiss(animated: true)
-//        }
         totalTimeCounter += 1
     }
     
@@ -482,6 +434,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
     }
     
     @objc func restTimerFire() {
+        isRestModeActive = true
         if restTimeCounter > 1 {
             self.restTimeCounter -= 1
             let timeString = restTimeCounter
@@ -489,6 +442,7 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
         } else {
             self.splitTimeCounter = 0
             restTimer.invalidate()
+            isRestModeActive = false
             self.splitTimerPerform(timeInterval: 1)
             
             UIView.animate(withDuration: 0.2, delay: 0) {
