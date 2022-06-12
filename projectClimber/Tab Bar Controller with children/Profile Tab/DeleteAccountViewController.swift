@@ -36,14 +36,14 @@ class DeleteAccountViewController: UIViewController {
     }()
     
     let firstNotation: NotationView = {
-        let view = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "You will lose your data", descriptionText: "All data that associated with this account will be erradicated. Your profile will no longer exist. Workouts which were perform on the local mode will last as long as the app is stored on your iPhone.", image: UIImage(systemName: "person.crop.circle")!)
+        let view = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "You will lose your data", descriptionText: "All data that associated with this account will be eradicated. Your profile will no longer exist. Workouts which were perform on the local mode will last as long as the app is stored on your iPhone.", image: UIImage(systemName: "person.crop.circle")!)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
     let secondNotation: NotationView = {
-        let view = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "No sync", descriptionText: "After deletion you will not have opportunity to sync your workouts.", image: UIImage(systemName: "arrow.triangle.2.circlepath")!)
+        let view = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), titleText: "No sync", descriptionText: "After deletion you will not have opportunity to sync your workouts.", image: UIImage(systemName: "exclamationmark.arrow.triangle.2.circlepath")!)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -121,7 +121,7 @@ class DeleteAccountViewController: UIViewController {
             confirmButton.topAnchor.constraint(greaterThanOrEqualTo: thirdNotation.bottomAnchor, constant: 30),
             confirmButton.leadingAnchor.constraint(equalTo: baseView.leadingAnchor, constant: 20),
             confirmButton.trailingAnchor.constraint(equalTo: baseView.trailingAnchor, constant: -20),
-            confirmButton.bottomAnchor.constraint(equalTo: baseView.bottomAnchor, constant: 0)
+            confirmButton.bottomAnchor.constraint(equalTo: baseView.bottomAnchor, constant: -20)
         ])
     }
     // MARK: Helper Methods

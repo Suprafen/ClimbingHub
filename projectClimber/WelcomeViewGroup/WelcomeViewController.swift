@@ -26,6 +26,7 @@ class WelcomeViewController: UIViewController {
         label.text = "Welcome to ClimbingHub"
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
+        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -39,42 +40,31 @@ class WelcomeViewController: UIViewController {
         return label
     }()
     
-    let reasonsStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.distribution = .equalSpacing
-        stack.alignment = .fill
-        stack.spacing = 15
-        stack.translatesAutoresizingMaskIntoConstraints = false
+    let reasonNumberOne: NotationView = {
+        let notation = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
+                                    titleText: "Simple",
+                                    descriptionText: "This application has pretty simple and intuitive design. So you’ll be in a familiar environment. ", image: UIImage(systemName: "rectangle.grid.1x2")!)
+        notation.translatesAutoresizingMaskIntoConstraints = false
         
-        return stack
+        return notation
     }()
     
-    let reason1Label: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        label.text = "Reason to create an account"
+    let reasonNumberTwo: NotationView = {
+        let notation = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
+                                    titleText: "Flexible",
+                                    descriptionText: "Even though you can use default mode with no goal for a workout, the application gives you an opportunity to create your own.", image: UIImage(systemName: "paintbrush")!)
+        notation.translatesAutoresizingMaskIntoConstraints = false
         
-        return label
+        return notation
     }()
     
-    let reason2Label: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        label.text = "Reason to create an account"
+    let reasonNumberThree: NotationView = {
+        let notation = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
+                                    titleText: "Syncing",
+                                    descriptionText: "You can use our app as an anonymous. But keep in mind that all workouts you’re going to perform will be saved directly on your iPhone. But you can create an account and your data will be saved even after application has been deelted.", image: UIImage(systemName: "arrow.triangle.2.circlepath")!)
+        notation.translatesAutoresizingMaskIntoConstraints = false
         
-        return label
-    }()
-    
-    let reason3Label: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        label.text = "Reason to create an account"
-        
-        return label
+        return notation
     }()
     
     let buttonStack: UIStackView = {
@@ -125,6 +115,16 @@ class WelcomeViewController: UIViewController {
         configureView()
         // Do any additional setup after loading the view.
     }
+        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -137,13 +137,21 @@ class WelcomeViewController: UIViewController {
         
         let margins = view.layoutMarginsGuide
         NSLayoutConstraint.activate([
-            labelStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            labelStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            labelStack.bottomAnchor.constraint(equalTo: reasonsStack.topAnchor, constant: -30),
+            welcomeLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 30),
+            welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            reasonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            reasonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            reasonsStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            reasonNumberOne.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 20),
+            reasonNumberOne.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            reasonNumberOne.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            reasonNumberTwo.topAnchor.constraint(equalTo: reasonNumberOne.bottomAnchor, constant: 30),
+            reasonNumberTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            reasonNumberTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            reasonNumberThree.topAnchor.constraint(equalTo: reasonNumberTwo.bottomAnchor, constant: 30),
+            reasonNumberThree.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            reasonNumberThree.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             buttonStack.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20),
             buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -153,16 +161,11 @@ class WelcomeViewController: UIViewController {
 
     func configureView() {
         view.backgroundColor = .white
-        labelStack.addArrangedSubview(welcomeLabel)
-        labelStack.addArrangedSubview(descriptionLabel)
-        
-        view.addSubview(labelStack)
-        
-        reasonsStack.addArrangedSubview(reason1Label)
-        reasonsStack.addArrangedSubview(reason2Label)
-        reasonsStack.addArrangedSubview(reason3Label)
-        
-        view.addSubview(reasonsStack)
+//        self.navigationItem.title = "Welcome to ClimbingHub"
+        view.addSubview(welcomeLabel)
+        view.addSubview(reasonNumberOne)
+        view.addSubview(reasonNumberTwo)
+        view.addSubview(reasonNumberThree)
         
         buttonStack.addArrangedSubview(getStartedButton)
         buttonStack.addArrangedSubview(alreadyHaveButton)

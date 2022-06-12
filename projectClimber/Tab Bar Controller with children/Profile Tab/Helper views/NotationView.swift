@@ -33,7 +33,7 @@ class NotationView: UIView {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
         label.text = "You will lose your data"
         label.textAlignment = .center
         label.numberOfLines = 1
@@ -44,7 +44,7 @@ class NotationView: UIView {
     
     let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .light)
         label.textColor = .gray
         label.text = "Here goes text that makes clear user is going to lose their data and so on. "
         label.textAlignment = .left
