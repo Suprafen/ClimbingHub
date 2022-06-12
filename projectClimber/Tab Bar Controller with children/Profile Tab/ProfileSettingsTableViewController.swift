@@ -84,7 +84,7 @@ class ProfileSettingsTableViewController: UITableViewController {
                 return UITableViewCell()
             }
         case 2:
-            let cell = LogoutTableCell()
+            let cell = SignOutTableCell()
             
             return cell
         default:
@@ -282,14 +282,14 @@ class ProfileTableCell: UITableViewCell {
     }
 }
 
-class LogoutTableCell: UITableViewCell {
-    static let reuseIdentifier = "LogoutTableCell"
+class SignOutTableCell: UITableViewCell {
+    static let reuseIdentifier = "SignOutTableCell"
     
     let label: UILabel = {
         let label = UILabel()
         label.textColor = .systemRed
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = "Log Out"
+        label.text = "Sign Out"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
