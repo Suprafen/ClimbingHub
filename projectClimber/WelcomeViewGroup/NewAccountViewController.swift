@@ -8,6 +8,7 @@
 import UIKit
 import RealmSwift
 import SwiftUI
+import SafariServices
 
 class NewAccountViewController: UIViewController {
     let createAccountButton: UIButton = {
@@ -94,6 +95,17 @@ class NewAccountViewController: UIViewController {
         return label
     }()
     
+    let privacyPolicyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Learn more...", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+        button.setTitleColor(UIColor.systemBlue, for: .normal)
+        button.addTarget(nil, action: #selector(privacyPolicyButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
     let attentionMessageView: AttentionMessageView = {
         let view = AttentionMessageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), .wrongPassword)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -120,6 +132,7 @@ class NewAccountViewController: UIViewController {
         view.addSubview(createAccountButton)
         view.addSubview(attentionMessageView)
         view.addSubview(privacyPolicyLabel)
+        view.addSubview(privacyPolicyButton)
         setConstraints()
     }
     
@@ -149,7 +162,10 @@ class NewAccountViewController: UIViewController {
             
             privacyPolicyLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
             privacyPolicyLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-            privacyPolicyLabel.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor, constant: -20),
+            privacyPolicyLabel.bottomAnchor.constraint(equalTo: privacyPolicyButton.topAnchor, constant: -10),
+            
+            privacyPolicyButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            privacyPolicyButton.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor, constant: -20),
             
             createAccountButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
             createAccountButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
@@ -274,5 +290,13 @@ class NewAccountViewController: UIViewController {
     
     @objc func emailFieldChanged(_ sender: UITextField) {
         updateUI()
+    }
+    
+    @objc func privacyPolicyButtonTapped() {
+        let privacyPolicyStringURL = "https://johny77.notion.site/ClimbingHub-Main-page-8882b7030b5645ba8cdfc9af7e6d6efa"
+        if let url = URL(string: privacyPolicyStringURL) {
+            let safariController = SFSafariViewController(url: url)
+            present(safariController, animated: true)
+        }
     }
 }
