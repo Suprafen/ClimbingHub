@@ -443,7 +443,6 @@ class FingerWorkoutViewController: UIViewController {
     @objc func splitTimerFire() {
         splitTimeCounter += 1
         
-//        let timeString = makeTimeString(hours: time.0, minutes: time.1, seconds: time.2)
         let timeString = String.makeTimeString(seconds: splitTimeCounter, withLetterDescription: false)
         splitLabel.text = timeString
     }

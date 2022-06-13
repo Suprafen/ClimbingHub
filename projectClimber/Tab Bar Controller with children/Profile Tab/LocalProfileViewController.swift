@@ -21,7 +21,6 @@ class LocalProfileViewController: UIViewController {
     
     let instructionLabel: UILabel = {
         let label = UILabel()
-//        label.text = "You have not logged in, so it means that all workouts you're going to perform in this mode will be stored on your iPhone directly."
         label.text = "You haven't logged in. All data stored on your iPhone localy."
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -33,7 +32,6 @@ class LocalProfileViewController: UIViewController {
     
     let secondInstructionLabel: UILabel = {
         let label = UILabel()
-//        label.text = "If you delete app you'll lost your data. To prevent this we recomend you login or create a new account."
         label.text =  "If you delete the app you'll lost your data."
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -84,7 +82,6 @@ class LocalProfileViewController: UIViewController {
         textView.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .regular)
         textView.isEditable = false
         textView.isScrollEnabled = false
-        textView.heightAnchor.constraint(equalToConstant: 44)
         textView.translatesAutoresizingMaskIntoConstraints = false
         
         return textView
@@ -116,16 +113,13 @@ class LocalProfileViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             /// First paragraph of Instruction
-//            instructionLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 30),
             instructionLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 30),
             instructionLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -30),
             instructionLabel.bottomAnchor.constraint(equalTo: secondInstructionLabel.topAnchor, constant: -20),
             /// Second paragraph of Instruction
-//            secondInstructionLabel.topAnchor.constraint(equalTo: instructionLabel.bottomAnchor, constant: 20),
             secondInstructionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -40),
             secondInstructionLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 30),
             secondInstructionLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -30),
-//            secondInstructionLabel.bottomAnchor.constraint(equalTo: supportLabel.topAnchor, constant: )
             /// Support label where we encourage user to email us if something bad happened
             supportLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 30),
             supportLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 30),
@@ -135,12 +129,10 @@ class LocalProfileViewController: UIViewController {
             supportEmailTextView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 0),
             supportEmailTextView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 0),
             /// Button to move to privacy policy page
-//            privacyPolicyButton.topAnchor.constraint(equalTo: supportEmailTextView.bottomAnchor, constant: 40),
             privacyPolicyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             privacyPolicyButton.bottomAnchor.constraint(equalTo: backToMainViewButton.topAnchor, constant: -20),
             
             /// Pretty self-explanatory
-//            backToMainViewButton.topAnchor.constraint(equalTo: privacyPolicyButton.bottomAnchor, constant: 20),
             backToMainViewButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 0),
             backToMainViewButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 0),
             backToMainViewButton.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -40)

@@ -292,7 +292,6 @@ class WorkoutViewController: UIViewController {
         vc.delegate = self
         vc.currentGoalType = self.workoutParameters.workoutGoal
         let controllerToPresent = UINavigationController(rootViewController: vc)
-//        controllerToPresent.currentGoalType = self.workoutParameters.workoutGoal
         if let sheet = controllerToPresent.sheetPresentationController {
             sheet.detents = [.medium()]
             sheet.preferredCornerRadius = 15

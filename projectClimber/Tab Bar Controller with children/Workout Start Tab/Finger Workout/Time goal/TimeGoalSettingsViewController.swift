@@ -69,7 +69,6 @@ class TimeGoalSettingsViewController: UIViewController {
     
     let timePicker: UIPickerView = {
         let timePicker = UIPickerView()
-//        timePicker.heightAnchor.constraint(equalToConstant: 400).isActive = true
         return timePicker
     }()
     
@@ -88,13 +87,6 @@ class TimeGoalSettingsViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         NSLayoutConstraint.activate([
-//            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
-//            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-//            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-//            subTitleLabel.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
-            
-//            stackView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 15),
             stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
@@ -113,16 +105,11 @@ class TimeGoalSettingsViewController: UIViewController {
         self.timePicker.selectRow(self.seconds, inComponent: 1, animated: true)
         
         stackView.addArrangedSubview(titleLabel)
-//        stackView.addArrangedSubview(subTitleLabel)
         stackView.addArrangedSubview(timePicker)
         
-//        self.view.addSubview(titleLabel)
-//        self.view.addSubview(subTitleLabel)
         self.view.addSubview(stackView)
         
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
-//        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        self.subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func retrieveTime(_ time: Int) {
@@ -187,12 +174,7 @@ extension TimeGoalSettingsViewController: UIPickerViewDelegate, UIPickerViewData
             }
             
         case 1:
-//            if row == 0 {
-//                pickerView.selectRow(row + 1, inComponent: 0, animated: true)
-//                seconds = 1
-//            } else {
-                seconds = row
-//            }
+            seconds = row
         default:
             break
         }

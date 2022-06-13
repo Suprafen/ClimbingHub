@@ -248,8 +248,6 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
             
             splitLabel.textColor = .systemGray
         } else if isRestModeActive && !totalTimeTimer.isValid && !splitTimer.isValid{
-            print("rest timer and total timer are going now!")
-            
             restTimerPerform(timeInterval: 1)
             totalTimeTimerPerform(timeInterval: 1)
             splitLabel.textColor = .black
@@ -417,7 +415,6 @@ class FingerWorkoutCustomGoalViewController: UIViewController {
                 }
                 return
             }
-            print("Splits done \(splitsDone)")
             splitTimer.invalidate()
             // Perform rest timer after invalidating
             self.restTimerPerform(timeInterval: 1)

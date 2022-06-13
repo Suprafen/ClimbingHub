@@ -89,7 +89,6 @@ class GoalPickerViewController: UIViewController {
         configuration.title = "Custom"
         configuration.baseBackgroundColor = UIColor(rgb: 0xAB80E2)
         configuration.baseForegroundColor = UIColor(rgb: 0x47088A)
-//        configuration.buttonSize = .medium
         configuration.buttonSize = .large
         let button = UIButton(configuration: configuration, primaryAction: nil)
         button.addTarget(nil, action: #selector(anyButtonTapped(sender:)), for: .touchDown)
@@ -179,13 +178,6 @@ class GoalPickerViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         NSLayoutConstraint.activate([
-            
-//            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
-//            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//
-//            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-//            subTitleLabel.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
-            
             outerMostStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 35),
             outerMostStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             outerMostStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
@@ -219,12 +211,7 @@ class GoalPickerViewController: UIViewController {
         self.view.addSubview(customGoalCircle)
         self.view.addSubview(timeGoalCircle)
         
-//        self.view.addSubview(buttonsStackView)
-        
-//        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        self.subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.outerMostStack.translatesAutoresizingMaskIntoConstraints = false
-//        self.buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
         self.openGoalCircle.translatesAutoresizingMaskIntoConstraints = false
         self.customGoalCircle.translatesAutoresizingMaskIntoConstraints = false
         self.timeGoalCircle.translatesAutoresizingMaskIntoConstraints = false

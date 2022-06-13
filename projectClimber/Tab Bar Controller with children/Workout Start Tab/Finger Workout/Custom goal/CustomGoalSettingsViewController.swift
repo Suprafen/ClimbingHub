@@ -269,7 +269,6 @@ extension CustomGoalSettingsViewController: UITableViewDataSource, UITableViewDe
 extension CustomGoalSettingsViewController: NumberOfSplitsProtocol {
     func retrieveNumberOfSplits(_ numberOfSplits: Int) {
         self.numberOfSplits = numberOfSplits
-        print("\(self.numberOfSplits)")
     }
 }
 // For retreiveing time from time picker

@@ -15,14 +15,6 @@ class NameChangingTableViewController: UITableViewController {
     var userName: String
     var delegate: NameChangingTableViewDelegate?
     
-//    var isDoneButtonAvailable: Bool {
-//        get {
-//            return navigationItem.rightBarButtonItem!.isEnabled
-//        } set {
-//            self.isDoneButtonAvailable = newValue
-//        }
-//    }
-    
     init(style: UITableView.Style, userName: String) {
         self.userName = userName
         super.init(style: style)
@@ -106,7 +98,6 @@ class NameChangingTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -121,7 +112,6 @@ class NameChangingTableViewCell: UITableViewCell {
             textField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
         ])
     }
-    // MARK: Helper methods
     
     // MARK: Selectors
     @objc func textFieldValueChanged() {

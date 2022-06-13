@@ -56,7 +56,6 @@ class NotationView: UIView {
     
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
         imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
@@ -96,7 +95,6 @@ class NotationView: UIView {
         self.outerMostStack.addArrangedSubview(firstLabelStack)
         self.addSubview(outerMostStack)
 
-//        iconImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.1, constant: 0).isActive = true
         iconImageView.widthAnchor.constraint(equalToConstant: imageSize).isActive = true
         iconImageView.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
         NSLayoutConstraint.activate([

@@ -29,9 +29,7 @@ class SplitTableViewCell: UITableViewCell {
         
         return label
     }()
-    
-    //TODO: Add another label for the best attempt
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
