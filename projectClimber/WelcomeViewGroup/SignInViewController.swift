@@ -10,6 +10,17 @@ import RealmSwift
 import SafariServices
 
 class SignInViewController: UIViewController {
+    func setLoading(_ loading: Bool) {
+        self.signInButton.configuration?.showsActivityIndicator = loading
+        self.signInButton.configuration?.title = loading ? "Signing in..." : "Sign in"
+        
+        emailField.isEnabled = !loading
+        passwordField.isEnabled = !loading
+        signInButton.isEnabled = !loading
+        forgotPasswordButton.isEnabled = !loading
+        privacyPolicyButton.isEnabled = !loading
+        self.navigationItem.setHidesBackButton(loading, animated: true)
+    }
     
     let signInButton: UIButton = {
         var config = UIButton.Configuration.filled()
@@ -90,7 +101,6 @@ class SignInViewController: UIViewController {
     
     let activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .medium)
-        
         return activityIndicator
     }()
     
@@ -126,8 +136,6 @@ class SignInViewController: UIViewController {
           tapGesture.cancelsTouchesInView = true
           view.addGestureRecognizer(tapGesture)
         
-        emailField.rightView = activityIndicator
-        emailField.rightViewMode = .always
         container.addArrangedSubview(emailField)
         container.addArrangedSubview(passwordField)
 
@@ -208,20 +216,7 @@ class SignInViewController: UIViewController {
         present(alertController, animated: true)
     }
     
-    func setLoading(_ loading: Bool) {
-        if loading {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-        }
-        
-        emailField.isEnabled = !loading
-        passwordField.isEnabled = !loading
-        signInButton.isEnabled = !loading
-    }
-    
     //MARK: Selectors
-    
     @objc func signInButtonTapped() {
         setLoading(true)
         

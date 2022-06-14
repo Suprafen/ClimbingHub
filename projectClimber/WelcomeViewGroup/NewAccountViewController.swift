@@ -11,6 +11,18 @@ import SwiftUI
 import SafariServices
 
 class NewAccountViewController: UIViewController {
+    func setLoading(_ loading: Bool) {
+        self.createAccountButton.configuration?.showsActivityIndicator = loading
+        self.createAccountButton.configuration?.title = loading ? "Creating Account..." : "Create Account"
+        
+        createAccountButton.isEnabled = !loading
+        emailField.isEnabled = !loading
+        passwordField.isEnabled = !loading
+        repeatPasswordField.isEnabled = !loading
+        privacyPolicyButton.isEnabled = !loading
+        self.navigationItem.setHidesBackButton(loading, animated: true)
+    }
+    
     let createAccountButton: UIButton = {
         var config = UIButton.Configuration.filled()
         config.title = "Create Account"
@@ -217,18 +229,18 @@ class NewAccountViewController: UIViewController {
     }
     
     // Function that starts activity indicator and disable buttons
-    func setLoading(_ loading: Bool) {
-        if loading {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-        }
-        
-        emailField.isEnabled = !loading
-        passwordField.isEnabled = !loading
-        createAccountButton.isEnabled = !loading
-        navigationItem.leftBarButtonItem?.isEnabled = !loading
-    }
+//    func setLoading(_ loading: Bool) {
+//        if loading {
+//            activityIndicator.startAnimating()
+//        } else {
+//            activityIndicator.stopAnimating()
+//        }
+//
+//        emailField.isEnabled = !loading
+//        passwordField.isEnabled = !loading
+//        createAccountButton.isEnabled = !loading
+//        navigationItem.leftBarButtonItem?.isEnabled = !loading
+//    }
     
     func updateUI(){
         if emailField.isEmail() && isPasswordsIdenticalInFields() {
