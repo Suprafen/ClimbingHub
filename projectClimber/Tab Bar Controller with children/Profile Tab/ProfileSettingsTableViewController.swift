@@ -59,7 +59,7 @@ class ProfileSettingsTableViewController: UITableViewController {
         case 1:
             switch (indexPath.row) {
             case 0:
-                let cell = PrivacyTableCell()
+                let cell = ParameterCell()
                 let image = UIImage(systemName: "hand.raised.fill")!
                 cell.configureCell(name: "Privacy Policy", image: image, color: .systemBlue)
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0)
@@ -68,7 +68,7 @@ class ProfileSettingsTableViewController: UITableViewController {
                 return cell
                 
             case 1:
-                let cell = PrivacyTableCell()
+                let cell = ParameterCell()
                 let image = UIImage(systemName: "trash.fill")!
                 cell.configureCell(name: "Delete Account", image: image, color: .systemRed)
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0)
@@ -307,7 +307,7 @@ class SignOutTableCell: UITableViewCell {
     }
 }
 
-class PrivacyTableCell: UITableViewCell {
+class ParameterCell: UITableViewCell {
     static let reuseIdentifier = "PrivacyTableCell"
 
     let iconContainer: UIView = {
@@ -332,7 +332,7 @@ class PrivacyTableCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize) 
         label.textColor = .label
         
         return label
