@@ -89,12 +89,6 @@ class NewAccountViewController: UIViewController {
         return passwordField
     }()
     
-    let activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .medium)
-        
-        return activityIndicator
-    }()
-    
     let privacyPolicyLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -134,8 +128,6 @@ class NewAccountViewController: UIViewController {
           tapGesture.cancelsTouchesInView = true
           view.addGestureRecognizer(tapGesture)
         
-        emailField.rightView = activityIndicator
-        emailField.rightViewMode = .always
         container.addArrangedSubview(emailField)
         container.addArrangedSubview(passwordField)
         container.addArrangedSubview(repeatPasswordField)
@@ -227,20 +219,6 @@ class NewAccountViewController: UIViewController {
         
         present(alertController, animated: true)
     }
-    
-    // Function that starts activity indicator and disable buttons
-//    func setLoading(_ loading: Bool) {
-//        if loading {
-//            activityIndicator.startAnimating()
-//        } else {
-//            activityIndicator.stopAnimating()
-//        }
-//
-//        emailField.isEnabled = !loading
-//        passwordField.isEnabled = !loading
-//        createAccountButton.isEnabled = !loading
-//        navigationItem.leftBarButtonItem?.isEnabled = !loading
-//    }
     
     func updateUI(){
         if emailField.isEmail() && isPasswordsIdenticalInFields() {
