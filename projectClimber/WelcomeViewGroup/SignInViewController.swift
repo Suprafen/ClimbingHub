@@ -217,46 +217,40 @@ class SignInViewController: UIViewController {
         
         emailField.isEnabled = !loading
         passwordField.isEnabled = !loading
-//        signInButton.isEnabled = !loading
         signInButton.isEnabled = !loading
     }
     
     //MARK: Selectors
     
     @objc func signInButtonTapped() {
-        print("Sign In")
         setLoading(true)
-                   
         
         // Execute method for logining user
         app.login(credentials: Credentials.emailPassword(email: emailField.text!, password: passwordField.text!)) { [weak self](result) in
             DispatchQueue.main.async {
-                self!.setLoading(false)
                 switch result {
                 case .failure(let error):
+                    self!.setLoading(false)
                     self!.presentAlertController(with: error.localizedDescription.capitalized)
                     print("\(error.localizedDescription)")
                 case .success(let user):
-                    
-                    self!.setLoading(true)
-                    
                     // Define realm configurations based on the user's id
                     // Set different partition values for user and workout configs
                     let userConfiguration = user.configuration(partitionValue: "user=\(user.id)")
                     let workoutConfiguration = user.configuration(partitionValue: user.id)
-
                     // Async open a realm, just for making sure that the realm's downloaded everything
                     Realm.asyncOpen(configuration: userConfiguration) { [weak self](result) in
                         DispatchQueue.main.async {
-                            self!.setLoading(false)
                             switch result {
                             case .failure(let error):
+                                self!.setLoading(false)
                                 self!.presentAlertController(with: error.localizedDescription.capitalized)
                                 print("\(error.localizedDescription)")
                             case .success:
                                 // Another async open, but now this one for workouts
                                 Realm.asyncOpen(configuration: workoutConfiguration) {[weak self](result) in
                                     DispatchQueue.main.async {
+                                        self!.setLoading(false)
                                         switch result {
                                         case .failure(let error):
                                             self!.presentAlertController(with: error.localizedDescription)
