@@ -191,12 +191,7 @@ class WelcomeViewController: UIViewController {
     
     @objc func anonymousButtonTapped() {
         let userRealm = Realm.Configuration(schemaVersion: 3)
-        // It's a temporary function just for making sure that when we open local realm
-        // We don't have logged in users.
-        // When app closed, user is not loged out, meanwhile app doesn't save the state of logged in user.
-        // So after restart we already logged in, but we can't get access to the workouts through sync realm,
-        // however we can go to local realm and we'll appear as logged in user, which is unlikely behavior.
-        // TODO: Make app save the state of logged in user
+        // To ensure, that there's no logged user
         if app.currentUser != nil {
             app.currentUser!.logOut { (_) in
             }

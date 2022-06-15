@@ -10,17 +10,6 @@ import RealmSwift
 import SafariServices
 
 class SignInViewController: UIViewController {
-    func setLoading(_ loading: Bool) {
-        self.signInButton.configuration?.showsActivityIndicator = loading
-        self.signInButton.configuration?.title = loading ? "Signing in..." : "Sign in"
-        
-        emailField.isEnabled = !loading
-        passwordField.isEnabled = !loading
-        signInButton.isEnabled = !loading
-        forgotPasswordButton.isEnabled = !loading
-        privacyPolicyButton.isEnabled = !loading
-        self.navigationItem.setHidesBackButton(loading, animated: true)
-    }
     
     let signInButton: UIButton = {
         var config = UIButton.Configuration.filled()
@@ -214,6 +203,18 @@ class SignInViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true)
+    }
+    
+    func setLoading(_ loading: Bool) {
+        self.signInButton.configuration?.showsActivityIndicator = loading
+        self.signInButton.configuration?.title = loading ? "Signing in..." : "Sign in"
+        
+        emailField.isEnabled = !loading
+        passwordField.isEnabled = !loading
+        signInButton.isEnabled = !loading
+        forgotPasswordButton.isEnabled = !loading
+        privacyPolicyButton.isEnabled = !loading
+        self.navigationItem.setHidesBackButton(loading, animated: true)
     }
     
     //MARK: Selectors

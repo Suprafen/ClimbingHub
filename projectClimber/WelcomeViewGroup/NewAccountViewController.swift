@@ -11,17 +11,6 @@ import SwiftUI
 import SafariServices
 
 class NewAccountViewController: UIViewController {
-    func setLoading(_ loading: Bool) {
-        self.createAccountButton.configuration?.showsActivityIndicator = loading
-        self.createAccountButton.configuration?.title = loading ? "Creating Account..." : "Create Account"
-        
-        createAccountButton.isEnabled = !loading
-        emailField.isEnabled = !loading
-        passwordField.isEnabled = !loading
-        repeatPasswordField.isEnabled = !loading
-        privacyPolicyButton.isEnabled = !loading
-        self.navigationItem.setHidesBackButton(loading, animated: true)
-    }
     
     let createAccountButton: UIButton = {
         var config = UIButton.Configuration.filled()
@@ -246,6 +235,18 @@ class NewAccountViewController: UIViewController {
         // Hide attention view
         attentionMessageView.isHidden = true
         return true
+    }
+    
+    func setLoading(_ loading: Bool) {
+        self.createAccountButton.configuration?.showsActivityIndicator = loading
+        self.createAccountButton.configuration?.title = loading ? "Creating Account..." : "Create Account"
+        
+        createAccountButton.isEnabled = !loading
+        emailField.isEnabled = !loading
+        passwordField.isEnabled = !loading
+        repeatPasswordField.isEnabled = !loading
+        privacyPolicyButton.isEnabled = !loading
+        self.navigationItem.setHidesBackButton(loading, animated: true)
     }
     
     //MARK: Selectors
