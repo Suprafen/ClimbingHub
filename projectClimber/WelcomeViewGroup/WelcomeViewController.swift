@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 class WelcomeViewController: UIViewController {
-
+    
     let labelStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -30,43 +30,7 @@ class WelcomeViewController: UIViewController {
         
         return label
     }()
-    
-    let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        label.text = "You can extend your strength in the good looking application. Here we go!"
         
-        return label
-    }()
-    
-    let reasonNumberOne: NotationView = {
-        let notation = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
-                                    titleText: "Simple",
-                                    descriptionText: "This application has pretty simple and intuitive design. So you’ll be in a familiar environment. ", image: UIImage(systemName: "rectangle.grid.1x2")!)
-        notation.translatesAutoresizingMaskIntoConstraints = false
-        
-        return notation
-    }()
-    
-    let reasonNumberTwo: NotationView = {
-        let notation = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
-                                    titleText: "Flexible",
-                                    descriptionText: "Even though you can use default mode with no goal for a workout, the application gives you an opportunity to create your own.", image: UIImage(systemName: "paintbrush")!)
-        notation.translatesAutoresizingMaskIntoConstraints = false
-        
-        return notation
-    }()
-    
-    let reasonNumberThree: NotationView = {
-        let notation = NotationView(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
-                                    titleText: "Syncing",
-                                    descriptionText: "You can use our app as an anonymous. But keep in mind that all workouts you’re going to perform will be saved directly on your iPhone. But you can create an account and your data will be saved even after application has been deelted.", image: UIImage(systemName: "arrow.triangle.2.circlepath")!)
-        notation.translatesAutoresizingMaskIntoConstraints = false
-        
-        return notation
-    }()
-    
     let buttonStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -75,6 +39,13 @@ class WelcomeViewController: UIViewController {
         stack.spacing = 10
         
         return stack
+    }()
+    
+    let collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: UICollectionViewLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collectionView
     }()
     
     let getStartedButton: UIButton = {
@@ -110,10 +81,27 @@ class WelcomeViewController: UIViewController {
         return button
     }()
     
+    enum Section: Hashable {
+        case main
+    }
+    
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, WelcomeReason>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, WelcomeReason>
+    
+    let reasons: [WelcomeReason] = [
+        WelcomeReason(title: "Simple",
+                      description: "This application has pretty simple and intuitive design. So you’ll be in a familiar environment. "),
+        WelcomeReason(title: "Flexible",
+                  description: "Even though you can use default mode with no goal for a workout, the application gives you an opportunity to create your own."),
+        WelcomeReason(title: "Sycing",
+                      description: "You can use our app as an anonymous. But keep in mind that all workouts you’re going to perform will be saved directly on your iPhone. But you can create an account and your data will be saved even after application has been deelted.")]
+    
+    var dataSource: DataSource!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        // Do any additional setup after loading the view.
+        configureDataSource()
     }
         
     override func viewWillAppear(_ animated: Bool) {
@@ -133,6 +121,43 @@ class WelcomeViewController: UIViewController {
     
     //MARK: Helper Methods
     
+    func configureDataSource() {
+        dataSource = .init(collectionView: collectionView, cellProvider: {collectionView, indexPath, item -> UICollectionViewCell? in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WelcomeViewReasonCollectionViewCell.reuseIdentifier, for: indexPath) as! WelcomeViewReasonCollectionViewCell
+            
+            cell.backgroundColor = .blue
+            return cell
+        })
+        
+        var snapshot = Snapshot()
+        
+        snapshot.appendSections([.main])
+        snapshot.appendItems(self.reasons, toSection: .main)
+        
+        dataSource.apply(snapshot)
+    }
+    
+    func createLayout() -> UICollectionViewLayout {
+        
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
+            
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
+            group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+            let section = NSCollectionLayoutSection(group: group)
+            
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+            section.orthogonalScrollingBehavior = .groupPagingCentered
+            
+            return section
+        }
+        return layout
+    }
+    
     func setConstraints() {
         
         let margins = view.layoutMarginsGuide
@@ -141,17 +166,10 @@ class WelcomeViewController: UIViewController {
             welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            reasonNumberOne.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 20),
-            reasonNumberOne.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            reasonNumberOne.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            
-            reasonNumberTwo.topAnchor.constraint(equalTo: reasonNumberOne.bottomAnchor, constant: 30),
-            reasonNumberTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            reasonNumberTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            
-            reasonNumberThree.topAnchor.constraint(equalTo: reasonNumberTwo.bottomAnchor, constant: 30),
-            reasonNumberThree.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            reasonNumberThree.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            collectionView.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 10),
+            collectionView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -20),
             
             buttonStack.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20),
             buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -161,11 +179,11 @@ class WelcomeViewController: UIViewController {
 
     func configureView() {
         view.backgroundColor = .white
-//        self.navigationItem.title = "Welcome to ClimbingHub"
         view.addSubview(welcomeLabel)
-        view.addSubview(reasonNumberOne)
-        view.addSubview(reasonNumberTwo)
-        view.addSubview(reasonNumberThree)
+        view.addSubview(collectionView)
+        
+        collectionView.register(WelcomeViewReasonCollectionViewCell.self, forCellWithReuseIdentifier: WelcomeViewReasonCollectionViewCell.reuseIdentifier)
+        collectionView.setCollectionViewLayout(createLayout(), animated: false)
         
         buttonStack.addArrangedSubview(getStartedButton)
         buttonStack.addArrangedSubview(alreadyHaveButton)

@@ -44,6 +44,8 @@
 		E2D0E2C8281A91C700397C79 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D0E2C7281A91C700397C79 /* NewAccountViewController.swift */; };
 		E2D1333C283A60E100AB2A9A /* EmailSentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */; };
 		E2D1913A284CE3D400E3E596 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */; };
+		E2D2CB2E285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB2D285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift */; };
+		E2D2CB30285E232C00F7EE3C /* WelcomeViewReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB2F285E232C00F7EE3C /* WelcomeViewReason.swift */; };
 		E2EFFA822850710800F70C97 /* AttentionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFFA812850710800F70C97 /* AttentionMessageView.swift */; };
 		E2F028BF2851DF3D001289E7 /* LocalProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */; };
 		E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */; };
@@ -97,6 +99,8 @@
 		E2D0E2C7281A91C700397C79 /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSentViewController.swift; sourceTree = "<group>"; };
 		E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		E2D2CB2D285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewReasonCollectionViewCell.swift; sourceTree = "<group>"; };
+		E2D2CB2F285E232C00F7EE3C /* WelcomeViewReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewReason.swift; sourceTree = "<group>"; };
 		E2EFFA812850710800F70C97 /* AttentionMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionMessageView.swift; sourceTree = "<group>"; };
 		E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalProfileViewController.swift; sourceTree = "<group>"; };
 		E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatisticsTableViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 				E2A94A88281FDD06003061D0 /* SignInViewController.swift */,
 				E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */,
 				E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */,
+				E2D2CB31285E233400F7EE3C /* Model */,
 				E2EFFA83285075DA00F70C97 /* Helper Views */,
 			);
 			path = WelcomeViewGroup;
@@ -342,10 +347,19 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		E2D2CB31285E233400F7EE3C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E2D2CB2F285E232C00F7EE3C /* WelcomeViewReason.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E2EFFA83285075DA00F70C97 /* Helper Views */ = {
 			isa = PBXGroup;
 			children = (
 				E2EFFA812850710800F70C97 /* AttentionMessageView.swift */,
+				E2D2CB2D285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift */,
 			);
 			path = "Helper Views";
 			sourceTree = "<group>";
@@ -467,6 +481,7 @@
 				E2815189279AD7D900E8C2D4 /* AppDelegate.swift in Sources */,
 				E24DCBB127ECD9230002A7FC /* WorkoutsHistoryCollectionViewController.swift in Sources */,
 				E281518B279AD7D900E8C2D4 /* SceneDelegate.swift in Sources */,
+				E2D2CB30285E232C00F7EE3C /* WelcomeViewReason.swift in Sources */,
 				E205A87F27AD2A55002BA08B /* WorkoutViewController.swift in Sources */,
 				E205A88127AD4DD0002BA08B /* FingerWorkoutViewController.swift in Sources */,
 				E24DCBB027ECD9230002A7FC /* SectionHeaderWorkoutsHistoryView.swift in Sources */,
@@ -500,6 +515,7 @@
 				E205A87B27AD18B2002BA08B /* StatisticsCollectionViewController.swift in Sources */,
 				E23678BE280469F90043F3E9 /* FingerWorkoutCustomGoalViewController.swift in Sources */,
 				E2F1D00227BC26C7007ADEE2 /* SecondTableViewCell.swift in Sources */,
+				E2D2CB2E285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift in Sources */,
 				E2EFFA822850710800F70C97 /* AttentionMessageView.swift in Sources */,
 				E2A94A89281FDD06003061D0 /* SignInViewController.swift in Sources */,
 				E2856B7127E7A73F00443E63 /* SplitTableViewCell.swift in Sources */,
@@ -559,7 +575,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -621,7 +637,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
