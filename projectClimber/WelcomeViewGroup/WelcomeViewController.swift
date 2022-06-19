@@ -7,6 +7,7 @@
 // TODO: Add page controll to this view
 import UIKit
 import RealmSwift
+import Combine
 
 class WelcomeViewController: UIViewController {
     
@@ -40,6 +41,14 @@ class WelcomeViewController: UIViewController {
         stack.spacing = 10
         
         return stack
+    }()
+    
+    let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
     }()
     
     let collectionView: UICollectionView = {
@@ -86,8 +95,14 @@ class WelcomeViewController: UIViewController {
         case main
     }
     
+    enum SupplementaryKind {
+        static let footer = "footer"
+    }
+    
     typealias DataSource = UICollectionViewDiffableDataSource<Section, WelcomeReason>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, WelcomeReason>
+    
+    private let pagingInfoSubject = PassthroughSubject<PagingInfo, Never>()
     
     let reasons: [WelcomeReason] = [
         WelcomeReason(title: "Simple",
@@ -95,14 +110,14 @@ class WelcomeViewController: UIViewController {
         WelcomeReason(title: "Flexible",
                       description: "Even though you can use a default mode with no goal for a workout, the application gives you an opportunity to create your own.", systemNameForImage: "paintbrush"),
         WelcomeReason(title: "Sycing",
-                      description: "You can use our app as an anonymous. But keep in mind that all workouts you’re going to perform will be saved directly on your iPhone. But you can create an account and your data will be saved even after application has been deelted.", systemNameForImage: "arrow.triangle.2.circlepath")]
+                      description: "We suggest creating an account to be sure that your data will be saved and available across devices you logged in.", systemNameForImage: "arrow.triangle.2.circlepath")]
     
     var dataSource: DataSource!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
         configureDataSource()
+        configureView()
     }
         
     override func viewWillAppear(_ animated: Bool) {
@@ -130,6 +145,16 @@ class WelcomeViewController: UIViewController {
             return cell
         })
         
+        dataSource.supplementaryViewProvider = {[unowned self] collectionView, kind, indexPath -> UICollectionReusableView? in
+                let footer = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryKind.footer, withReuseIdentifier: PagingSectionFooterView.reuseIdentifier, for: indexPath) as! PagingSectionFooterView
+                let itemCount = 3
+            
+                footer.configure(with: itemCount)
+                
+                footer.subscribeTo(subject: pagingInfoSubject, for: indexPath.section)
+                return footer
+        }
+        
         var snapshot = Snapshot()
         
         snapshot.appendSections([.main])
@@ -142,6 +167,12 @@ class WelcomeViewController: UIViewController {
         
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
             
+            //Footer...
+            let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(20))
+            let pagingFooterElement = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: SupplementaryKind.footer, alignment: .bottom)
+            pagingFooterElement.contentInsets = NSDirectionalEdgeInsets(top: -45, leading: 0, bottom: 0, trailing: 0)
+            
+            //Main Section...
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
@@ -151,9 +182,15 @@ class WelcomeViewController: UIViewController {
             group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
             let section = NSCollectionLayoutSection(group: group)
             
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+            section.boundarySupplementaryItems = [pagingFooterElement]
             section.orthogonalScrollingBehavior = .groupPagingCentered
             
+            section.visibleItemsInvalidationHandler = {[weak self] (items, offset, env) -> Void in
+                guard let self = self else { return }
+                let page = round(offset.x / self.view.bounds.width)
+
+                self.pagingInfoSubject.send(PagingInfo(sectionIndex: sectionIndex, currentPage: Int(page)))
+            }
             return section
         }
         return layout
@@ -167,25 +204,32 @@ class WelcomeViewController: UIViewController {
             welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            collectionView.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 10),
-            collectionView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -20),
+            containerView.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 10),
+            containerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -10),
             
-            buttonStack.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20),
+            collectionView.heightAnchor.constraint(equalTo: containerView.heightAnchor),
+            collectionView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            collectionView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
+            
             buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            buttonStack.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -20)
         ])
     }
 
     func configureView() {
         view.backgroundColor = .white
         view.addSubview(welcomeLabel)
-        view.addSubview(collectionView)
+        containerView.addSubview(collectionView)
+        view.addSubview(containerView)
         
         collectionView.register(WelcomeViewReasonCollectionViewCell.self, forCellWithReuseIdentifier: WelcomeViewReasonCollectionViewCell.reuseIdentifier)
+        collectionView.register(PagingSectionFooterView.self, forSupplementaryViewOfKind: SupplementaryKind.footer, withReuseIdentifier: PagingSectionFooterView.reuseIdentifier)
         collectionView.setCollectionViewLayout(createLayout(), animated: false)
-        
+        collectionView.isScrollEnabled = false
         buttonStack.addArrangedSubview(getStartedButton)
         buttonStack.addArrangedSubview(alreadyHaveButton)
         buttonStack.addArrangedSubview(anonymousButton)
@@ -197,7 +241,7 @@ class WelcomeViewController: UIViewController {
     }
     
     //MARK: Selectors
-    // Different selectors for different buttons, which moves us to different views
+    // Different selectors for different buttons, which move us to different views
     @objc func getStartedButtonTapped() {
         let viewToShow = NewAccountViewController()
         navigationController?.pushViewController(viewToShow, animated: true)

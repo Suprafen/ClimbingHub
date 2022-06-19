@@ -46,6 +46,8 @@
 		E2D1913A284CE3D400E3E596 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */; };
 		E2D2CB2E285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB2D285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift */; };
 		E2D2CB30285E232C00F7EE3C /* WelcomeViewReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB2F285E232C00F7EE3C /* WelcomeViewReason.swift */; };
+		E2D2CB33285F1F6500F7EE3C /* PagingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB32285F1F6500F7EE3C /* PagingInfo.swift */; };
+		E2D2CB35285F219200F7EE3C /* PagingSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB34285F219200F7EE3C /* PagingSectionFooterView.swift */; };
 		E2EFFA822850710800F70C97 /* AttentionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFFA812850710800F70C97 /* AttentionMessageView.swift */; };
 		E2F028BF2851DF3D001289E7 /* LocalProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */; };
 		E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */; };
@@ -101,6 +103,8 @@
 		E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		E2D2CB2D285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewReasonCollectionViewCell.swift; sourceTree = "<group>"; };
 		E2D2CB2F285E232C00F7EE3C /* WelcomeViewReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewReason.swift; sourceTree = "<group>"; };
+		E2D2CB32285F1F6500F7EE3C /* PagingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingInfo.swift; sourceTree = "<group>"; };
+		E2D2CB34285F219200F7EE3C /* PagingSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingSectionFooterView.swift; sourceTree = "<group>"; };
 		E2EFFA812850710800F70C97 /* AttentionMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionMessageView.swift; sourceTree = "<group>"; };
 		E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalProfileViewController.swift; sourceTree = "<group>"; };
 		E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatisticsTableViewController.swift; sourceTree = "<group>"; };
@@ -351,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				E2D2CB2F285E232C00F7EE3C /* WelcomeViewReason.swift */,
+				E2D2CB32285F1F6500F7EE3C /* PagingInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -360,6 +365,7 @@
 			children = (
 				E2EFFA812850710800F70C97 /* AttentionMessageView.swift */,
 				E2D2CB2D285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift */,
+				E2D2CB34285F219200F7EE3C /* PagingSectionFooterView.swift */,
 			);
 			path = "Supplemetary Views";
 			sourceTree = "<group>";
@@ -487,6 +493,7 @@
 				E24DCBB027ECD9230002A7FC /* SectionHeaderWorkoutsHistoryView.swift in Sources */,
 				E28859A82833F18B00303824 /* NotationView.swift in Sources */,
 				E2D1333C283A60E100AB2A9A /* EmailSentViewController.swift in Sources */,
+				E2D2CB33285F1F6500F7EE3C /* PagingInfo.swift in Sources */,
 				E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */,
 				E256AD4A27FB697400D146CB /* CustomGoalSettingsViewController.swift in Sources */,
 				E2F028BF2851DF3D001289E7 /* LocalProfileViewController.swift in Sources */,
@@ -494,6 +501,7 @@
 				E2A94A87281FBE4A003061D0 /* WelcomeViewController.swift in Sources */,
 				E27A68D327F779270006479D /* TimeGoalSettingsViewController.swift in Sources */,
 				E205A87927AD174C002BA08B /* TabBarController.swift in Sources */,
+				E2D2CB35285F219200F7EE3C /* PagingSectionFooterView.swift in Sources */,
 				E2CA241A284C839100021E78 /* SceneDelegate-StateRestoration.swift in Sources */,
 				E24DCBAF27ECD9230002A7FC /* SectionHeaderView.swift in Sources */,
 				E2F1CFFF27BC22C3007ADEE2 /* FirstTableViewCell.swift in Sources */,
