@@ -32,7 +32,7 @@ class LocalProfileViewController: UIViewController {
     
     let secondInstructionLabel: UILabel = {
         let label = UILabel()
-        label.text =  "If you delete the app you'll lost your data."
+        label.text =  "If you delete the app you'll lose your data."
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false

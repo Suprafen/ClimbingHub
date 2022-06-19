@@ -182,7 +182,7 @@
 				E2D19139284CE3D400E3E596 /* ForgotPasswordViewController.swift */,
 				E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */,
 				E2D2CB31285E233400F7EE3C /* Model */,
-				E2EFFA83285075DA00F70C97 /* Helper Views */,
+				E2EFFA83285075DA00F70C97 /* Supplemetary Views */,
 			);
 			path = WelcomeViewGroup;
 			sourceTree = "<group>";
@@ -355,13 +355,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		E2EFFA83285075DA00F70C97 /* Helper Views */ = {
+		E2EFFA83285075DA00F70C97 /* Supplemetary Views */ = {
 			isa = PBXGroup;
 			children = (
 				E2EFFA812850710800F70C97 /* AttentionMessageView.swift */,
 				E2D2CB2D285E157F00F7EE3C /* WelcomeViewReasonCollectionViewCell.swift */,
 			);
-			path = "Helper Views";
+			path = "Supplemetary Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

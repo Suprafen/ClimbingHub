@@ -11,10 +11,12 @@ struct WelcomeReason: Hashable {
     var id = UUID()
     var title: String
     var description: String
+    var systemNameForImage: String
     
-    init(title: String, description: String) {
+    init(title: String, description: String, systemNameForImage: String) {
         self.title = title
         self.description = description
+        self.systemNameForImage = systemNameForImage
     }
     
     static func ==(lhs: WelcomeReason, rhs: WelcomeReason) -> Bool {

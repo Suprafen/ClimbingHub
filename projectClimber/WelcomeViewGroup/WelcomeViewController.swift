@@ -4,7 +4,7 @@
 //
 //  Created by Ivan Pryhara on 2.05.22.
 //
-
+// TODO: Add page controll to this view
 import UIKit
 import RealmSwift
 
@@ -23,9 +23,10 @@ class WelcomeViewController: UIViewController {
     let welcomeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
-        label.text = "Welcome to ClimbingHub"
+        label.text = "ClimbingHub"
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -62,7 +63,7 @@ class WelcomeViewController: UIViewController {
     let alreadyHaveButton: UIButton = {
         var config = UIButton.Configuration.gray()
         config.buttonSize = .large
-        config.title = "I already have an account"
+        config.title = "Sign In"
         
         let button = UIButton(configuration: config)
         button.addTarget(nil, action: #selector(alreadyHaveButtonTapped), for: .touchUpInside)
@@ -90,11 +91,11 @@ class WelcomeViewController: UIViewController {
     
     let reasons: [WelcomeReason] = [
         WelcomeReason(title: "Simple",
-                      description: "This application has pretty simple and intuitive design. So you’ll be in a familiar environment. "),
+                      description: "This application has simple and intuitive design. So you’ll be in a familiar environment.", systemNameForImage: "rectangle.grid.2x2"),
         WelcomeReason(title: "Flexible",
-                  description: "Even though you can use default mode with no goal for a workout, the application gives you an opportunity to create your own."),
+                      description: "Even though you can use a default mode with no goal for a workout, the application gives you an opportunity to create your own.", systemNameForImage: "paintbrush"),
         WelcomeReason(title: "Sycing",
-                      description: "You can use our app as an anonymous. But keep in mind that all workouts you’re going to perform will be saved directly on your iPhone. But you can create an account and your data will be saved even after application has been deelted.")]
+                      description: "You can use our app as an anonymous. But keep in mind that all workouts you’re going to perform will be saved directly on your iPhone. But you can create an account and your data will be saved even after application has been deelted.", systemNameForImage: "arrow.triangle.2.circlepath")]
     
     var dataSource: DataSource!
     
@@ -125,7 +126,7 @@ class WelcomeViewController: UIViewController {
         dataSource = .init(collectionView: collectionView, cellProvider: {collectionView, indexPath, item -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WelcomeViewReasonCollectionViewCell.reuseIdentifier, for: indexPath) as! WelcomeViewReasonCollectionViewCell
             
-            cell.backgroundColor = .blue
+            cell.configure(with: item)
             return cell
         })
         
