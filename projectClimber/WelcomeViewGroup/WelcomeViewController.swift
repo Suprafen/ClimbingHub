@@ -4,7 +4,7 @@
 //
 //  Created by Ivan Pryhara on 2.05.22.
 //
-// TODO: Add page controll to this view
+
 import UIKit
 import RealmSwift
 import Combine
