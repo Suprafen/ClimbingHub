@@ -230,7 +230,7 @@ class ProfileTableCell: UITableViewCell {
         
         return label
     }()
-    
+    // In the future this circle will be used for profile image
     let circle: UIView = {
         
         let circleDiameter = UIScreen.main.bounds.height / 13
@@ -257,7 +257,7 @@ class ProfileTableCell: UITableViewCell {
         labelStack.addArrangedSubview(nameLabel)
         labelStack.addArrangedSubview(descriptionLabel)
         
-        outermostStackView.addArrangedSubview(circle)
+//        outermostStackView.addArrangedSubview(circle)
         outermostStackView.addArrangedSubview(labelStack)
 
         contentView.addSubview(outermostStackView)
