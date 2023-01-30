@@ -29,7 +29,7 @@ protocol WorkoutInfoProtocol{
     var date: Date {get set}
 }
 
-class Workout: Object {
+class Workout: Object, Identifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var totalTime: Int
     @Persisted var date: Date

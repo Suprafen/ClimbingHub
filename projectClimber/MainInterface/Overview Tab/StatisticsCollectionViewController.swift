@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import RealmSwift
 import SafariServices
 
@@ -81,13 +82,17 @@ class StatisticsCollectionViewController: UICollectionViewController {
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "checkerboard.shield")
         configuration.baseForegroundColor = .systemBlue.withAlphaComponent(0.8)
-        
+        //MARK: Cell Registration
         self.collectionView.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier)
         self.collectionView.register(StatisticsCollectionViewCell.self, forCellWithReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier)
+//        self.collectionView.register(TestCollectionViewCell.self, forCellWithReuseIdentifier: TestCollectionViewCell.reuseIdentifier)
+        
+        // MARK: Supplementary View Registration
         self.collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
         self.collectionView.register(ShowMoreButtonHeaderView.self, forSupplementaryViewOfKind: SupplementaryKind.button, withReuseIdentifier: ShowMoreButtonHeaderView.reuseIdentifier)
         collectionView.collectionViewLayout = createLayout()
         
+        // MARK: Other Set Ups
         self.workouts = Array(workoutRealm.objects(Workout.self)).sorted(by: {$0.date > $1.date})
 
         var counter = 0

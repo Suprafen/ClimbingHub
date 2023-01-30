@@ -26,6 +26,10 @@
 		E256AD4C27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD4B27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift */; };
 		E256AD4F27FC6CB400D146CB /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD4E27FC6CB400D146CB /* TitleCell.swift */; };
 		E256AD5127FC6CCA00D146CB /* TimePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD5027FC6CCA00D146CB /* TimePickerCell.swift */; };
+		E275750429881FF200E47DA9 /* ClimbingHubCompanionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E275750329881FF200E47DA9 /* ClimbingHubCompanionApp.swift */; };
+		E275750629881FF200E47DA9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E275750529881FF200E47DA9 /* ContentView.swift */; };
+		E275750829881FF400E47DA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E275750729881FF400E47DA9 /* Assets.xcassets */; };
+		E275750B29881FF400E47DA9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E275750A29881FF400E47DA9 /* Preview Assets.xcassets */; };
 		E27A68D127F615C10006479D /* GoalPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27A68D027F615C10006479D /* GoalPickerViewController.swift */; };
 		E27A68D327F779270006479D /* TimeGoalSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27A68D227F779270006479D /* TimeGoalSettingsViewController.swift */; };
 		E27B660327D2A3C000239D5C /* FourthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27B660227D2A3C000239D5C /* FourthTableViewCell.swift */; };
@@ -48,6 +52,8 @@
 		E2D2CB30285E232C00F7EE3C /* WelcomeViewReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB2F285E232C00F7EE3C /* WelcomeViewReason.swift */; };
 		E2D2CB33285F1F6500F7EE3C /* PagingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB32285F1F6500F7EE3C /* PagingInfo.swift */; };
 		E2D2CB35285F219200F7EE3C /* PagingSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB34285F219200F7EE3C /* PagingSectionFooterView.swift */; };
+		E2E5B4C528DECEB8001B720D /* DoneWorkoutsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5B4C428DECEB8001B720D /* DoneWorkoutsChartView.swift */; };
+		E2E5B4C728E0B3F0001B720D /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5B4C628E0B3F0001B720D /* TestCollectionViewCell.swift */; };
 		E2EFFA822850710800F70C97 /* AttentionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFFA812850710800F70C97 /* AttentionMessageView.swift */; };
 		E2F028BF2851DF3D001289E7 /* LocalProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */; };
 		E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */; };
@@ -81,6 +87,11 @@
 		E256AD4B27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfSplitsStaticCell.swift; sourceTree = "<group>"; };
 		E256AD4E27FC6CB400D146CB /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		E256AD5027FC6CCA00D146CB /* TimePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerCell.swift; sourceTree = "<group>"; };
+		E275750129881FF200E47DA9 /* ClimbingHubCompanion Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ClimbingHubCompanion Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E275750329881FF200E47DA9 /* ClimbingHubCompanionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClimbingHubCompanionApp.swift; sourceTree = "<group>"; };
+		E275750529881FF200E47DA9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E275750729881FF400E47DA9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E275750A29881FF400E47DA9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E27A68D027F615C10006479D /* GoalPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalPickerViewController.swift; sourceTree = "<group>"; };
 		E27A68D227F779270006479D /* TimeGoalSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeGoalSettingsViewController.swift; sourceTree = "<group>"; };
 		E27B660227D2A3C000239D5C /* FourthTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthTableViewCell.swift; sourceTree = "<group>"; };
@@ -105,6 +116,8 @@
 		E2D2CB2F285E232C00F7EE3C /* WelcomeViewReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewReason.swift; sourceTree = "<group>"; };
 		E2D2CB32285F1F6500F7EE3C /* PagingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingInfo.swift; sourceTree = "<group>"; };
 		E2D2CB34285F219200F7EE3C /* PagingSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingSectionFooterView.swift; sourceTree = "<group>"; };
+		E2E5B4C428DECEB8001B720D /* DoneWorkoutsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneWorkoutsChartView.swift; sourceTree = "<group>"; };
+		E2E5B4C628E0B3F0001B720D /* TestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionViewCell.swift; sourceTree = "<group>"; };
 		E2EFFA812850710800F70C97 /* AttentionMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionMessageView.swift; sourceTree = "<group>"; };
 		E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalProfileViewController.swift; sourceTree = "<group>"; };
 		E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatisticsTableViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +128,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E27574FE29881FF200E47DA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2815182279AD7D900E8C2D4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -145,10 +165,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E275750229881FF200E47DA9 /* ClimbingHubCompanion Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				E275750329881FF200E47DA9 /* ClimbingHubCompanionApp.swift */,
+				E275750529881FF200E47DA9 /* ContentView.swift */,
+				E275750729881FF400E47DA9 /* Assets.xcassets */,
+				E275750929881FF400E47DA9 /* Preview Content */,
+			);
+			path = "ClimbingHubCompanion Watch App";
+			sourceTree = "<group>";
+		};
+		E275750929881FF400E47DA9 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E275750A29881FF400E47DA9 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		E281517C279AD7D900E8C2D4 = {
 			isa = PBXGroup;
 			children = (
 				E2815187279AD7D900E8C2D4 /* projectClimber */,
+				E275750229881FF200E47DA9 /* ClimbingHubCompanion Watch App */,
 				E2815186279AD7D900E8C2D4 /* Products */,
 				2E59D8B1A7E59D8AD0AE9C03 /* Pods */,
 				CE1D5F2CD52C3234FF8B4925 /* Frameworks */,
@@ -159,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				E2815185279AD7D900E8C2D4 /* ClimbingHub.app */,
+				E275750129881FF200E47DA9 /* ClimbingHubCompanion Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,7 +210,7 @@
 				E2D19126284CA1EE00E3E596 /* ClimbingHub Application */,
 				E2D19125284CA18700E3E596 /* WelcomeViewGroup */,
 				E2D19138284CB90000E3E596 /* Model */,
-				E2D19127284CA26B00E3E596 /* Tab Bar Controller with children */,
+				E2D19127284CA26B00E3E596 /* MainInterface */,
 				E2815191279AD7DB00E8C2D4 /* Assets.xcassets */,
 				E2815193279AD7DB00E8C2D4 /* LaunchScreen.storyboard */,
 				E2815196279AD7DB00E8C2D4 /* Info.plist */,
@@ -201,7 +242,7 @@
 			path = "ClimbingHub Application";
 			sourceTree = "<group>";
 		};
-		E2D19127284CA26B00E3E596 /* Tab Bar Controller with children */ = {
+		E2D19127284CA26B00E3E596 /* MainInterface */ = {
 			isa = PBXGroup;
 			children = (
 				E205A87827AD174C002BA08B /* TabBarController.swift */,
@@ -209,12 +250,13 @@
 				E2D1912C284CA39F00E3E596 /* Workout Start Tab */,
 				E2D19128284CA29300E3E596 /* Overview Tab */,
 			);
-			path = "Tab Bar Controller with children";
+			path = MainInterface;
 			sourceTree = "<group>";
 		};
 		E2D19128284CA29300E3E596 /* Overview Tab */ = {
 			isa = PBXGroup;
 			children = (
+				E2E5B4C328DECE9A001B720D /* Charts */,
 				E205A87A27AD18B2002BA08B /* StatisticsCollectionViewController.swift */,
 				E2D1912F284CAB2300E3E596 /* Workout Overview Table View Controller */,
 				E2D1912A284CA33100E3E596 /* Supplementary Views */,
@@ -228,6 +270,7 @@
 			children = (
 				E22E7B2027BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift */,
 				E205A87C27AD18F1002BA08B /* WorkoutCollectionViewCell.swift */,
+				E2E5B4C628E0B3F0001B720D /* TestCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -360,6 +403,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		E2E5B4C328DECE9A001B720D /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				E2E5B4C428DECEB8001B720D /* DoneWorkoutsChartView.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
 		E2EFFA83285075DA00F70C97 /* Supplemetary Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,6 +424,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E275750029881FF200E47DA9 /* ClimbingHubCompanion Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E275750C29881FF400E47DA9 /* Build configuration list for PBXNativeTarget "ClimbingHubCompanion Watch App" */;
+			buildPhases = (
+				E27574FD29881FF200E47DA9 /* Sources */,
+				E27574FE29881FF200E47DA9 /* Frameworks */,
+				E27574FF29881FF200E47DA9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ClimbingHubCompanion Watch App";
+			productName = "ClimbingHubCompanion Watch App";
+			productReference = E275750129881FF200E47DA9 /* ClimbingHubCompanion Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E2815184279AD7D900E8C2D4 /* ClimbingHub */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2815199279AD7DB00E8C2D4 /* Build configuration list for PBXNativeTarget "ClimbingHub" */;
@@ -399,9 +467,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1310;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1310;
 				TargetAttributes = {
+					E275750029881FF200E47DA9 = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					E2815184279AD7D900E8C2D4 = {
 						CreatedOnToolsVersion = 13.1;
 					};
@@ -421,11 +492,21 @@
 			projectRoot = "";
 			targets = (
 				E2815184279AD7D900E8C2D4 /* ClimbingHub */,
+				E275750029881FF200E47DA9 /* ClimbingHubCompanion Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E27574FF29881FF200E47DA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E275750B29881FF400E47DA9 /* Preview Assets.xcassets in Resources */,
+				E275750829881FF400E47DA9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2815183279AD7D900E8C2D4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -480,6 +561,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E27574FD29881FF200E47DA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E275750629881FF200E47DA9 /* ContentView.swift in Sources */,
+				E275750429881FF200E47DA9 /* ClimbingHubCompanionApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2815181279AD7D900E8C2D4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -503,6 +593,7 @@
 				E205A87927AD174C002BA08B /* TabBarController.swift in Sources */,
 				E2D2CB35285F219200F7EE3C /* PagingSectionFooterView.swift in Sources */,
 				E2CA241A284C839100021E78 /* SceneDelegate-StateRestoration.swift in Sources */,
+				E2E5B4C728E0B3F0001B720D /* TestCollectionViewCell.swift in Sources */,
 				E24DCBAF27ECD9230002A7FC /* SectionHeaderView.swift in Sources */,
 				E2F1CFFF27BC22C3007ADEE2 /* FirstTableViewCell.swift in Sources */,
 				E2F1D00427BC32FA007ADEE2 /* Extensions.swift in Sources */,
@@ -511,6 +602,7 @@
 				E29BD37627FEEE4D003616A6 /* FingerViewTimeGoalViewController.swift in Sources */,
 				E256AD4F27FC6CB400D146CB /* TitleCell.swift in Sources */,
 				E256AD4C27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift in Sources */,
+				E2E5B4C528DECEB8001B720D /* DoneWorkoutsChartView.swift in Sources */,
 				E2D1913A284CE3D400E3E596 /* ForgotPasswordViewController.swift in Sources */,
 				E2A94A8B2820051A003061D0 /* ProfileSettingsTableViewController.swift in Sources */,
 				E2401EED282BFB270098CDB4 /* NameChangingTableViewController.swift in Sources */,
@@ -546,6 +638,68 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E275750D29881FF400E47DA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ClimbingHubCompanion Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = KWBL32UU3W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ClimbingHubCompanion;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = .watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		E275750E29881FF400E47DA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ClimbingHubCompanion Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = KWBL32UU3W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ClimbingHubCompanion;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = .watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
 		E2815197279AD7DB00E8C2D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -673,7 +827,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = KWBL32UU3W;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -706,7 +860,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = KWBL32UU3W;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -733,6 +887,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E275750C29881FF400E47DA9 /* Build configuration list for PBXNativeTarget "ClimbingHubCompanion Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E275750D29881FF400E47DA9 /* Debug */,
+				E275750E29881FF400E47DA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E2815180279AD7D900E8C2D4 /* Build configuration list for PBXProject "projectClimber" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
