@@ -53,7 +53,8 @@
 		E2D2CB33285F1F6500F7EE3C /* PagingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB32285F1F6500F7EE3C /* PagingInfo.swift */; };
 		E2D2CB35285F219200F7EE3C /* PagingSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2CB34285F219200F7EE3C /* PagingSectionFooterView.swift */; };
 		E2E5B4C528DECEB8001B720D /* DoneWorkoutsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5B4C428DECEB8001B720D /* DoneWorkoutsChartView.swift */; };
-		E2E5B4C728E0B3F0001B720D /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5B4C628E0B3F0001B720D /* TestCollectionViewCell.swift */; };
+		E2E5B4C728E0B3F0001B720D /* BlankCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5B4C628E0B3F0001B720D /* BlankCollectionViewCell.swift */; };
+		E2E8EBF329959F78002476E1 /* StatisticsSellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E8EBF229959F78002476E1 /* StatisticsSellView.swift */; };
 		E2EFFA822850710800F70C97 /* AttentionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFFA812850710800F70C97 /* AttentionMessageView.swift */; };
 		E2F028BF2851DF3D001289E7 /* LocalProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */; };
 		E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */; };
@@ -117,7 +118,8 @@
 		E2D2CB32285F1F6500F7EE3C /* PagingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingInfo.swift; sourceTree = "<group>"; };
 		E2D2CB34285F219200F7EE3C /* PagingSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingSectionFooterView.swift; sourceTree = "<group>"; };
 		E2E5B4C428DECEB8001B720D /* DoneWorkoutsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneWorkoutsChartView.swift; sourceTree = "<group>"; };
-		E2E5B4C628E0B3F0001B720D /* TestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionViewCell.swift; sourceTree = "<group>"; };
+		E2E5B4C628E0B3F0001B720D /* BlankCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankCollectionViewCell.swift; sourceTree = "<group>"; };
+		E2E8EBF229959F78002476E1 /* StatisticsSellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsSellView.swift; sourceTree = "<group>"; };
 		E2EFFA812850710800F70C97 /* AttentionMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionMessageView.swift; sourceTree = "<group>"; };
 		E2F028BE2851DF3D001289E7 /* LocalProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalProfileViewController.swift; sourceTree = "<group>"; };
 		E2F1CFFA27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStatisticsTableViewController.swift; sourceTree = "<group>"; };
@@ -268,9 +270,10 @@
 		E2D19129284CA2D400E3E596 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E2E8EBF129959F57002476E1 /* StatisticsSellsView */,
 				E22E7B2027BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift */,
 				E205A87C27AD18F1002BA08B /* WorkoutCollectionViewCell.swift */,
-				E2E5B4C628E0B3F0001B720D /* TestCollectionViewCell.swift */,
+				E2E5B4C628E0B3F0001B720D /* BlankCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -409,6 +412,14 @@
 				E2E5B4C428DECEB8001B720D /* DoneWorkoutsChartView.swift */,
 			);
 			path = Charts;
+			sourceTree = "<group>";
+		};
+		E2E8EBF129959F57002476E1 /* StatisticsSellsView */ = {
+			isa = PBXGroup;
+			children = (
+				E2E8EBF229959F78002476E1 /* StatisticsSellView.swift */,
+			);
+			path = StatisticsSellsView;
 			sourceTree = "<group>";
 		};
 		E2EFFA83285075DA00F70C97 /* Supplemetary Views */ = {
@@ -593,12 +604,13 @@
 				E205A87927AD174C002BA08B /* TabBarController.swift in Sources */,
 				E2D2CB35285F219200F7EE3C /* PagingSectionFooterView.swift in Sources */,
 				E2CA241A284C839100021E78 /* SceneDelegate-StateRestoration.swift in Sources */,
-				E2E5B4C728E0B3F0001B720D /* TestCollectionViewCell.swift in Sources */,
+				E2E5B4C728E0B3F0001B720D /* BlankCollectionViewCell.swift in Sources */,
 				E24DCBAF27ECD9230002A7FC /* SectionHeaderView.swift in Sources */,
 				E2F1CFFF27BC22C3007ADEE2 /* FirstTableViewCell.swift in Sources */,
 				E2F1D00427BC32FA007ADEE2 /* Extensions.swift in Sources */,
 				E27A68D127F615C10006479D /* GoalPickerViewController.swift in Sources */,
 				E2401EEF2830EBE90098CDB4 /* DeleteAccountViewController.swift in Sources */,
+				E2E8EBF329959F78002476E1 /* StatisticsSellView.swift in Sources */,
 				E29BD37627FEEE4D003616A6 /* FingerViewTimeGoalViewController.swift in Sources */,
 				E256AD4F27FC6CB400D146CB /* TitleCell.swift in Sources */,
 				E256AD4C27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift in Sources */,

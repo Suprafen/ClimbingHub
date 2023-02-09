@@ -1,17 +1,16 @@
 //
-//  TestCollectionViewCell.swift
+//  BlankCollectionViewCell.swift
 //  ClimbingHub
 //
 //  Created by Ivan Pryhara on 25.09.22.
 //
 
 import UIKit
-
-class TestCollectionViewCell: UICollectionViewCell {
+@available (iOS 16, *)
+class BlankCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "StatisticsCollectionViewCell"
+    static let reuseIdentifier = "BlankStatisticsCollectionViewCell"
 
-    
     //MARK: Initializers
     override init (frame: CGRect) {
         super.init(frame: frame)

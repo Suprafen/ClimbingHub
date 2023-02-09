@@ -85,7 +85,9 @@ class StatisticsCollectionViewController: UICollectionViewController {
         //MARK: Cell Registration
         self.collectionView.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier)
         self.collectionView.register(StatisticsCollectionViewCell.self, forCellWithReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier)
-//        self.collectionView.register(TestCollectionViewCell.self, forCellWithReuseIdentifier: TestCollectionViewCell.reuseIdentifier)
+        if #available(iOS 16, *) {
+            self.collectionView.register(BlankCollectionViewCell.self, forCellWithReuseIdentifier: BlankCollectionViewCell.reuseIdentifier)
+        }
         
         // MARK: Supplementary View Registration
         self.collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
@@ -294,19 +296,36 @@ class StatisticsCollectionViewController: UICollectionViewController {
             // Configuring cell depends on section
             switch section {
             case .statistics:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier, for: indexPath) as! StatisticsCollectionViewCell
-                guard let statistics = item as? Statistics else { return UICollectionViewCell()}
-                
-                let longestSplit: Int = self.biggestSplitInFingerWorkouts()
-                cell.configure(with: statistics, quantityOfWorkouts: self.workouts.count, longestAttemptOnHangboard: longestSplit)
-
-                cell.layer.cornerRadius = 15
-                cell.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
-                
-                return cell
+                if #available(iOS 16, *) {
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlankCollectionViewCell.reuseIdentifier, for: indexPath) as! BlankCollectionViewCell
+                    
+                    guard let statistics = item as? Statistics else { return UICollectionViewCell()}
+                    
+                    cell.contentConfiguration = UIHostingConfiguration {
+                        
+                        StatisticsSellView(statistics: statistics)
+                        
+                    }
+                    
+                    cell.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+                    cell.layer.cornerRadius = 15
+                    
+                    return cell
+                } else {
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatisticsCollectionViewCell.reuseIdentifier, for: indexPath) as! StatisticsCollectionViewCell
+                    guard let statistics = item as? Statistics else { return UICollectionViewCell()}
+                    
+                    let longestSplit: Int = self.biggestSplitInFingerWorkouts()
+                    cell.configure(with: statistics, quantityOfWorkouts: self.workouts.count, longestAttemptOnHangboard: longestSplit)
+                    
+                    cell.layer.cornerRadius = 15
+                    cell.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
+                    
+                    return cell
+                }
             case .workouts:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WorkoutCollectionViewCell
-                guard let workout = item as? Workout else { return UICollectionViewCell()}
+                guard let _ = item as? Workout else { return UICollectionViewCell()}
                 cell.configure(with: item)
                 cell.layer.cornerRadius = 15
 
