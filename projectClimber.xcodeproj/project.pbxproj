@@ -26,6 +26,9 @@
 		E256AD4C27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD4B27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift */; };
 		E256AD4F27FC6CB400D146CB /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD4E27FC6CB400D146CB /* TitleCell.swift */; };
 		E256AD5127FC6CCA00D146CB /* TimePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD5027FC6CCA00D146CB /* TimePickerCell.swift */; };
+		E273E964299D3582004C07A7 /* WorkoutsDoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273E963299D3582004C07A7 /* WorkoutsDoneView.swift */; };
+		E273E966299D35A0004C07A7 /* LongestHangView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273E965299D35A0004C07A7 /* LongestHangView.swift */; };
+		E273E968299D35B9004C07A7 /* DailyGoalStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273E967299D35B9004C07A7 /* DailyGoalStatusView.swift */; };
 		E275750429881FF200E47DA9 /* ClimbingHubCompanionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E275750329881FF200E47DA9 /* ClimbingHubCompanionApp.swift */; };
 		E275750629881FF200E47DA9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E275750529881FF200E47DA9 /* ContentView.swift */; };
 		E275750829881FF400E47DA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E275750729881FF400E47DA9 /* Assets.xcassets */; };
@@ -88,6 +91,9 @@
 		E256AD4B27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfSplitsStaticCell.swift; sourceTree = "<group>"; };
 		E256AD4E27FC6CB400D146CB /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		E256AD5027FC6CCA00D146CB /* TimePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerCell.swift; sourceTree = "<group>"; };
+		E273E963299D3582004C07A7 /* WorkoutsDoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsDoneView.swift; sourceTree = "<group>"; };
+		E273E965299D35A0004C07A7 /* LongestHangView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongestHangView.swift; sourceTree = "<group>"; };
+		E273E967299D35B9004C07A7 /* DailyGoalStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalStatusView.swift; sourceTree = "<group>"; };
 		E275750129881FF200E47DA9 /* ClimbingHubCompanion Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ClimbingHubCompanion Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E275750329881FF200E47DA9 /* ClimbingHubCompanionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClimbingHubCompanionApp.swift; sourceTree = "<group>"; };
 		E275750529881FF200E47DA9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -165,6 +171,16 @@
 				85692B7B2BC7387F29343E2A /* Pods_ClimbingHub.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E273E962299D3564004C07A7 /* SuplementartViews */ = {
+			isa = PBXGroup;
+			children = (
+				E273E963299D3582004C07A7 /* WorkoutsDoneView.swift */,
+				E273E965299D35A0004C07A7 /* LongestHangView.swift */,
+				E273E967299D35B9004C07A7 /* DailyGoalStatusView.swift */,
+			);
+			path = SuplementartViews;
 			sourceTree = "<group>";
 		};
 		E275750229881FF200E47DA9 /* ClimbingHubCompanion Watch App */ = {
@@ -418,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				E2E8EBF229959F78002476E1 /* StatisticsSellView.swift */,
+				E273E962299D3564004C07A7 /* SuplementartViews */,
 			);
 			path = StatisticsSellsView;
 			sourceTree = "<group>";
@@ -593,6 +610,7 @@
 				E205A88127AD4DD0002BA08B /* FingerWorkoutViewController.swift in Sources */,
 				E24DCBB027ECD9230002A7FC /* SectionHeaderWorkoutsHistoryView.swift in Sources */,
 				E28859A82833F18B00303824 /* NotationView.swift in Sources */,
+				E273E964299D3582004C07A7 /* WorkoutsDoneView.swift in Sources */,
 				E2D1333C283A60E100AB2A9A /* EmailSentViewController.swift in Sources */,
 				E2D2CB33285F1F6500F7EE3C /* PagingInfo.swift in Sources */,
 				E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */,
@@ -604,11 +622,13 @@
 				E205A87927AD174C002BA08B /* TabBarController.swift in Sources */,
 				E2D2CB35285F219200F7EE3C /* PagingSectionFooterView.swift in Sources */,
 				E2CA241A284C839100021E78 /* SceneDelegate-StateRestoration.swift in Sources */,
+				E273E968299D35B9004C07A7 /* DailyGoalStatusView.swift in Sources */,
 				E2E5B4C728E0B3F0001B720D /* BlankCollectionViewCell.swift in Sources */,
 				E24DCBAF27ECD9230002A7FC /* SectionHeaderView.swift in Sources */,
 				E2F1CFFF27BC22C3007ADEE2 /* FirstTableViewCell.swift in Sources */,
 				E2F1D00427BC32FA007ADEE2 /* Extensions.swift in Sources */,
 				E27A68D127F615C10006479D /* GoalPickerViewController.swift in Sources */,
+				E273E966299D35A0004C07A7 /* LongestHangView.swift in Sources */,
 				E2401EEF2830EBE90098CDB4 /* DeleteAccountViewController.swift in Sources */,
 				E2E8EBF329959F78002476E1 /* StatisticsSellView.swift in Sources */,
 				E29BD37627FEEE4D003616A6 /* FingerViewTimeGoalViewController.swift in Sources */,

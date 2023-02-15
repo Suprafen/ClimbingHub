@@ -17,29 +17,16 @@ struct StatisticsSellView: View {
             case .graph:
                 Text("Graph")
             case .hangBoard:
-                HStack {
-                    VStack {
-                        Text("Here could be a description. Maybe even useful one")
-                            .font(.body)
-                            .italic()
-                        Spacer()
-                        Text("\(statistics.titleStatistics)")
-                    }
-                    .font(.title3)
-                    .bold()
-                    .foregroundColor(.white)
-                    Spacer()
+                VStack(alignment: .leading) {
+                    WorkoutsDoneView()
+                        .frame(maxHeight: 70)
+                    
+                    LongestHangView()
+                        .frame(maxHeight: 70)
                 }
-                Spacer()
+                .foregroundColor(.white)
             case .totalTime:
-                HStack {
-                    Text("\(statistics.titleStatistics)")
-                        .font(.title3)
-                        .bold()
-                        .foregroundColor(.white)
-                    Spacer()
-                }
-                Spacer()
+                DailyGoalStatusView()
             }
         }
     }
