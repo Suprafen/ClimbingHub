@@ -27,7 +27,7 @@ class WorkoutsHistoryCollectionViewController: UICollectionViewController {
     }()
     
     var workouts: [Workout] = []
-    var sections = [SectionForHistory]()
+    var sections = [HistorySection]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +59,7 @@ class WorkoutsHistoryCollectionViewController: UICollectionViewController {
         let grouped = Dictionary(grouping: workouts, by: { Calendar.current.date(from: Calendar.current.dateComponents([.month, .year], from: $0.date))! })
         
         for (date, workouts) in grouped.sorted(by: {$0.0 > $1.0}) {
-            sections.append(SectionForHistory(title: monthDateFormatter.string(from: date) , workouts: workouts.sorted(by: {$0.date > $1.date})))
+            sections.append(HistorySection(title: monthDateFormatter.string(from: date) , workouts: workouts.sorted(by: {$0.date > $1.date})))
         }
         
         collectionView.reloadData()
