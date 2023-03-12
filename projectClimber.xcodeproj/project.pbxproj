@@ -26,7 +26,10 @@
 		E256AD4C27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD4B27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift */; };
 		E256AD4F27FC6CB400D146CB /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD4E27FC6CB400D146CB /* TitleCell.swift */; };
 		E256AD5127FC6CCA00D146CB /* TimePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256AD5027FC6CCA00D146CB /* TimePickerCell.swift */; };
-		E273E964299D3582004C07A7 /* WorkoutsDoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273E963299D3582004C07A7 /* WorkoutsDoneView.swift */; };
+		E269123B29BDFABD00D9A1BA /* AmountOfDoneWorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E269123A29BDFABD00D9A1BA /* AmountOfDoneWorkoutsView.swift */; };
+		E269123D29BE013C00D9A1BA /* TriangleShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E269123C29BE013C00D9A1BA /* TriangleShapeView.swift */; };
+		E269124029BE035D00D9A1BA /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E269123F29BE035D00D9A1BA /* SwiftUIView.swift */; };
+		E273E964299D3582004C07A7 /* TimeSpentDuringWorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273E963299D3582004C07A7 /* TimeSpentDuringWorkoutsView.swift */; };
 		E273E966299D35A0004C07A7 /* LongestHangView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273E965299D35A0004C07A7 /* LongestHangView.swift */; };
 		E273E968299D35B9004C07A7 /* DailyGoalStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273E967299D35B9004C07A7 /* DailyGoalStatusView.swift */; };
 		E273E96A299D36B9004C07A7 /* WorkoutGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273E969299D36B9004C07A7 /* WorkoutGoal.swift */; };
@@ -61,6 +64,7 @@
 		E2A94A87281FBE4A003061D0 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A94A86281FBE4A003061D0 /* WelcomeViewController.swift */; };
 		E2A94A89281FDD06003061D0 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A94A88281FDD06003061D0 /* SignInViewController.swift */; };
 		E2A94A8B2820051A003061D0 /* ProfileSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A94A8A2820051A003061D0 /* ProfileSettingsTableViewController.swift */; };
+		E2BD644E29BE5CAB008B03E6 /* TriangleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BD644D29BE5CAB008B03E6 /* TriangleProgressView.swift */; };
 		E2CA241A284C839100021E78 /* SceneDelegate-StateRestoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA2419284C839100021E78 /* SceneDelegate-StateRestoration.swift */; };
 		E2D0E2C8281A91C700397C79 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D0E2C7281A91C700397C79 /* NewAccountViewController.swift */; };
 		E2D1333C283A60E100AB2A9A /* EmailSentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */; };
@@ -104,7 +108,10 @@
 		E256AD4B27FC6C8A00D146CB /* NumberOfSplitsStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfSplitsStaticCell.swift; sourceTree = "<group>"; };
 		E256AD4E27FC6CB400D146CB /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		E256AD5027FC6CCA00D146CB /* TimePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerCell.swift; sourceTree = "<group>"; };
-		E273E963299D3582004C07A7 /* WorkoutsDoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsDoneView.swift; sourceTree = "<group>"; };
+		E269123A29BDFABD00D9A1BA /* AmountOfDoneWorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountOfDoneWorkoutsView.swift; sourceTree = "<group>"; };
+		E269123C29BE013C00D9A1BA /* TriangleShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleShapeView.swift; sourceTree = "<group>"; };
+		E269123F29BE035D00D9A1BA /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		E273E963299D3582004C07A7 /* TimeSpentDuringWorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSpentDuringWorkoutsView.swift; sourceTree = "<group>"; };
 		E273E965299D35A0004C07A7 /* LongestHangView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongestHangView.swift; sourceTree = "<group>"; };
 		E273E967299D35B9004C07A7 /* DailyGoalStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalStatusView.swift; sourceTree = "<group>"; };
 		E273E969299D36B9004C07A7 /* WorkoutGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutGoal.swift; sourceTree = "<group>"; };
@@ -142,6 +149,7 @@
 		E2A94A86281FBE4A003061D0 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		E2A94A88281FDD06003061D0 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		E2A94A8A2820051A003061D0 /* ProfileSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsTableViewController.swift; sourceTree = "<group>"; };
+		E2BD644D29BE5CAB008B03E6 /* TriangleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleProgressView.swift; sourceTree = "<group>"; };
 		E2CA2419284C839100021E78 /* SceneDelegate-StateRestoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneDelegate-StateRestoration.swift"; sourceTree = "<group>"; };
 		E2D0E2C7281A91C700397C79 /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		E2D1333B283A60E100AB2A9A /* EmailSentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSentViewController.swift; sourceTree = "<group>"; };
@@ -199,12 +207,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E269123E29BE033D00D9A1BA /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				E269123C29BE013C00D9A1BA /* TriangleShapeView.swift */,
+				E269123F29BE035D00D9A1BA /* SwiftUIView.swift */,
+				E2BD644D29BE5CAB008B03E6 /* TriangleProgressView.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		E273E962299D3564004C07A7 /* SuplementartViews */ = {
 			isa = PBXGroup;
 			children = (
-				E273E963299D3582004C07A7 /* WorkoutsDoneView.swift */,
+				E273E963299D3582004C07A7 /* TimeSpentDuringWorkoutsView.swift */,
 				E273E965299D35A0004C07A7 /* LongestHangView.swift */,
 				E273E967299D35B9004C07A7 /* DailyGoalStatusView.swift */,
+				E269123A29BDFABD00D9A1BA /* AmountOfDoneWorkoutsView.swift */,
 			);
 			path = SuplementartViews;
 			sourceTree = "<group>";
@@ -355,6 +374,7 @@
 		E2D19127284CA26B00E3E596 /* MainInterface */ = {
 			isa = PBXGroup;
 			children = (
+				E269123E29BE033D00D9A1BA /* Library */,
 				E205A87827AD174C002BA08B /* TabBarController.swift */,
 				E2D19133284CB75800E3E596 /* Profile Tab */,
 				E2D1912C284CA39F00E3E596 /* Workout Start Tab */,
@@ -724,10 +744,11 @@
 				E205A88127AD4DD0002BA08B /* FingerWorkoutViewController.swift in Sources */,
 				E24DCBB027ECD9230002A7FC /* SectionHeaderWorkoutsHistoryView.swift in Sources */,
 				E28859A82833F18B00303824 /* NotationView.swift in Sources */,
-				E273E964299D3582004C07A7 /* WorkoutsDoneView.swift in Sources */,
+				E273E964299D3582004C07A7 /* TimeSpentDuringWorkoutsView.swift in Sources */,
 				E2D1333C283A60E100AB2A9A /* EmailSentViewController.swift in Sources */,
 				E2D2CB33285F1F6500F7EE3C /* PagingInfo.swift in Sources */,
 				E2F1CFFB27BC1755007ADEE2 /* WorkoutStatisticsTableViewController.swift in Sources */,
+				E269123B29BDFABD00D9A1BA /* AmountOfDoneWorkoutsView.swift in Sources */,
 				E256AD4A27FB697400D146CB /* CustomGoalSettingsViewController.swift in Sources */,
 				E273E981299D39FF004C07A7 /* MakeTimeString-Ext.swift in Sources */,
 				E273E978299D37C9004C07A7 /* HistorySection.swift in Sources */,
@@ -746,6 +767,7 @@
 				E2F1CFFF27BC22C3007ADEE2 /* FirstTableViewCell.swift in Sources */,
 				E273E983299D3A2A004C07A7 /* CombineWorkoutTime-Ext.swift in Sources */,
 				E27A68D127F615C10006479D /* GoalPickerViewController.swift in Sources */,
+				E269123D29BE013C00D9A1BA /* TriangleShapeView.swift in Sources */,
 				E273E96A299D36B9004C07A7 /* WorkoutGoal.swift in Sources */,
 				E273E974299D3767004C07A7 /* StatContainer.swift in Sources */,
 				E273E966299D35A0004C07A7 /* LongestHangView.swift in Sources */,
@@ -760,6 +782,7 @@
 				E2D1913A284CE3D400E3E596 /* ForgotPasswordViewController.swift in Sources */,
 				E273E96C299D36E2004C07A7 /* WorkoutType.swift in Sources */,
 				E2A94A8B2820051A003061D0 /* ProfileSettingsTableViewController.swift in Sources */,
+				E2BD644E29BE5CAB008B03E6 /* TriangleProgressView.swift in Sources */,
 				E2401EED282BFB270098CDB4 /* NameChangingTableViewController.swift in Sources */,
 				E22E7B2127BECA5C00ADE4C3 /* StatisticsCollectionViewCell.swift in Sources */,
 				E2D0E2C8281A91C700397C79 /* NewAccountViewController.swift in Sources */,
@@ -777,6 +800,7 @@
 				E273E97C299D39A6004C07A7 /* Workout.swift in Sources */,
 				E2856B7127E7A73F00443E63 /* SplitTableViewCell.swift in Sources */,
 				E2FFD4F327BD4623004AADEC /* ThirdTableViewCell.swift in Sources */,
+				E269124029BE035D00D9A1BA /* SwiftUIView.swift in Sources */,
 				E24DCBAE27ECD9230002A7FC /* ShowMoreButtonHeaderView.swift in Sources */,
 				E273E98A299D3B23004C07A7 /* CorrectEmailRegexFormat-Ext.swift in Sources */,
 			);

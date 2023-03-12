@@ -302,12 +302,10 @@ class StatisticsCollectionViewController: UICollectionViewController {
                     guard let statistics = item as? Statistics else { return UICollectionViewCell()}
                     
                     cell.contentConfiguration = UIHostingConfiguration {
-                        
-                        StatisticsSellView(statistics: statistics)
-                        
+                        StatisticsCellView(statistics: statistics, foregroundColor: .black)
                     }
                     
-                    cell.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+                    cell.backgroundColor = .white
                     cell.layer.cornerRadius = 15
                     
                     return cell

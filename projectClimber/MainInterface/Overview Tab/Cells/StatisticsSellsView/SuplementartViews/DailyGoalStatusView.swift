@@ -1,31 +1,31 @@
-//
-//  DailyGoalStatusView.swift
-//  ClimbingHub
-//
-//  Created by Ivan Pryhara on 15.02.23.
-//
-
 import SwiftUI
 
 struct DailyGoalStatusView: View {
-    @State var isGoalDone: Bool = false
+    @State private var isGoalDone: Bool = false
+    @State private var progress: Double = 0.6
+    var foregroundColor: Color
     var body: some View {
-        
-        GeometryReader { proxy in
-            HStack(alignment: .center) {
-                // FIXME: Wrong rectangle positioning.
-                GeometryReader { proxy in
-                    Rectangle()
-                        .foregroundColor(.white)
-                        .frame(maxWidth: proxy.size.width / 1.5,
-                               maxHeight: proxy.size.width / 1.5)
+        HStack(spacing: 20) {
+            TriangleProgressView(progress: $progress, strokeWidth: 15, strokeColor: .blue.opacity(0.7))
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if progress < 1.0 {
+                        withAnimation {
+                            progress += 0.2
+                        }
+                    }
                 }
-                .background(Color.red)
+
+            VStack (alignment: .leading) {
                 
-                Text(isGoalDone ? "You've met your daily goal!" : "You need to train MIN_MIN more to acomplish")
-                    .foregroundColor(.white)
+                Text("0/130min")
+                    .font(.system(.title3, design: .rounded))
                     .bold()
+                    .foregroundColor(.blue.opacity(0.7))
+                
+                Text("Workout time")
             }
         }
+        .foregroundColor(foregroundColor)
     }
 }
